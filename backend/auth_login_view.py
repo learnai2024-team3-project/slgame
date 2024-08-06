@@ -17,6 +17,21 @@ from backend.serializers import AuthLoginRequestSerializer,\
       UploadRequestSerializer,\
       StartGameRequestSerializer, SubmitGameRequestSerializer
 
-def index(request):
-    project_name = "Sign Language Game Project"
-    return render(request, "index.html", locals())
+@swagger_auto_schema(
+        methods=['POST'],
+        request_body = AuthLoginRequestSerializer,
+        responses = { 
+            status.HTTP_200_OK: openapi.Schema(
+            type = openapi.TYPE_OBJECT,
+            properties = {
+                'token': openapi.Schema(type=openapi.TYPE_STRING),
+                'expiresIn': openapi.Schema(type=openapi.TYPE_INTEGER)
+            }
+    )},
+)
+@api_view(['POST'])
+def auth_login(request):
+    return JsonResponse({
+        "token": "123456",
+        "expiresIn": 65535
+    }, safe=False)

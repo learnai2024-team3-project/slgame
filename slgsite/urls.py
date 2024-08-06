@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from backend import views as player_view
+from backend.player_view import PlayerView
 from django.urls import include, re_path
-from backend.views import index, auth_login, upload
+from backend.views import index
+from backend.auth_login_view import auth_login
+from backend.upload_view import upload
+from backend.game_start_view import game_start
+from backend.submit_game_view import submit_game
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -40,9 +44,11 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index),
-    path('users/', player_view.PlayerView.as_view()),
+    path('players/', PlayerView.as_view()),
     path("auth/login", auth_login),
     path("upload/", upload),
+    path("game/start", game_start),
+    path("game/submit", submit_game),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
