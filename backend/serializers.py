@@ -10,6 +10,16 @@ class UploadRequestSerializer(serializers.Serializer):
     file = serializers.ImageField()
     mode = serializers.CharField()
 
+class StartGameRequestSerializer(serializers.Serializer):
+    Authorization = serializers.CharField()
+    mode = serializers.CharField()
+
+class SubmitGameRequestSerializer(serializers.Serializer):
+    Authorization = serializers.CharField()
+    gameId = serializers.CharField()
+    recognizedWord = serializers.CharField()
+    timeSpent =  serializers.FloatField()
+
 class PlayerSerializer(serializers.ModelSerializer):
      class Meta:
          model = Player
