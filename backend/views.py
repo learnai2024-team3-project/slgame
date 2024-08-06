@@ -13,7 +13,10 @@ from rest_framework.response import Response
 # Create your views here.
 from backend.models import Player 
 from backend.serializers import PlayerSerializer
-from backend.serializers import AuthLoginRequestSerializer, UploadRequestSerializer
+from backend.serializers import AuthLoginRequestSerializer,\
+      UploadRequestSerializer,\
+      StartGameRequestSerializer, SubmitGameRequestSerializer
+
 
 @swagger_auto_schema(
         methods=['POST'],
@@ -59,6 +62,62 @@ def auth_login(request):
     return JsonResponse({
         "token": "123456",
         "expiresIn": 65535
+    }, safe=False)
+
+@swagger_auto_schema(
+    methods=['POST'],
+    request_body = StartGameRequestSerializer,
+    responses = { 
+            status.HTTP_200_OK: openapi.Schema(
+            type = openapi.TYPE_OBJECT,
+            properties = {
+                'status': openapi.Schema(type=openapi.TYPE_STRING),
+                'gameId': openapi.Schema(type=openapi.TYPE_STRING),
+                "challenge": {
+                    "type": openapi.Schema(type=openapi.TYPE_STRING),
+                    "content": openapi.Schema(type=openapi.TYPE_STRING)
+                },
+            }
+    )},
+)
+@api_view(['POST'])
+def game_start(request):
+    return JsonResponse({
+        "status": "success",
+        "gameId": "1",
+        "challenge": {
+            "type": "A",
+            "content": "Apple"
+        }
+    }, safe=False)
+
+@swagger_auto_schema(
+    methods=['POST'],
+    request_body = SubmitGameRequestSerializer,
+    responses = { 
+            status.HTTP_200_OK: openapi.Schema(
+            type = openapi.TYPE_OBJECT,
+            properties = {
+                'status': openapi.Schema(type=openapi.TYPE_STRING),
+                'store': openapi.Schema(type=openapi.TYPE_INTEGER),
+                'correct': openapi.Schema(type=openapi.TYPE_BOOLEAN),
+                "ranking": {
+                    "position": openapi.Schema(type=openapi.TYPE_INTEGER),
+                    "totalPlayers": openapi.Schema(type=openapi.TYPE_INTEGER)
+                },
+            }
+    )},
+)
+@api_view(['POST'])
+def submit_game(request):
+    return JsonResponse({
+        "status": "success",
+        "store": 100,
+        "correct": True,
+        "ranking": {
+            "position": 5,
+            "totalPlayers": 1
+        }
     }, safe=False)
 
 class PlayerView(GenericAPIView):
