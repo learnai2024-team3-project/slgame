@@ -8,5 +8,8 @@ pip install djangorestframework
 
 # drf-yasg
 pip install -U drf-yasg
+
+# PIL
+pip install pillow
 ```
 

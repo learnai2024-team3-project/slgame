@@ -9,6 +9,11 @@ from rest_framework import status
 from django.core import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import base64
+from rest_framework.parsers import JSONParser
+from PIL import Image
+from io import BytesIO
+from django.views.decorators.gzip import gzip_page
 
 # Create your views here.
 from backend.models import Player 
@@ -34,7 +39,37 @@ from backend.serializers import AuthLoginRequestSerializer,\
     )},
 )
 @api_view(['POST'])
+@gzip_page
 def upload(request):
+    try:
+        pythondata = JSONParser().parse(request)
+        serializer = UploadRequestSerializer(data=pythondata) 
+
+        if serializer.is_valid() == False:
+            return JsonResponse({
+            "status": "fail to deserialize",
+            "feedback": "",
+            "data": {
+                "recognizedWord": "",
+                "confidence": ""
+            }
+            }, safe=False)
+    
+        image_byte = base64.b64decode(serializer.validated_data["file"])
+
+        with Image.open(BytesIO(image_byte)) as im:
+            print(f"{im.width} x {im.height}")
+
+    except:
+        return JsonResponse({
+        "status": "fail",
+        "feedback": "",
+        "data": {
+            "recognizedWord": "",
+            "confidence": ""
+        }
+        }, safe=False)
+
     return JsonResponse({
         "status": "success",
         "feedback": "",
