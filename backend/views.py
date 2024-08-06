@@ -9,6 +9,7 @@ from rest_framework import status
 from django.core import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.middleware.gzip import GZipMiddleware
 
 # Create your views here.
 from backend.models import Player 
