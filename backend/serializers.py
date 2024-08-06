@@ -7,7 +7,7 @@ class AuthLoginRequestSerializer(serializers.Serializer):
 
 class UploadRequestSerializer(serializers.Serializer):
     Authorization = serializers.CharField()
-    file = serializers.ImageField()
+    file = serializers.CharField()
     mode = serializers.CharField()
 
 class StartGameRequestSerializer(serializers.Serializer):

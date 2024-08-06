@@ -17,6 +17,13 @@ from backend.serializers import AuthLoginRequestSerializer,\
       UploadRequestSerializer,\
       StartGameRequestSerializer, SubmitGameRequestSerializer
 
-def index(request):
-    project_name = "Sign Language Game Project"
-    return render(request, "index.html", locals())
+class PlayerView(GenericAPIView):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
+
+    # Get 請求 回傳所有玩家
+    def get(self, request, *args, **kargs):
+        players = self.get_queryset()
+        serializer = self.serializer_class(players, many=True)
+        data = serializer.data
+        return JsonResponse(data, safe=False)
