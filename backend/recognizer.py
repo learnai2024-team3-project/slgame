@@ -2,11 +2,19 @@
 from transformers import pipeline
 import os
 
+from transformers import ViTFeatureExtractor, ViTForImageClassification
+
 model_name = "RavenOnur/Sign-Language"
 pipe = pipeline("image-classification", model=model_name)
 
+# feature_extractor = ViTFeatureExtractor.from_pretrained('google/vit-base-patch16-224')
+# model = ViTForImageClassification.from_pretrained('google/vit-base-patch16-224')
+# pipe = pipeline("image-classification", model=model, feature_extractor=feature_extractor)
+        
 def use_pipe(image):
+    #url = "https://huggingface.co/datasets/Narsil/image_dummy/raw/main/parrots.png"
     prediction = pipe(image)
+    #prediction = pipe(url)
     most_probable = prediction[0]['label']
     return most_probable
 
