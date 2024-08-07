@@ -62,8 +62,9 @@ def upload(request):
         recognizedWord = ""
     
         with Image.open(BytesIO(image_byte)) as img:
-            required_size = (200, 200)
-            img = img.resize(required_size).convert("L")
+            #required_size = (28, 28)
+            #img = img.resize(required_size).convert("L")
+            img = img.convert("L")
             print(f"{img.width} x {img.height}")
             recognizedWord = use_pipe(img)
             print(recognizedWord)
