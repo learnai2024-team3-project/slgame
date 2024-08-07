@@ -1,0 +1,6 @@
+line-bot-sdk==3.11.0
+
+# recognizer.py
+datasets>=2.18.0
+transformers==4.43.3
+torch==2.4.0
