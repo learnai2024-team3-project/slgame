@@ -10,10 +10,12 @@ from django.core import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import base64
+import os
 from rest_framework.parsers import JSONParser
 from PIL import Image
 from io import BytesIO
 from django.views.decorators.gzip import gzip_page
+from backend.recognizer import use_pipe
 
 # Create your views here.
 from backend.models import Player 
@@ -47,34 +49,41 @@ def upload(request):
 
         if serializer.is_valid() == False:
             return JsonResponse({
-            "status": "fail to deserialize",
-            "feedback": "",
-            "data": {
-                "recognizedWord": "",
-                "confidence": ""
-            }
-            }, safe=False)
+                "status": "fail to deserialize",
+                "feedback": "",
+                "data": {
+                    "recognizedWord": "",
+                    "confidence": ""
+                }
+                }, safe=False)
     
         image_byte = base64.b64decode(serializer.validated_data["file"])
+    
+        recognizedWord = ""
+    
+        with Image.open(BytesIO(image_byte)) as img:
+            required_size = (200, 200)
+            img = img.resize(required_size).convert("L")
+            print(f"{img.width} x {img.height}")
+            recognizedWord = use_pipe(img)
+            print(recognizedWord)
 
-        with Image.open(BytesIO(image_byte)) as im:
-            print(f"{im.width} x {im.height}")
-
-    except:
         return JsonResponse({
-        "status": "fail",
-        "feedback": "",
-        "data": {
-            "recognizedWord": "",
-            "confidence": ""
-        }
+            "status": "success",
+            "feedback": "",
+            "data": {
+                "recognizedWord": recognizedWord,
+                "confidence": "float"
+            }
         }, safe=False)
-
-    return JsonResponse({
-        "status": "success",
-        "feedback": "",
-        "data": {
-            "recognizedWord": "A",
-            "confidence": "float"
-        }
-    }, safe=False)
+        
+    except BaseException as e:
+        return JsonResponse({
+                "status": str(e),
+                "feedback": "",
+                "data": {
+                    "recognizedWord": "",
+                    "confidence": ""
+                }
+                }, safe=False)
+    
