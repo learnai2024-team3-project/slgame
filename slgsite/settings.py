@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "backend",
-    'drf_yasg',
+    "drf_yasg",
+    "line_bot"
 ]
 
 MIDDLEWARE = [    
@@ -125,3 +126,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LINE_CHANNEL_ACCESS_TOKEN="eqIuYj1mXTTCMXwIP22DuGjkTXK3OKxU0S6YvNdolMFOyAmPnF70id6KwdwCCzXLdP5zvAJpH7O/r9LA2aguVnhyw2JZiEAmJdjkXCGqMfuLT5ftqcRoQbJQx8lB5MDKtcFDSguKzY+Zz+UjUOkWVAdB04t89/1O/w1cDnyilFU="
+LINE_CHANNEL_SECRET="3faf6dae8a61bf1425d48487c88b7050"
+LINE_USER_ID = "@011fresn"
