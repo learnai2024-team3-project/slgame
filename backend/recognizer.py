@@ -1,22 +1,38 @@
-# Use a pipeline as a high-level helper
-from transformers import pipeline
-import os
+import cv2
+import torch
+from ultralytics import YOLO
 
-model_name = "joseluhf11/sign_language_classification"
-pipe = pipeline("image-classification", model=model_name)
+# 检查并使用GPU或CPU
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f'Using device: {device}')
 
-def use_pipe(image):
-    prediction = pipe(image)
-    print(prediction)
-    most_probable = prediction[0]['label']
-    return most_probable
+# 加载模型并将其移动到设备
+model = YOLO('./models/best.pt')
+model.to(device)
 
-if __name__ == "__main__":
-    print('This is a test')
-    imgdir = os.path.join('..', 'static', 'Images')
-    imgpaths = [os.path.join(imgdir, img) for img in os.listdir(imgdir)]
+def recognize_image(image):
+    # 找到最高置信度的检测结果
+    best_result = None
+    max_conf = 0
     
-    for imgpath in imgpaths:
-        result = use_pipe(imgpath)
-        print(imgpath, result)
+    # 设置置信度阈值
+    confidence_threshold = 0.25
+    
+    results = model(image, conf=confidence_threshold)
+
+    for result in results:
+        boxes = result.boxes.xyxy.cpu().numpy()  # 获取边界框
+        confs = result.boxes.conf.cpu().numpy()  # 获取置信度
+        labels = result.boxes.cls.cpu().numpy()  # 获取分类标签
         
+        for box, conf, label in zip(boxes, confs, labels):
+            if conf > max_conf:
+                max_conf = conf
+                best_result = (box, conf, label)
+
+    # 绘制最高置信度的检测结果
+    if best_result is not None:
+        box, conf, label = best_result
+        return (model.names[int(label)], conf)
+    
+    return ("", 0.0)
