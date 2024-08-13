@@ -8,7 +8,7 @@ class Player(models.Model):
     name = models.CharField(max_length=100)
 
 class UserTab(models.Model): #inheritance from models.Model
-    username = models.CharField(max_length=60, null=False, blank=False, unique=True)
+    userid = models.CharField(max_length=60, null=False, blank=False, unique=True)
     useremail = models.CharField(max_length=200, default='username@example.com')
     userloginhost = models.CharField(max_length=200, default='example.com')
     totalscore = models.IntegerField( default=0 )
@@ -21,4 +21,4 @@ class UserTab(models.Model): #inheritance from models.Model
         '''from doc, sort table output by totalscore descending'''
    
     def __str__(self):
-        return self.username 
+        return self.userid 
