@@ -16,9 +16,9 @@ class StartGameRequestSerializer(serializers.Serializer):
 
 class SubmitGameRequestSerializer(serializers.Serializer):
     Authorization = serializers.CharField()
-    gameId = serializers.CharField()
-    recognizedWord = serializers.CharField()
-    timeSpent =  serializers.FloatField()
+    userid = serializers.CharField()
+    score = serializers.IntegerField()
+    
 
 class PlayerSerializer(serializers.ModelSerializer):
      class Meta:
