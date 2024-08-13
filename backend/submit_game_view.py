@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.db import transaction
 from rest_framework.generics import GenericAPIView
-from django.http import JsonResponse
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework import status

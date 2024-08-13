@@ -2,10 +2,12 @@ from django.db import models
 
 # Create your models here.
 
+
 class Player(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=100)
+
 
 class UserTab(models.Model): #inheritance from models.Model
     userid = models.CharField(max_length=60, null=False, blank=False, unique=True)
