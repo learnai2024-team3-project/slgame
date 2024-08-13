@@ -15,8 +15,9 @@ from rest_framework.parsers import JSONParser
 from PIL import Image
 from io import BytesIO
 from django.views.decorators.gzip import gzip_page
-from backend.recognizer import use_pipe
-
+from backend.recognizer import recognize_image
+import numpy
+ 
 # Create your views here.
 from backend.models import Player 
 from backend.serializers import PlayerSerializer
@@ -62,11 +63,10 @@ def upload(request):
         recognizedWord = ""
     
         with Image.open(BytesIO(image_byte)) as img:
-            #required_size = (28, 28)
-            #img = img.resize(required_size).convert("L")
-            img = img.convert("L")
-            print(f"{img.width} x {img.height}")
-            recognizedWord = use_pipe(img)
+            pil_image = img.convert('RGB')
+            open_cv_image = numpy.array(pil_image)
+            open_cv_image = open_cv_image[:, :, ::-1].copy()
+            (recognizedWord, confidence) = recognize_image(open_cv_image)
             print(recognizedWord)
 
         return JsonResponse({
@@ -74,7 +74,7 @@ def upload(request):
             "feedback": "",
             "data": {
                 "recognizedWord": recognizedWord,
-                "confidence": "float"
+                "confidence": str(confidence)
             }
         }, safe=False)
         
