@@ -1,4 +1,6 @@
- 
+# 深度學習模型
+目前使用的深度學習模型來自 [MuhammadMoinFaisal 的專案](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8)，可參考 [Google Colab](https://colab.research.google.com/drive/1ITdJrATdpu3zE99HYPXZ42exQWLrWRp0?usp=sharing#scrollTo=Ep7iJPcKwuCx)。
+
 # 虛擬環境
 
 ## Miniconda
