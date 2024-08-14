@@ -11,6 +11,7 @@
             border: 2px solid #ddd;
             padding: 20px;
             height: 500px;
+            overflow-y: auto;
         }
 
         #camera-section {
@@ -31,6 +32,39 @@
             height: auto;
         }
 
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .letter-box {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #ced4da;
+            text-align: center;
+            line-height: 60px;
+            font-size: 24px;
+            text-transform: uppercase;
+            background-color: white;
+            border-radius: 4px;
+        }
+
+        .correct {
+            background-color: #28a745 !important;
+            color: white !important;
+        }
+
+        .present {
+            background-color: #ffc107 !important;
+            color: white !important;
+        }
+
+        .absent {
+            background-color: #6c757d !important;
+            color: white !important;
+        }
+
         #countdown {
             font-size: 1.5rem;
             font-weight: bold;
@@ -45,8 +79,9 @@
         <div class="row">
             <!-- Wordle Game Section -->
             <div class="col-md-6" id="wordle-game">
-                <h3>Wordle Game</h3>
-                <!-- 這裡放置Wordle遊戲的內容 -->
+                <h3 class="text-center">Wordle Game</h3>
+                <div class="game-container" id="game-board"></div>
+                <div id="message" class="mt-4 text-center"></div>
             </div>
 
             <!-- Camera and Recording Section -->
@@ -70,6 +105,57 @@
     </div>
 
     <script>
+        const WORDS = ["apple", "bread", "crane", "frame", "grape"];
+        const answer = WORDS[Math.floor(Math.random() * WORDS.length)];
+        const board = document.getElementById('game-board');
+        const message = document.getElementById('message');
+        let currentRow = 0;
+        let currentGuess = "";
+
+        function createBoard() {
+            for (let i = 0; i < 30; i++) {
+                const box = document.createElement('div');
+                box.classList.add('letter-box');
+                board.appendChild(box);
+            }
+        }
+
+        function updateBoard() {
+            const row = board.querySelectorAll(`.letter-box:nth-child(n+${currentRow * 5 + 1}):nth-child(-n+${currentRow * 5 + 5})`);
+            row.forEach((box, i) => {
+                box.textContent = currentGuess[i] || '';
+            });
+        }
+
+        function checkGuess() {
+            const row = board.querySelectorAll(`.letter-box:nth-child(n+${currentRow * 5 + 1}):nth-child(-n+${currentRow * 5 + 5})`);
+            const guess = currentGuess;
+            const answerArray = answer.split('');
+
+            row.forEach((box, i) => {
+                if (answerArray[i] === guess[i]) {
+                    box.classList.add('correct');
+                    answerArray[i] = null;
+                } else if (answerArray.includes(guess[i])) {
+                    box.classList.add('present');
+                    answerArray[answerArray.indexOf(guess[i])] = null;
+                } else {
+                    box.classList.add('absent');
+                }
+            });
+
+            if (guess === answer) {
+                message.textContent = 'You guessed it! Well done!';
+            } else if (currentRow === 5) {
+                message.textContent = `Game over! The word was ${answer}.`;
+            } else {
+                currentRow++;
+                currentGuess = '';
+            }
+        }
+
+        createBoard();
+
         let camera = document.getElementById('camera');
         let countdownElement = document.getElementById('countdown');
         let recognizedWordElement = document.getElementById('recognized-word');
@@ -130,17 +216,25 @@
                 console.log('Success:', data);
                 if (data.status === 'success') {
                     const confidencePercentage = (parseFloat(data.data.confidence) * 100).toFixed(2) + '%';
-                    resultText.innerHTML = `
-                        <strong>Recognized Word:</strong> ${data.data.recognizedWord}<br>
-                        <strong>Confidence:</strong> ${confidencePercentage}
-                    `;
+                    recognizedWordElement.innerText = `Word: ${data.data.recognizedWord}`;
+                    confidenceLevelElement.innerText = `Confidence: ${confidencePercentage}`;
+
+                    // 将结果作为一个字母输入到Wordle游戏中
+                    if (data.data.recognizedWord.length === 1) {
+                        currentGuess += data.data.recognizedWord.toLowerCase();
+                        updateBoard();
+
+                        if (currentGuess.length === 5) {
+                            checkGuess();
+                        }
+                    }
                 } else {
-                    resultText.textContent = data.feedback || "Recognition failed.";
+                    recognizedWordElement.textContent = data.feedback || "Recognition failed.";
                 }
             })
             .catch((error) => {
                 console.error('Error:', error);
-                resultText.textContent = "Error during recognition.";
+                recognizedWordElement.textContent = "Error during recognition.";
             });
         }
 
