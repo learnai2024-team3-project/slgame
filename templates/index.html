@@ -10,14 +10,15 @@
         #wordle-game {
             border: 2px solid #ddd;
             padding: 20px;
-            height: 500px;
+            height: 550px; /* 增加50px */
             overflow-y: auto;
         }
 
         #camera-section {
             border: 2px solid #ddd;
             padding: 20px;
-            height: 500px;
+            height: 550px; /* 增加50px */
+            margin-bottom: 30px; /* 與按鈕框之間的距離 */
         }
 
         #result-display {
@@ -25,6 +26,11 @@
             border: 1px solid #ccc;
             padding: 10px;
             height: 100px;
+        }
+
+        #button-container {
+            border: 2px solid #ddd;
+            padding: 20px;
         }
 
         video {
@@ -89,11 +95,6 @@
                 <h3>Camera & Recording</h3>
                 <video id="camera" autoplay></video>
                 <div id="countdown"></div>
-                <div class="mt-3">
-                    <button class="btn btn-primary" onclick="startRecording(3)">Record 3 seconds</button>
-                    <button class="btn btn-primary" onclick="startRecording(5)">Record 5 seconds</button>
-                    <button class="btn btn-primary" onclick="startRecording(10)">Record 10 seconds</button>
-                </div>
                 <div id="result-display">
                     <h5>Recognition Result:</h5>
                     <p id="recognized-word">Word: -</p>
@@ -101,18 +102,30 @@
                     <p id="base64-video">Base64 Video: -</p>
                 </div>
             </div>
+
+            <!-- Button Container Section -->
+            <div class="col-md-6" id="button-container">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" onclick="startRecording(3)">Record 3 seconds</button>
+                    <button class="btn btn-primary" onclick="startRecording(5)">Record 5 seconds</button>
+                    <button class="btn btn-primary" onclick="startRecording(10)">Record 10 seconds</button>
+                    <button class="btn btn-secondary mt-2" onclick="passInput()">Pass (Input 'A')</button>
+                    <button class="btn btn-danger mt-2" onclick="resetGame()">Reset Game</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        const WORDS = ["apple", "bread", "crane", "frame", "grape"];
-        const answer = WORDS[Math.floor(Math.random() * WORDS.length)];
+        let WORDS = ["apple", "bread", "crane", "frame", "grape"];
+        let answer = WORDS[Math.floor(Math.random() * WORDS.length)];
         const board = document.getElementById('game-board');
         const message = document.getElementById('message');
         let currentRow = 0;
         let currentGuess = "";
 
         function createBoard() {
+            board.innerHTML = '';  // Clear the board before creating
             for (let i = 0; i < 30; i++) {
                 const box = document.createElement('div');
                 box.classList.add('letter-box');
@@ -152,6 +165,14 @@
                 currentRow++;
                 currentGuess = '';
             }
+        }
+
+        function resetGame() {
+            answer = WORDS[Math.floor(Math.random() * WORDS.length)];
+            currentRow = 0;
+            currentGuess = '';
+            message.textContent = '';
+            createBoard();
         }
 
         createBoard();
@@ -249,6 +270,14 @@
                 sendVideoToAPI(base64Video);
             };
             reader.readAsDataURL(blob);
+        }
+
+        function passInput() {
+            currentGuess += 'a';
+            updateBoard();
+            if (currentGuess.length === 5) {
+                checkGuess();
+            }
         }
     </script>
 </body>
