@@ -10,27 +10,21 @@
         #wordle-game {
             border: 2px solid #ddd;
             padding: 20px;
-            height: 550px; /* 增加50px */
+            height: 650px;
             overflow-y: auto;
         }
 
         #camera-section {
-            border: 2px solid #ddd;
             padding: 20px;
-            height: 550px; /* 增加50px */
-            margin-bottom: 30px; /* 與按鈕框之間的距離 */
+            height: 650px;
+            margin-bottom: 30px;
         }
 
         #result-display {
             margin-top: 20px;
             border: 1px solid #ccc;
             padding: 10px;
-            height: 100px;
-        }
-
-        #button-container {
-            border: 2px solid #ddd;
-            padding: 20px;
+            height: 150px;
         }
 
         video {
@@ -95,22 +89,15 @@
                 <h3>Camera & Recording</h3>
                 <video id="camera" autoplay></video>
                 <div id="countdown"></div>
+                <button class="btn btn-primary" onclick="startRecording(3)">Record 3 seconds</button>
+                <button class="btn btn-primary" onclick="startRecording(5)">Record 5 seconds</button>
+                <button class="btn btn-primary" onclick="startRecording(10)">Record 10 seconds</button>
+                <button class="btn btn-secondary mt-2" onclick="passInput()">Pass (Input 'A')</button>
+                <button class="btn btn-danger mt-2" onclick="resetGame()">Reset Game</button>
                 <div id="result-display">
-                    <h5>Recognition Result:</h5>
                     <p id="recognized-word">Word: -</p>
                     <p id="confidence-level">Confidence: -</p>
-                    <p id="base64-video">Base64 Video: -</p>
-                </div>
-            </div>
-
-            <!-- Button Container Section -->
-            <div class="col-md-6" id="button-container">
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" onclick="startRecording(3)">Record 3 seconds</button>
-                    <button class="btn btn-primary" onclick="startRecording(5)">Record 5 seconds</button>
-                    <button class="btn btn-primary" onclick="startRecording(10)">Record 10 seconds</button>
-                    <button class="btn btn-secondary mt-2" onclick="passInput()">Pass (Input 'A')</button>
-                    <button class="btn btn-danger mt-2" onclick="resetGame()">Reset Game</button>
+                    <p id="base64-video">Base64 Video: -</p> <!-- Moved inside the Recognition Result container -->
                 </div>
             </div>
         </div>
