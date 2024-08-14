@@ -20,7 +20,7 @@ from backend.player_view import PlayerView
 from django.urls import include, re_path
 from backend.views import index
 from backend.auth_login_view import auth_login
-from backend.upload_view import upload
+from backend.upload_view import upload, upload_video
 from backend.game_start_view import game_start
 from backend.submit_game_view import submit_game
 
@@ -47,6 +47,7 @@ urlpatterns = [
     path('players/', PlayerView.as_view()),
     path("auth/login", auth_login),
     path("upload/", upload),
+    path("upload_video/", upload_video),
     path("game/start", game_start),
     path("game/submit", submit_game),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
