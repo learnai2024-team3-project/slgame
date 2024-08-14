@@ -58,8 +58,9 @@ def upload_video(request):
                 }, safe=False)
     
         file_byte = base64.b64decode(serializer.validated_data["file"])
-        recognizedWord = "A"
-        confidence = 99.9
+        (recognizedWord, confidence) = recognize_video(file_byte)
+        #recognizedWord = "A"
+        #confidence = 99.9
 
         return JsonResponse({
             "status": "success",

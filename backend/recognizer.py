@@ -13,7 +13,7 @@ model.to(device)
 
 def recognize_video(file_byte):
     # 创建一个临时文件来存储视频
-    with tempfile.NamedTemporaryFile(suffix='.webm') as temp_video_file:
+    with tempfile.NamedTemporaryFile(suffix='.webm', mode='wb+', delete=False) as temp_video_file:
         # 将字节流写入临时文件
         temp_video_file.write(file_byte)
         temp_video_file.flush()

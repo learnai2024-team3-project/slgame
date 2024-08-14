@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-!i=r+_b-xe=__-wl)h5oe!$dj6jyhui8$m#0nb49td&inkccnr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "backend",
     "drf_yasg",
-    "line_bot"
+    "line_bot",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [    
@@ -51,7 +52,9 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",    
     "django.contrib.auth.middleware.AuthenticationMiddleware",    
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",    
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",  
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",  
 ]
 
 ROOT_URLCONF = "slgsite.urls"
@@ -130,3 +133,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LINE_CHANNEL_ACCESS_TOKEN="eqIuYj1mXTTCMXwIP22DuGjkTXK3OKxU0S6YvNdolMFOyAmPnF70id6KwdwCCzXLdP5zvAJpH7O/r9LA2aguVnhyw2JZiEAmJdjkXCGqMfuLT5ftqcRoQbJQx8lB5MDKtcFDSguKzY+Zz+UjUOkWVAdB04t89/1O/w1cDnyilFU="
 LINE_CHANNEL_SECRET="3faf6dae8a61bf1425d48487c88b7050"
 LINE_USER_ID = "@011fresn"
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT'
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
