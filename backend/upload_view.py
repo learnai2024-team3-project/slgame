@@ -14,7 +14,7 @@ from rest_framework.parsers import JSONParser
 from PIL import Image
 from io import BytesIO
 from django.views.decorators.gzip import gzip_page
-from backend.recognizer import recognize_image
+from backend.recognizer import recognize_image, recognize_video
 import numpy
  
 # Create your views here.
@@ -57,16 +57,19 @@ def upload(request):
                 }
                 }, safe=False)
     
-        image_byte = base64.b64decode(serializer.validated_data["file"])
+        # image_byte = base64.b64decode(serializer.validated_data["file"])
     
-        recognizedWord = ""
+        # recognizedWord = ""
     
-        with Image.open(BytesIO(image_byte)) as img:
-            pil_image = img.convert('RGB')
-            open_cv_image = numpy.array(pil_image)
-            open_cv_image = open_cv_image[:, :, ::-1].copy()
-            (recognizedWord, confidence) = recognize_image(open_cv_image)
-            print(recognizedWord)
+        # with Image.open(BytesIO(image_byte)) as img:
+        #     pil_image = img.convert('RGB')
+        #     open_cv_image = numpy.array(pil_image)
+        #     open_cv_image = open_cv_image[:, :, ::-1].copy()
+        #     (recognizedWord, confidence) = recognize_image(open_cv_image)
+        #     print(recognizedWord)
+        
+        file_byte = base64.b64decode(serializer.validated_data["file"])
+        (recognizedWord, confidence) = recognize_video(file_byte)
 
         return JsonResponse({
             "status": "success",
@@ -78,6 +81,7 @@ def upload(request):
         }, safe=False)
         
     except BaseException as e:
+        print(str(e))
         return JsonResponse({
                 "status": str(e),
                 "feedback": "",
