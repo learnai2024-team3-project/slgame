@@ -19,6 +19,7 @@ from backend.serializers import AuthLoginRequestSerializer,\
       UploadRequestSerializer,\
       StartGameRequestSerializer, SubmitGameRequestSerializer
 from backend.models import UserTab 
+# from django.db import transaction
 
 @swagger_auto_schema(
     methods=['POST'],
@@ -31,9 +32,11 @@ from backend.models import UserTab
                 'feedback': openapi.Schema(type=openapi.TYPE_INTEGER),
                 'data': {
                     'totalscore': openapi.Schema(type=openapi.TYPE_INTEGER),
+                    "count":openapi.Schema(type=openapi.TYPE_INTEGER),
+                    "rank":openapi.Schema(type=openapi.TYPE_INTEGER),
                     }
                 
-                
+            
                 # 'data': openapi.Schema(
                 #     type=openapi.TYPE_OBJECT,
                 #     properties={
@@ -47,6 +50,7 @@ from backend.models import UserTab
 )
 
 @api_view(['POST'])
+# @transaction.atomic
 def submit_game(request):
 
     try:
@@ -59,7 +63,10 @@ def submit_game(request):
                 "status": "fail to deserialize",
                 "feedback": "",
                 "data":{
-                    "totalscore": ""
+                    "totalscore": "",
+                    "count": "",
+                    "rank": "",
+                
                 }
                 }, safe=False)
     
@@ -73,13 +80,30 @@ def submit_game(request):
         user.totalscore += score
         # print(f'changescore = {user.totalscore}')
         user.save()
+
+
+        # 排名
+        def getRank(id, usersrank):
+            for key, value in usersrank.items():
+                if value['userid'] == id:
+                    return key
+
         
+        usersByScore = UserTab.objects.all().order_by('-totalscore').values('userid')
+        usersRank = {rank:id for rank, id in enumerate(usersByScore, start=1)}
+        count = len(usersRank)
+        rank = getRank(userid, usersRank)
+        print(f'總人數: {count}; {userid}的排名:{rank}')
+
+       
         # 回傳總分
         return JsonResponse({
             "status": "success",
             "feedback": "",
             "data":{
-                    "totalscore": user.totalscore
+                    "totalscore": user.totalscore,
+                    "count":count,
+                    "rank":rank,
                 }
             
             
@@ -91,7 +115,9 @@ def submit_game(request):
                 "status": str(e),
                 "feedback": "",
                 "data":{
-                    "totalscore": ""
+                    "totalscore": "",
+                    "count":"",
+                    "rank":"",
                 },
                 }, safe=False)
 
