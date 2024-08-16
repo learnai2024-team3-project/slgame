@@ -18,20 +18,22 @@ from backend.serializers import AuthLoginRequestSerializer,\
 
 @swagger_auto_schema(
     methods=['POST'],
-    request_body = StartGameRequestSerializer,
-    responses = { 
+    request_body=StartGameRequestSerializer,
+    responses={ 
             status.HTTP_200_OK: openapi.Schema(
-            type = openapi.TYPE_OBJECT,
-            properties = {
-                'status': openapi.Schema(type=openapi.TYPE_STRING),
-                'gameId': openapi.Schema(type=openapi.TYPE_STRING),
-                "challenge": {
-                    "type": openapi.Schema(type=openapi.TYPE_STRING),
-                    "content": openapi.Schema(type=openapi.TYPE_STRING)
-                },
-            }
-    )},
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'status': openapi.Schema(type=openapi.TYPE_STRING),
+                    'gameId': openapi.Schema(type=openapi.TYPE_STRING),
+                    "challenge": {
+                        "type": openapi.Schema(type=openapi.TYPE_STRING),
+                        "content": openapi.Schema(type=openapi.TYPE_STRING)
+                    },
+                }
+            )
+    },
 )
+
 @api_view(['POST'])
 def game_start(request):
     return JsonResponse({
