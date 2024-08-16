@@ -1,5 +1,3 @@
-// 施工中！
-
 const wordGrid = document.getElementById('word-grid');
 const keyboard = document.getElementById('keyboard');
 const toggleWebcamBtn = document.getElementById('toggle-webcam');
