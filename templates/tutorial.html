@@ -40,8 +40,10 @@
                 </div>
             </div>
         </div>
-
-        <script src="{% static 'scripts/tutorial.js' %}"> </script>
+        <script>
+            var tutorialImagesUrl = "{%static 'images/tutorial/' %}";
+        </script>
+        <script src="{% static 'scripts/tutorial.js' %}">    </script>
 
     </body>
 </html>
