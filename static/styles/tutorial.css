@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.alphabet-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.alphabet-button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.alphabet-button:hover {
+    background-color: #45a049;
+}
+.alphabet-button.selected {
+    background-color: #D2B48C; /* Light brown */
+}
+.row {
+    display: flex;
+    margin-bottom: 20px;
+}
+.column {
+    flex: 1;
+    padding: 10px;
+}
+#webcam, #demo-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border: 1px solid #ddd;
+}
+.control-button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.control-button:hover {
+    background-color: #007B9A;
+}
+#hand-shape-explanation, #recognition-result, #user-score {
+    min-height: 100px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
