@@ -105,22 +105,54 @@ async function startWebcam() {
         webcamPlaceholder.style.display = 'none';
         isRecording = true;
         toggleWebcamBtn.textContent = 'Stop Recording';
+
+        // New : Send each frame of the video stream to the backend
+        const videoTrack = stream.getVideoTracks()[0];
+        const imageCapture = new ImageCapture(videoTrack);
+        
+        // Capture a frame every second and send it to the backend
+        setInterval(async () => {
+            const frame = await imageCapture.grabFrame();
+            sendFrameToBackend(frame);
+        }, 1000); // Send one frame per second; adjust frequency as needed
     } catch (err) {
         console.error("Error accessing the webcam:", err);
         alert("Failed to access the webcam. Please check your permissions.");
     }
 }
 
-function stopWebcam() {
-    const stream = webcamFeed.srcObject;
-    const tracks = stream.getTracks();
 
-    tracks.forEach(track => track.stop());
-    webcamFeed.srcObject = null;
-    webcamPlaceholder.style.display = 'block';
-    isRecording = false;
-    toggleWebcamBtn.textContent = 'Start Recording';
+async function sendFrameToBackend(frame) {
+    // Create a canvas element to draw the captured frame
+    const canvas = document.createElement('canvas');
+    canvas.width = frame.width;
+    canvas.height = frame.height;
+    
+    // Get the 2D drawing context for the canvas
+    const context = canvas.getContext('2d');
+    
+    // Draw the captured frame onto the canvas
+    context.drawImage(frame, 0, 0);
+    
+    // Convert the canvas content to a base64-encoded JPEG image
+    const imageData = canvas.toDataURL('image/jpeg');
+
+    // Send the image data to the backend for recognition
+    const response = await fetch('/recognize/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: imageData }), // Send the image data as JSON
+    });
+
+    // Parse the JSON response from the backend
+    const result = await response.json();
+    
+    // Log the recognition result to the console
+    console.log('Recognition Result:', result);
 }
+
 
 toggleWebcamBtn.addEventListener('click', toggleWebcam);
 
