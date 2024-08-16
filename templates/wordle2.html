@@ -3,13 +3,30 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        display: flex;
-        flex-wrap: wrap;
+        display: inline-flex;
+        /* flex-wrap: wrap; */
         justify-content: space-around;
         padding: 20px;
         background-color: #f0f0f0;
     }
+
+    .head {
+        border:2px solid red;
+        height: 50px;
+        width: 100%;
+
+    }
+
+    .gamepart{
+        border:2px solid rgb(255, 0, 191);
+    }
+
+    .detectionpart{
+        border:2px solid rgb(0, 255, 153);
+    }
+
     .container {
+        border:2px solid green;
         background-color: white;
         border-radius: 10px;
         padding: 20px;
@@ -17,6 +34,7 @@
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     #word-grid {
+        border:2px solid blue;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 5px;
@@ -92,25 +110,36 @@
 </style>
 </head>
 <body>
-    <div class="container">
-        <div id="word-grid"></div>
-    </div>
-    <div class="container">
-        <div id="webcam-container">
-            <video id="webcam-feed" autoplay playsinline></video>
-            <div id="webcam-placeholder">Webcam feed will appear here</div>
+    <!-- <div class="head">this is head</div> -->
+
+    <div class="gamepart">
+        <div class="container">
+            <div id="word-grid"></div>
+        </div>
+
+        <div class="container">
+            <div id="keyboard"></div>
         </div>
     </div>
-    <div class="container">
-        <div id="keyboard"></div>
-    </div>
-    <div class="container">
-        <div id="controls">
-            <button id="toggle-webcam">Start Recording</button>
-            <button id="submit">Submit</button>
-            <button id="give-up">Give Up</button>
+    
+
+    <div class="detectionpart">
+        <div class="container">
+            <div id="webcam-container">
+                <video id="webcam-feed" autoplay playsinline></video>
+                <div id="webcam-placeholder">Webcam feed will appear here</div>
+            </div>
+        </div>
+    
+        <div class="container">
+            <div id="controls">
+                <button id="toggle-webcam">Start Recording</button>
+                <button id="submit">Submit</button>
+                <button id="give-up">Give Up</button>
+            </div>
         </div>
     </div>
+    
 
 <script>
 const wordGrid = document.getElementById('word-grid');
