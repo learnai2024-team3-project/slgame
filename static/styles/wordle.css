@@ -36,7 +36,7 @@ body {
 
 #keyboard {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     gap: 5px;
 }
 
@@ -91,7 +91,7 @@ body {
 }
 
 .yellow {
-    background-color: #2e2bc7;
+    background-color: #dacf3f;
     color: white;
 }
 

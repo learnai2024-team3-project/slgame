@@ -1,3 +1,4 @@
+{% load static %}
 <html>
     <head> 
         <meta charset="UTF-8">
@@ -88,7 +89,7 @@
                     <video id="webcam" autoplay playsinline></video>
                 </div>
                 <div class="column">
-                    <img id="demo-image" alt="ASL hand shape demonstration" src="">
+                    <img id="demo-image" alt="ASL hand shape demonstration" src="{% static 'images/tutorial/a.png' %}">
                 </div>
             </div>
             
@@ -149,14 +150,10 @@
                 // Change the color of the selected button to light brown
                 const selectedButton = document.querySelector(`.alphabet-button:nth-child(${alphabetLetters.indexOf(letter) + 1})`);
                 selectedButton.classList.add('selected');
-
-                // Show ASL hand shape for the selected letter
-                strTemp = `./images/${letter.toLowerCase()}.jpg`
         
-                demoImage.src = "C:\\Users\\David\\Desktop\\js_try\\images\\a.jpg";
-            //  demoImage.src = `.\\images\\${letter.toLowerCase()}.jpg`; // Replace with actual hosted image URL
-            //  demoImage.alt = `ASL hand shape for lette ${letter}`;
-                demoImage.alt = directoryPath + "/images/a.jpg";  
+                // Dynamically update the demo image source using Django static files
+                demoImage.src = "{% static 'images/tutorial/' %}" + letter.toLowerCase() + ".png";
+                demoImage.alt = `ASL hand shape for letter ${letter}`;
                 handShapeExplanation.textContent = `Demonstrating hand shape for letter ${letter}`;
             }
 
