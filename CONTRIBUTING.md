@@ -85,3 +85,16 @@ pip install roboflow
 pip install kaggle
 ```
 
+## 建立說明文件
+
+安裝 Sphinx
+```shell
+pip install -U sphinx
+```
+
+建立說明文件（HTML）
+```shell
+cd docs
+make html
+```
+

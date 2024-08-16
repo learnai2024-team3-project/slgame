@@ -4,6 +4,7 @@
 其他模型選擇：Kaggle 競賽「[Google - American Sign Language Fingerspelling Recognition](https://www.kaggle.com/competitions/asl-fingerspelling)」 ，[Guthema 與 elliot robot 的作品](https://www.kaggle.com/code/gusthema/asl-fingerspelling-recognition-w-tensorflow) 。
 - 研究中：[gust0811](https://www.kaggle.com/code/siniuho/gust0811)
  
+[貢獻指南](CONTRIBUTING.md)
 
 # 執行 Web app
 到本專案的 Google Drive 下載模型 `best.pt` ，移動到本專案目錄的 `models/` 底下。
@@ -24,3 +25,4 @@ Wordle 遊戲介面開發中。請參考：
 - `templates/wordle.html` 遊戲頁面
 - `static/wordle.js` 包含遊戲邏輯、webcam 控制，目前尚未整合深度學習模型
 - `static/wordle.css` 包含畫面元素，如鍵盤等
+- `templates/tutorial.html` 手語教學頁面
