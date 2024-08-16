@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.middleware.gzip import GZipMiddleware
 
+
 # Create your views here.
 from backend.models import Player 
 from backend.serializers import PlayerSerializer
@@ -17,6 +18,12 @@ from backend.serializers import AuthLoginRequestSerializer,\
       UploadRequestSerializer,\
       StartGameRequestSerializer, SubmitGameRequestSerializer
 
+
 def index(request):
     project_name = "Sign Language Game Project"
     return render(request, "index.html", locals())
+
+
+def wordle(request):
+    title = "Wordle AI - Sign Language Edition"
+    return render(request, 'wordle.html', locals())
