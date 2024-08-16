@@ -6,3 +6,4 @@ Frontend
    :caption: Contents:
 
    index.html
+   wordle.js
