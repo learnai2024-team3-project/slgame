@@ -1,6 +1,8 @@
 # 深度學習模型
-目前使用的深度學習模型來自 [MuhammadMoinFaisal 的專案](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8)，可參考 [Google Colab](https://colab.research.google.com/drive/1ITdJrATdpu3zE99HYPXZ42exQWLrWRp0?usp=sharing#scrollTo=Ep7iJPcKwuCx)。
+目前使用的深度學習模型來自 [MuhammadMoinFaisal 的專案](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8)，可參考作者的 [Google Colab](https://colab.research.google.com/drive/1ITdJrATdpu3zE99HYPXZ42exQWLrWRp0?usp=sharing#scrollTo=Ep7iJPcKwuCx)。
 
+其他模型選擇：Kaggle 競賽「[Google - American Sign Language Fingerspelling Recognition](https://www.kaggle.com/competitions/asl-fingerspelling)」 ，[Guthema 與 elliot robot 的作品](https://www.kaggle.com/code/gusthema/asl-fingerspelling-recognition-w-tensorflow) 。
+- 研究中：[gust0811](https://www.kaggle.com/code/siniuho/gust0811)
 
 # 虛擬環境
 
