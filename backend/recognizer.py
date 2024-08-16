@@ -2,13 +2,13 @@ import cv2
 import torch
 from ultralytics import YOLO
 
-# If a GPU (CUDA) is available, use it; 
+# If a GPU (CUDA) is available, use it;
 # otherwise, fall back to using the CPU.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f'Using device: {device}')
 
 # Load the model and move it to the device
-model = YOLO('./models/best.pt')
+model = YOLO('./models/best_auto.pt')
 model.to(device)
 
 
