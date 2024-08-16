@@ -1,0 +1,37 @@
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="{% static 'styles/wordle.css' %}">
+    </head>
+    <body>
+        <div class="container"> <!--遊戲區塊-->
+            <div id="word-grid"></div>
+        </div>
+
+        <div class="container"> <!--鍵盤區塊-->
+            <div id="keyboard"></div>
+        </div>
+
+        <div class="container">
+            <div id="webcam-container"> <!--webcam區塊-->
+                <video id="webcam-feed" autoplay playsinline></video>
+                <div id="webcam-placeholder">Webcam feed will appear here</div>
+            </div>
+        </div>
+
+        <div class="container"> <!--控制按鈕區塊-->
+            <div id="controls">
+                <button id="toggle-webcam">Start Recording</button>
+                <button id="submit">Submit</button>
+                <button id="give-up">Give Up</button>
+            </div>
+        </div>
+
+        <script src="{% static 'scripts/wordle.js' %}"></script>
+    </body>
+</html>
+    

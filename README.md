@@ -1,6 +1,7 @@
 # 深度學習模型
 目前使用的深度學習模型來自 [MuhammadMoinFaisal 的專案](https://github.com/MuhammadMoinFaisal/Sign-Language-Alphabets-Detection-and-Recongition-using-YOLOv8)，可參考 [Google Colab](https://colab.research.google.com/drive/1ITdJrATdpu3zE99HYPXZ42exQWLrWRp0?usp=sharing#scrollTo=Ep7iJPcKwuCx)。
 
+
 # 虛擬環境
 
 ## Miniconda
@@ -54,11 +55,22 @@ pip install torch
 pip install ultralytics
 ```
 
-## 執行 Web app
-到雲端硬碟下載模型 `best.pt` ，移動到本專案的 `models/`。
+# 執行 Web app
+到本專案的 Google Drive 下載模型 `best.pt` ，移動到本專案目錄底下的 `models/`。
 
-然後執行
-```
+啟動 Django 伺服器
+```shell
 python manage.py runserver
 ```
 
+靜態文件收集（會收集到 `public/assets`，開發模式下還不需要）
+```shell
+python manage.py collectstatic
+```
+
+# 遊戲介面
+
+Wordle 遊戲介面開發中。請參考：
+- `templates/wordle.html` 遊戲頁面
+- `static/wordle.js` 包含遊戲邏輯、webcam 控制，目前尚未整合深度學習模型
+- `static/wordle.css` 包含畫面元素，如鍵盤等

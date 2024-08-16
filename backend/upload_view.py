@@ -16,13 +16,15 @@ from io import BytesIO
 from django.views.decorators.gzip import gzip_page
 from backend.recognizer import recognize_image
 import numpy
- 
+
+
 # Create your views here.
 from backend.models import Player 
 from backend.serializers import PlayerSerializer
 from backend.serializers import AuthLoginRequestSerializer,\
       UploadRequestSerializer,\
       StartGameRequestSerializer, SubmitGameRequestSerializer
+
 
 @swagger_auto_schema(
         methods=['POST'],
@@ -45,9 +47,9 @@ from backend.serializers import AuthLoginRequestSerializer,\
 def upload(request):
     try:
         pythondata = JSONParser().parse(request)
-        serializer = UploadRequestSerializer(data=pythondata) 
+        serializer = UploadRequestSerializer(data=pythondata)
 
-        if serializer.is_valid() == False:
+        if not serializer.is_valid():
             return JsonResponse({
                 "status": "fail to deserialize",
                 "feedback": "",
@@ -56,11 +58,11 @@ def upload(request):
                     "confidence": ""
                 }
                 }, safe=False)
-    
+
         image_byte = base64.b64decode(serializer.validated_data["file"])
-    
+
         recognizedWord = ""
-    
+
         with Image.open(BytesIO(image_byte)) as img:
             pil_image = img.convert('RGB')
             open_cv_image = numpy.array(pil_image)
@@ -76,7 +78,7 @@ def upload(request):
                 "confidence": str(confidence)
             }
         }, safe=False)
-        
+
     except BaseException as e:
         return JsonResponse({
                 "status": str(e),
@@ -86,4 +88,3 @@ def upload(request):
                     "confidence": ""
                 }
                 }, safe=False)
-    

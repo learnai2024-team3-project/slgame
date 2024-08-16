@@ -89,3 +89,7 @@ local_settings.py
 # db.sqlite3
 
 models/
+
+# public static
+public/assets/*
+!public/assets/.gitkeep
