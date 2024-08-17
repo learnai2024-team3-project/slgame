@@ -31,35 +31,35 @@ def index(request):
 
 def wordle_view(request):
     title = "Wordle AI - Sign Language Edition"
-    return render(request, 'wordle.html', locals())
+    return render(request, 'wordle2.html', locals())
 
 
 def tutorial_view(request):
     return render(request, 'tutorial.html')
 
 
-# @csrf_exempt
-# def recognize_view(request):
-#     if request.method == 'POST':
-#         try:
-#             # Parse JSON data from the request body
-#             data = json.loads(request.body.decode('utf-8'))
-#             image_data = data.get('image')  # Get the image data
+@csrf_exempt
+def recognize_view(request):
+    if request.method == 'POST':
+        try:
+            # Parse JSON data from the request body
+            data = json.loads(request.body.decode('utf-8'))
+            image_data = data.get('image')  # Get the image data
 
-#             # Decode base64 image data to an image format
-#             _, image_encoded = image_data.split(',', 1)
-#             image_bytes = base64.b64decode(image_encoded)
-#             image_array = np.frombuffer(image_bytes, np.uint8)
-#             image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+            # Decode base64 image data to an image format
+            _, image_encoded = image_data.split(',', 1)
+            image_bytes = base64.b64decode(image_encoded)
+            image_array = np.frombuffer(image_bytes, np.uint8)
+            image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
 
-#             # Perform recognition using the YOLO model
-#             label, confidence = recognize_image(image)
+            # Perform recognition using the YOLO model
+            label, confidence = recognize_image(image)
 
-#             # Return the recognition result as JSON
-#             return JsonResponse({'label': label, 'confidence': confidence})
-#         except Exception as e:
-#             # Handle any exceptions that occur and return an error response
-#             return JsonResponse({'error': str(e)}, status=500)
+            # Return the recognition result as JSON
+            return JsonResponse({'label': label, 'confidence': confidence})
+        except Exception as e:
+            # Handle any exceptions that occur and return an error response
+            return JsonResponse({'error': str(e)}, status=500)
 
-#     # Return an error response if the request method is not POST
-#     return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    # Return an error response if the request method is not POST
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)

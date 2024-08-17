@@ -15,11 +15,17 @@ let strTemp = '';
 
 // Initialize alphabet buttons
 alphabetLetters.split('').forEach(letter => {
-    const button = document.createElement('button');
-    button.className = 'alphabet-button';
-    button.textContent = letter;
-    button.onclick = () => selectLetter(letter);
-    alphabetButtonsContainer.appendChild(button);
+    // const button = document.createElement('button');
+    // button.className = 'alphabet-button';
+    // button.textContent = letter;
+    // button.onclick = () => selectLetter(letter);
+    // alphabetButtonsContainer.appendChild(button);
+    const key = document.createElement('div');
+    key.classList.add('key');
+    key.textContent = letter;
+    key.onclick = () => selectLetter(letter);
+    alphabetButtonsContainer.appendChild(key);
+
 });
 
 const handShapeExplanations = [
@@ -53,14 +59,14 @@ const handShapeExplanations = [
 
 function selectLetter(letter) {
     // Reset all buttons to default color
-    document.querySelectorAll('.alphabet-button').forEach(btn => {
+    document.querySelectorAll('.key').forEach(btn => {
         btn.classList.remove('selected');
     });
 
     currentLetter = letter;
     
     // Change the color of the selected button to light brown
-    const selectedButton = document.querySelector(`.alphabet-button:nth-child(${alphabetLetters.indexOf(letter) + 1})`);
+    const selectedButton = document.querySelector(`.key:nth-child(${alphabetLetters.indexOf(letter) + 1})`);
     selectedButton.classList.add('selected');
 
     // Dynamically update the demo image source using Django static files
@@ -126,3 +132,17 @@ demoImage.onerror = function() {
     console.error("Error loading image:", demoImage.src);
     handShapeExplanation.textContent = `Error loading image. Please try another letter or check your internet connection.`;
 };
+
+
+
+// =================sidebar=================
+document.getElementById("sidebarBtn").onclick = function() {
+    var sidebar = document.getElementById("sidebar");
+    
+    if (sidebar.style.width === "250px") {
+        sidebar.style.width = "0";        
+    } else {
+        sidebar.style.width = "250px";        
+    }
+};
+// =================sidebar=================

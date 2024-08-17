@@ -7,39 +7,78 @@
         <link rel="stylesheet" href="{% static 'styles/tutorial.css' %}">
     </head>
     <body>
-        <div class="container">
-            <div class="alphabet-buttons">
-                <!-- Alphabet buttons will be dynamically added here -->
-            </div>
-            
-            <div class="row">
-                <div class="column">
-                    <video id="webcam" autoplay playsinline></video>
-                </div>
-                <div class="column">
-                    <img id="demo-image" alt="ASL hand shape demonstration" src="{% static 'images/tutorial/a.png' %}">
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="column">
-                    <button class="control-button" onclick="startInput()">Input</button>
-                    <button class="control-button" onclick="completeAction()">Complete</button>
-                </div>
-                <div class="column">
-                    <div id="hand-shape-explanation"></div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="column">
-                    <div id="recognition-result"></div>
-                </div>
-                <div class="column">
-                    <div id="user-score"></div>
-                </div>
-            </div>
+
+
+        <!-- ===============sidebar============== -->
+        <div id="sidebar" class="sidebar">
+            <!-- Your menu items go here -->
+            <a href="../wordle2/">WordleMode</a>
+            <a href="#services">CheatSheet</a>
+            <a href="#contact">Challenge</a>
         </div>
+
+        <button id="sidebarBtn">選單</button>
+        <!-- ===============sidebar============== -->
+
+        <div class="container">
+            <!-- <div class="alphabet-buttons"> -->
+                <!-- Alphabet buttons will be dynamically added here -->
+            <!-- </div> -->
+            
+            
+
+            <div class="row">
+
+                <div class = "tutorialpart">
+
+                    <div class="column">
+                        <img id="demo-image" alt="ASL hand shape demonstration" src="{% static 'images/tutorial/a.png' %}">
+                    </div>
+                    <div class="column">
+                        <div id="hand-shape-explanation"></div>
+                    
+                </div>
+
+
+                <div id="keyboard">
+                    <div class="alphabet-buttons">
+                        <!-- Alphabet buttons will be dynamically added here -->
+                    </div>
+
+                </div>
+            </div>
+                
+            <div class="row">
+                <div class = "detectionpart">
+
+                    <div class="column">
+                        <video id="webcam" autoplay playsinline></video>
+                    </div>
+
+
+                    <div class="column">
+                        <button class="control-button" onclick="startInput()">Input</button>
+                        <button class="control-button" onclick="completeAction()">Complete</button>
+                        <div id="recognition-result">辨識結果為A</div>
+                        <div id="user-score"></div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+
+
+            
+            
+            
+            
+           
+        </div>
+
+
         <script>
             var tutorialImagesUrl = "{%static 'images/tutorial/' %}";
         </script>
