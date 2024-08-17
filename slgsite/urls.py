@@ -44,7 +44,8 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index),
-    path("wordle/", wordle_view, name='wordle'),
+    # path("wordle/", wordle_view, name='wordle'),
+    path("wordle2/", wordle_view, name='wordle'),
     path('recognize/', recognize_view, name='recognize'),
     path('tutorial/', tutorial_view, name='tutorial'),
     path('players/', PlayerView.as_view()),
