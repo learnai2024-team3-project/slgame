@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "backend",
     "drf_yasg",
-    "line_bot"
+    "line_bot",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [    
