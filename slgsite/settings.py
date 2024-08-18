@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "drf_yasg",
     "line_bot",
 
+    "corsheaders",
+
     # allauth 官方文件要求安裝
     'django.contrib.sites',
     # allauth 的核心模組
@@ -62,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",    
     "allauth.account.middleware.AccountMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "slgsite.urls"
@@ -153,7 +156,7 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-CSRF_TRUSTED_ORIGINS = ['https://primarily-evident-dinosaur.ngrok-free.app/']
+CSRF_TRUSTED_ORIGINS = ['https://primarily-evident-dinosaur.ngrok-free.app']
 
 SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = "none"

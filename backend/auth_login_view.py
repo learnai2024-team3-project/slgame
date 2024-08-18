@@ -13,6 +13,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 from backend.models import Player 
@@ -51,12 +52,12 @@ def main(request):
 
     return render(request, 'main.html', locals())
 
-
+@csrf_exempt
 def log_in(request):
     """登入頁面
     """
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect('')
     return render(request, 'login.html')
 
 
@@ -64,4 +65,4 @@ def log_out(request):
     """登出
     """
     logout(request)
-    return redirect('/')
+    return redirect('')
