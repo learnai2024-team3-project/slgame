@@ -14,7 +14,7 @@ from rest_framework.parsers import JSONParser
 from PIL import Image
 from io import BytesIO
 from django.views.decorators.gzip import gzip_page
-from backend.recognizer import recognize_image
+from backend.recognize_view import recognize_image
 import numpy
 
 

@@ -40,7 +40,16 @@ INSTALLED_APPS = [
     "rest_framework",
     "backend",
     "drf_yasg",
-    "line_bot"
+    "line_bot",
+
+    # allauth 官方文件要求安裝
+    'django.contrib.sites',
+    # allauth 的核心模組
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # social provider
+    'allauth.socialaccount.providers.line',
 ]
 
 MIDDLEWARE = [    
@@ -52,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",    
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",    
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "slgsite.urls"
@@ -116,6 +126,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+ALLOWED_HOSTS = ["*"]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -136,3 +148,35 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LINE_CHANNEL_ACCESS_TOKEN="eqIuYj1mXTTCMXwIP22DuGjkTXK3OKxU0S6YvNdolMFOyAmPnF70id6KwdwCCzXLdP5zvAJpH7O/r9LA2aguVnhyw2JZiEAmJdjkXCGqMfuLT5ftqcRoQbJQx8lB5MDKtcFDSguKzY+Zz+UjUOkWVAdB04t89/1O/w1cDnyilFU="
 LINE_CHANNEL_SECRET="3faf6dae8a61bf1425d48487c88b7050"
 LINE_USER_ID = "@011fresn"
+
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+CSRF_TRUSTED_ORIGINS = ['https://primarily-evident-dinosaur.ngrok-free.app/']
+
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_GET = True
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL='https' 
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL='http' 
+
+# 允许通过 GET 请求直接触发 OAuth 登录
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    'line': {
+        'APP': {
+            'client_id': '2006091806',
+            'secret': '2994da44439a8228395d43f018b00139'
+        },
+        "SCOPE": ['profile', 'openid', 'email'],
+         "AUTH_PARAMS": {
+            "access_type": "online",
+        }
+    }
+}

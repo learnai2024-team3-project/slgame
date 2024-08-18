@@ -26,3 +26,9 @@ Wordle 遊戲介面開發中。請參考：
 - `static/wordle.js` 包含遊戲邏輯、webcam 控制，目前尚未整合深度學習模型
 - `static/wordle.css` 包含畫面元素，如鍵盤等
 - `templates/tutorial.html` 手語教學頁面
+
+# ngrok
+
+```
+ngrok http --domain=primarily-evident-dinosaur.ngrok-free.app http://localhost:8000 --host-header="primarily-evident-dinosaur.ngrok-free.app"
+```

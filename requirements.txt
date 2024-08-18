@@ -5,6 +5,7 @@ drf-yasg
 
 ultralytics
 roboflow
+django-allauth
 
 # Dependencies of ultralytics
 # pillow

@@ -15,7 +15,7 @@ from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
-from backend.recognizer import recognize_image
+from backend.recognize_view import recognize_image
 from backend.models import Player 
 from backend.serializers import PlayerSerializer
 from backend.serializers import AuthLoginRequestSerializer,\
@@ -36,6 +36,9 @@ def wordle_view(request):
 
 def tutorial_view(request):
     return render(request, 'tutorial.html')
+
+def login_view(request):
+    return render(request, 'login.html')
 
 
 # @csrf_exempt

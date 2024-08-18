@@ -1,0 +1,67 @@
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .line-button {
+            background-color: #00B900;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .line-button img {
+            margin-right: 10px;
+        }
+        .line-button:hover {
+            background-color: #009a00;
+        }
+        .wordle-image {
+            width: 256px;
+            height: 256px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Sign Wordle Game</h2>
+        <img class="wordle-image" src="{% static 'images/logo.jpg' %}" alt="Wordle Image">
+        <a href="{% provider_login_url 'line' %}" class="line-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/LINE_logo.svg/32px-LINE_logo.svg.png" alt="Line logo" width="20" height="20">
+            Login with LINE
+        </a>
+    </div>
+</body>
+</html>

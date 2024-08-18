@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from backend.player_view import PlayerView
 from django.urls import include, re_path
-from backend.views import index, wordle_view, recognize_view, tutorial_view
+from backend.views import index, wordle_view, tutorial_view, login_view
 from backend.auth_login_view import auth_login
 from backend.upload_view import upload
 from backend.game_start_view import game_start
@@ -44,11 +44,11 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index),
-    path("wordle/", wordle_view, name='wordle'),
-    path('recognize/', recognize_view, name='recognize'),
+    path("wordle/", wordle_view, name='wordle'),    
     path('tutorial/', tutorial_view, name='tutorial'),
     path('players/', PlayerView.as_view()),
     path("auth/login", auth_login),
+    path("login", login_view),
     path("upload/", upload),
     path("game/start", game_start),
     path("game/submit", submit_game),
@@ -64,4 +64,5 @@ urlpatterns = [
             view=schema_view.with_ui('redoc', cache_timeout=0),
             name='schema-redoc'
             ),
+    path('accounts/', include('allauth.urls')),
 ]
