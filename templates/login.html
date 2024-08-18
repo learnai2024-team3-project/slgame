@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+
+body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+       
+        
+    }
+
+    .content {
+        /* border: 3px solid purple; */
+        font-family: Arial, sans-serif;
+        display: inline-flex;
+        /* flex-wrap: wrap; */
+        justify-content: space-around;
+        /* padding: 20px; */
+        background-color: #f0f0f0;
+        width: 100%;
+
+    }
+
+    .container {
+        /* border:2px solid green; */
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        width: 300px;
+        position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 将元素移动到中心 */
+    }
+
+    
+        .container input[type="text"],
+        .container input[type="password"] {
+            width: 285px;
+            padding: 10px 0px 10px 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            
+        }
+
+        .container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .container .general-btn {
+            background-color: #85876d;
+            color: white;
+        }
+
+
+        .container .line-btn {
+            background-color: #00c300;
+            color: white;
+        }
+
+        .container .google-btn {
+            background-color: #db4437;
+            color: white;
+        }
+
+        .container .register-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .container .register-btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+
+
+<body>
+    
+    <div class="content">
+
+
+        <div class="container">
+            
+            <h2>Let's play</h2>
+            <input id="client_id" type="text" placeholder="帳號">
+            <input id="password" type="password" placeholder="密碼">
+            <button id="generalbtn" class="general-btn">登入</button>
+            <button id="linebtn"class="line-btn">使用 LINE 登入</button>
+            <button id="googlebtn" class="google-btn">使用 Google 登入</button>
+            <button id="registerbtn" class="register-btn">註冊新帳號</button>
+
+
+
+        </div>
+
+
+    </div>
+
+</body>
+
+<script>
+
+const client_id = document.getElementById('client_id');
+const password = document.getElementById('password');
+const generalbtn = document.getElementById('generalbtn');
+const linebtn = document.getElementById('linebtn');
+const googlebtn = document.getElementById('googlebtn');
+const registerbtn = document.getElementById('registerbtn');
+// const csrftoken = getCookie('csrftoken'); // 提取 CSRF 令牌的函數
+
+// console.log(client_id)
+
+generalbtn.addEventListener('click', ()=>{
+    
+
+    const data ={
+        "client_id": client_id.value,
+        "password": password.value
+    }
+
+    fetch('http://127.0.0.1:8000/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            if (data.status === 'success') {
+               sessionStorage.setItem("status","login")
+               Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "登入成功",
+                    showConfirmButton: false,
+                    timer: 3000
+                    });
+                document.location.href="../../wordle2/"
+
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "登入失敗",
+                    showConfirmButton: true,
+                    // timer: 1500
+                    });
+
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            resultText.textContent = "Error during recognition.";
+        });
+    
+
+
+})
+
+
+
+</script>
+
+
+
+
+</html>

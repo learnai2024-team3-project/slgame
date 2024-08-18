@@ -8,36 +8,35 @@ from rest_framework import status
 from django.core import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 from backend.models import Player, UserTab
 from backend.serializers import PlayerSerializer
 from backend.serializers import AuthLoginRequestSerializer,\
       UploadRequestSerializer,\
-      StartGameRequestSerializer, SubmitGameRequestSerializer
-
-from django.views.decorators.csrf import csrf_exempt
+      StartGameRequestSerializer, SubmitGameRequestSerializer, RegisterRequestSerializer
 
 
 @swagger_auto_schema(
         methods=['POST'],
-        request_body = AuthLoginRequestSerializer,
+        request_body = RegisterRequestSerializer,
         responses = { 
             status.HTTP_200_OK: openapi.Schema(
             type = openapi.TYPE_OBJECT,
             properties = {
                 'client_id': openapi.Schema(type=openapi.TYPE_STRING),
+                'mail': openapi.Schema(type=openapi.TYPE_STRING),
                 'password': openapi.Schema(type=openapi.TYPE_STRING)
+
             }
     )},
 )
 
 
 @api_view(['POST'])
-def other_login(request):
+def register(request):
 
-    serializer = AuthLoginRequestSerializer(data=request.data) 
+    serializer = RegisterRequestSerializer(data=request.data) 
 
     if serializer.is_valid() == False:
             return JsonResponse({
@@ -45,33 +44,27 @@ def other_login(request):
                 "feedback": "",
                 "data":{
                     "client_id": "",
-                    "password":""
+                    "mail": "",
+                    "password":"" 
                 }
                 }, safe=False)
     
         # 取username和score
     userid = serializer.validated_data["client_id"]
+    useremail = serializer.validated_data["mail"]
     password = serializer.validated_data["password"]
     
-    try:
-        user = UserTab.objects.get(userid=userid)
-        if user:
-              if user.password == password:
-                    print(f'登入成功')
-                    return JsonResponse({
-                        "status": "success",
-                        "message": "Login successful",    
-                    }, safe=False)
-              else:
-                    print(f'密碼輸入錯誤')
-                    return JsonResponse({
-                        "status": "fail",
-                        "message": "Invalid password",
-                    }, safe=False) 
+    # user = UserTab.objects.filter(userid=userid).first()
 
-    except:
-          print(f'無此{userid}使用者')
-          return JsonResponse({
-                "status": "fail",
-                "message": f"無此{userid}使用者",
-          }, safe=False)
+    try:
+        if UserTab.objects.get(userid=userid):
+            print(f'重複建立使用者帳號{userid}')
+            return JsonResponse({
+                "error": f"重複建立使用者帳號{userid}",
+            }, safe=False)
+        
+    except UserTab.DoesNotExist:
+         UserTab.objects.create(userid=userid, useremail=useremail, password=password)
+         return JsonResponse({
+              'message': '成功建立使用者帳號'
+         }, safe=False)

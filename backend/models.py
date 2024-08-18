@@ -12,6 +12,7 @@ class Player(models.Model):
 class UserTab(models.Model): #inheritance from models.Model
     userid = models.CharField(max_length=60, null=False, blank=False, unique=True)
     useremail = models.CharField(max_length=200, default='username@example.com')
+    password = models.CharField(max_length=200)
     userloginhost = models.CharField(max_length=200, default='example.com')
     totalscore = models.IntegerField( default=0 )
     acctimes = models.IntegerField( default=0 )

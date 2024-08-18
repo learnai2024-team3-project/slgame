@@ -239,7 +239,7 @@
         <!-- Your menu items go here -->
         <a href="../tutorial/">TutorialMode</a>
         <a href="#services">CheatSheet</a>
-        <a href="#contact">Challenge</a>
+        <a href="../auth/login">Login</a>
     </div>
 
     <button id="sidebarBtn">選單</button>
@@ -288,6 +288,9 @@ const submitBtn = document.getElementById('submit');
 const giveUpBtn = document.getElementById('give-up');
 const webcamFeed = document.getElementById('webcam-feed');
 const webcamPlaceholder = document.getElementById('webcam-placeholder');
+
+const sidebar = document.getElementById('sidebar');
+const slist = sidebar.querySelectorAll('a');
 
 let currentWord = '';
 let currentRow = 0;
@@ -460,6 +463,17 @@ document.getElementById("sidebarBtn").onclick = function() {
         sidebar.style.width = "250px";        
     }
 };
+
+// function isUserLoggedIn(){
+//     if (sessionStorage.getItem("status") == "login"){
+//         return true;
+//     }
+// }
+
+if(sessionStorage.getItem("status") == "login"){
+    slist[2].textContent = 'Logout';
+}
+
 // =================sidebar=================
 
 
