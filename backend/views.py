@@ -37,6 +37,8 @@ def wordle_view(request):
 def tutorial_view(request):
     return render(request, 'tutorial.html')
 
+def auth_login_view(request):
+    return render(request, 'login.html')
 
 @csrf_exempt
 def recognize_view(request):

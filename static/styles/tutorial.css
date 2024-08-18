@@ -36,7 +36,7 @@ body {
     padding: 10px; */
 
 
- border:2px solid green;
+ /* border:2px solid green; */
  background-color: white;
  border-radius: 10px;
  padding: 20px;
@@ -51,7 +51,7 @@ body {
 }
 
 .detectionpart {
-    border: 2px solid pink;
+    /* border: 2px solid pink; */
     width: 100%;
     max-width: fit-content;
 }

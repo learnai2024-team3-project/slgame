@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from backend.player_view import PlayerView
 from django.urls import include, re_path
-from backend.views import index, wordle_view, recognize_view, tutorial_view
-from backend.auth_login_view import auth_login
+from backend.views import index, wordle_view, recognize_view, tutorial_view, auth_login_view
+from backend.auth_login_view import other_login
 from backend.upload_view import upload
 from backend.game_start_view import game_start
 from backend.submit_game_view import submit_game
+from backend.register_view import register
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -49,7 +50,9 @@ urlpatterns = [
     path('recognize/', recognize_view, name='recognize'),
     path('tutorial/', tutorial_view, name='tutorial'),
     path('players/', PlayerView.as_view()),
-    path("auth/login", auth_login),
+    path("auth/login/", auth_login_view, name='login'),
+    path("login/", other_login),
+    path("auth/register/", register),
     path("upload/", upload),
     path("game/start", game_start),
     path("game/submit", submit_game),
