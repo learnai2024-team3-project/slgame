@@ -37,7 +37,7 @@ def recognize_video(file_byte):
                 break
 
             # 调用 recognize_image 识别每一帧
-            label, conf = recognize_image(frame)
+            label, conf, _ = recognize_image(frame)
             
             # 更新最高置信度的结果
             if conf > highest_conf:
@@ -72,6 +72,10 @@ def recognize_image(image):
     # Draw the detection result with the highest confidence
     if best_result is not None:
         box, conf, label = best_result
+        x1, y1, x2, y2 = map(int, box)
+        label_text = f'{model.names[int(label)]} {conf:.2f}'
+        cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        cv2.putText(image, label_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
         return (model.names[int(label)], conf)
 
     return ("", 0.0)
