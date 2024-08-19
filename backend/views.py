@@ -2,7 +2,7 @@
 import base64
 import cv2
 import numpy as np
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from django.db import transaction
 from django.core import serializers
@@ -25,20 +25,18 @@ from backend.serializers import AuthLoginRequestSerializer,\
 
 # Create your views here.
 def index(request):
-    project_name = "Sign Language Game Project"
-    return render(request, "index.html", locals())
+    #project_name = "Sign Language Game Project"
+    #return render(request, "login.html", locals())
+    return redirect('/login')
 
 
 def wordle_view(request):
     title = "Wordle AI - Sign Language Edition"
-    return render(request, 'wordle.html', locals())
+    return render(request, 'wordle2.html', locals())
 
 
 def tutorial_view(request):
     return render(request, 'tutorial.html')
-
-def login_view(request):
-    return render(request, 'login.html')
 
 
 # @csrf_exempt

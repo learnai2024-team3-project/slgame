@@ -53,15 +53,15 @@ def main(request):
     return render(request, 'main.html', locals())
 
 @csrf_exempt
-def log_in(request):
+def log_in_view(request):
     """登入頁面
     """
     if request.user.is_authenticated:
-        return redirect('')
+        return render(request, 'wordle2.html')
     return render(request, 'login.html')
 
 
-def log_out(request):
+def log_out_view(request):
     """登出
     """
     logout(request)

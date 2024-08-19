@@ -1,4 +1,4 @@
-<html><head><base href="https://websim.ai/wordle-ai/">
+<html><head>
 <title>Wordle AI - Sign Language Edition</title>
 <style>
 
@@ -221,11 +221,43 @@
         }
     }
 
+    .avatar-container {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .user-info {
+        color: #333;
+    }
    
 
 
     
 </style>
+
+<div class="avatar-container">
+    <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="User Avatar" class="avatar">
+    {% if user.is_authenticated %}
+    <div class="user-info">
+        <li>User: {{ user.first_name }} {{ user.last_name }}</li>
+        <li><a href="{% url 'account_logout' %}">Logout</a></li>
+    </div>
+    {% else %}
+    <li><a href="{% url 'account_login' %}">Login</a></li>
+    {% endif %}
+</div>
+
 </head>
 <body>
     <div class="head">this is head</div>

@@ -32,3 +32,34 @@ Wordle 遊戲介面開發中。請參考：
 ```
 ngrok http --domain=primarily-evident-dinosaur.ngrok-free.app http://localhost:8000 --host-header="primarily-evident-dinosaur.ngrok-free.app"
 ```
+
+# CROS
+
+## 1. 安裝套件
+
+```
+pip install django-cors-headers
+```
+
+## 2. 加入Install App
+```
+INSTALLED_APPS = [ 'corsheaders', ]
+```
+
+## 3. 加入middleware
+```
+MIDDLEWARE = [ 'corsheaders.middleware.CorsMiddleware', ]
+```
+
+## 4. settings.py
+```
+CSRF_TRUSTED_ORIGINS = ['https://site.lv']
+```
+
+## 5. login加入修飾器
+```
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt 
+def login(): pass
+```

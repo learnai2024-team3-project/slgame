@@ -18,8 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from backend.player_view import PlayerView
 from django.urls import include, re_path
-from backend.views import index, wordle_view, tutorial_view, login_view
-from backend.auth_login_view import auth_login
+from backend.views import index, wordle_view, tutorial_view
+from backend.auth_login_view import auth_login, log_in_view, log_out_view
 from backend.upload_view import upload
 from backend.game_start_view import game_start
 from backend.submit_game_view import submit_game
@@ -43,12 +43,13 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", index),
+    path("", index) ,
     path("wordle/", wordle_view, name='wordle'),    
     path('tutorial/', tutorial_view, name='tutorial'),
     path('players/', PlayerView.as_view()),
     path("auth/login", auth_login),
-    path("login", login_view),
+    path("login/", log_in_view),
+    path("logout/", log_out_view),
     path("upload/", upload),
     path("game/start", game_start),
     path("game/submit", submit_game),
