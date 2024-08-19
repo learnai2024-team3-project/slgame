@@ -126,6 +126,7 @@ def upload(request):
             pil_image = img.convert('RGB')
             open_cv_image = numpy.array(pil_image)
             open_cv_image = open_cv_image[:, :, ::-1].copy()
+            open_cv_image = cv2.flip(open_cv_image, 1)
             (recognizedWord, confidence) = recognize_image(open_cv_image)
             _, buffer = cv2.imencode('.png', open_cv_image)
             recognizedImage = base64.b64encode(buffer).decode('utf-8')

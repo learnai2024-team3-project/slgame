@@ -475,35 +475,31 @@ function submitImage(base64Image) {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
+
+        // 显示识别的图像
+        let recognizedImage = data.data.recognizedImage;
+        const imageElement = document.getElementById('recognized-image');
+        imageElement.src = 'data:image/png;base64,' + recognizedImage;
+        imageElement.style.display = 'block';
+
         if (data.status === 'success') {
             if (data.data.recognizedWord.length === 1) {
                 let letter = data.data.recognizedWord.toUpperCase();
                 handleKeyPress(letter);
-                
-                // 显示识别的图像
-                let recognizedImage = data.data.recognizedImage;
-                const imageElement = document.getElementById('recognized-image');
-                imageElement.src = 'data:image/png;base64,' + recognizedImage;
-                imageElement.style.display = 'block';
-
-                // 恢复按钮文字
-                toggleWebcamBtn.textContent = 'Start Rec';
-                isRecording = false;
             }
         } else {
             alert('Recognition failed. Please try again.');
-            toggleWebcamBtn.textContent = 'Start Rec';
-            isRecording = false;
         }
     })
     .catch((error) => {
         console.error('Error:', error);
-        toggleWebcamBtn.textContent = 'Start Rec';
-        isRecording = false;
     })
     .finally(() => {
+        toggleWebcamBtn.textContent = 'Start Rec';
+        isRecording = false;
         // 隐藏“辨识中”消息
         overlayMessage.style.display = 'none';
+        toggleWebcamBtn.disabled = false;
     });
 }
 
@@ -520,6 +516,7 @@ async function startWebcam() {
         console.error("Error accessing the webcam:", err);
         alert("Failed to access the webcam. Please check your permissions.");
     }
+    toggleWebcamBtn.disabled = false;
 }
 
 function stopWebcam() {
@@ -572,6 +569,8 @@ document.addEventListener('keydown', (event) => {
 });
 
 function toggleWebcam() {
+    toggleWebcamBtn.disabled = true;
+
     if (isRecording) {
         stopWebcam();
     } else {
