@@ -14,7 +14,7 @@ from rest_framework.parsers import JSONParser
 from PIL import Image
 from io import BytesIO
 from django.views.decorators.gzip import gzip_page
-from backend.recognizer import recognize_image
+from backend.recognizer import recognize_image, recognize_video
 import numpy
 
 
@@ -25,6 +25,63 @@ from backend.serializers import AuthLoginRequestSerializer,\
       UploadRequestSerializer,\
       StartGameRequestSerializer, SubmitGameRequestSerializer
 
+@swagger_auto_schema(
+        methods=['POST'],
+        request_body = UploadRequestSerializer,
+        responses = { 
+            status.HTTP_200_OK: openapi.Schema(
+            type = openapi.TYPE_OBJECT,
+            properties = {
+                'status': openapi.Schema(type=openapi.TYPE_STRING),
+                'feedback': openapi.Schema(type=openapi.TYPE_INTEGER),
+                "schema": {
+                    "recognizedWord": openapi.Schema(type=openapi.TYPE_STRING),
+                    "confidence": openapi.Schema(type=openapi.FORMAT_FLOAT)
+                },
+            }
+    )},
+)
+@api_view(['POST'])
+@gzip_page
+def upload_video(request):
+    try:
+        pythondata = JSONParser().parse(request)
+        serializer = UploadRequestSerializer(data=pythondata) 
+
+        if serializer.is_valid() == False:
+            return JsonResponse({
+                "status": "fail to deserialize",
+                "feedback": "",
+                "data": {
+                    "recognizedWord": "",
+                    "confidence": ""
+                }
+                }, safe=False)
+    
+        file_byte = base64.b64decode(serializer.validated_data["file"])
+        (recognizedWord, confidence) = recognize_video(file_byte)
+        #recognizedWord = "A"
+        #confidence = 99.9
+
+        return JsonResponse({
+            "status": "success",
+            "feedback": "",
+            "data": {
+                "recognizedWord": recognizedWord,
+                "confidence": str(confidence)
+            }
+        }, safe=False)
+        
+    except BaseException as e:
+        print(str(e))
+        return JsonResponse({
+                "status": str(e),
+                "feedback": "",
+                "data": {
+                    "recognizedWord": "",
+                    "confidence": ""
+                }
+                }, safe=False)
 
 @swagger_auto_schema(
         methods=['POST'],

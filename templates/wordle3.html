@@ -1,0 +1,537 @@
+
+<html><head>
+    <!-- <base href="https://websim.ai/wordle-ai/"> -->
+<title>Wordle AI - Sign Language Edition</title>
+<style>
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        
+    }
+
+    .content {
+        /* border: 3px solid purple; */
+        font-family: Arial, sans-serif;
+        display: inline-flex;
+        /* flex-wrap: wrap; */
+        justify-content: space-around;
+        /* padding: 20px; */
+        background-color: #f0f0f0;
+        width: 100%;
+    }
+
+    .head {
+        /* border:2px solid red; */
+        height: 50px;
+        width: 100%;
+
+    }
+
+    .gamepart{
+        /* border:2px solid rgb(255, 0, 191); */
+    }
+
+    .detectionpart{
+        /* border:2px solid rgb(0, 255, 153); */
+       
+    }
+
+    .container {
+        /* border:2px solid green; */
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #word-grid {
+        /* border:2px solid blue; */
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+        margin-bottom: 20px;
+    }
+    .letter-box {
+        width: 50px;     /* 調整單一字母框大小 */
+        height: 50px;
+        border: 2px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    #keyboard {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 5px;
+    }
+    .key {
+        padding: 2.5px; /* 調整各字母的間距 */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+    }
+    .key.used {
+        background-color: #ddd;
+    }
+    #webcam-container {
+        
+        width: 100%;
+        height: 285px;
+        background-color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        position: relative;
+        border-radius: 10px;
+    }
+    #webcam-feed {
+        width: 100%;
+        height: 285px;
+        object-fit: contain;
+    }
+    #webcam-placeholder {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    #controls button {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .green {
+        background-color: #6aaa64;
+        color: white;
+    }
+    .yellow {
+        background-color: #c9b458;
+        color: white;
+    }
+    .grey {
+        background-color: #787c7e;
+        color: white;
+    }
+
+    #toggle-webcam, #submit, #give-up {
+        font-size: 10px;
+        border: 2px solid #c99458;
+        background-color: #c99458;
+        color: white;
+        border-radius: 10px;
+    }
+
+    body > div.content > div.detectionpart > div:nth-child(2) {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .sidebar {
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+        height: 25%;
+        width: 0;
+        position: absolute;
+        /* position: fixed; 固定不動 */
+        top: 0;
+        left: 0;
+        background-color: #d4d0d0;
+        overflow-x: hidden;
+        transition: 0.3s;
+        padding-top: 60px;
+        border-radius: 10px;
+    }
+
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #fff;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+        background-color: #575757;
+    }
+
+
+    #sidebarBtn {
+        font-weight:bold;
+        font-size: 15px;
+        cursor: pointer;
+        background-color: #e2d9d9;
+        color: rgb(207, 181, 181);
+        padding: 10px;
+        border: none;
+        position: absolute;
+        /* position: fixed; */
+        top: 10px;
+        left: 10px;
+        border-radius: 10px;
+    }
+
+
+
+
+    /* 響應式設計 */
+    
+    @media screen and (max-width: 1000px) {
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gamepart {
+        width: 400px; /* 固定寬度，不隨螢幕縮放 */
+        margin-bottom: 20px;
+    }
+
+    .detectionpart {
+        width: 90%; /* 保持響應性，避免過窄或過寬 */
+        margin-bottom: 20px;
+    }
+}
+
+    @media screen and (min-width: 1001px) {
+        .content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .gamepart {
+            width: 400px; /* 固定寬度，不隨螢幕縮放 */
+            margin-left: 70px;
+            margin-right: 45px;
+        }
+
+        .detectionpart {
+            width: 45%; /* 調整寬度以便兩者可以在大螢幕上均勻分布 */
+            margin-left: 45px;
+            margin-right: 70px;
+        }
+    }
+
+   
+
+
+    
+</style>
+</head>
+<body>
+    <div class="head">this is head</div>
+
+    <!-- ===============sidebar============== -->
+    <div id="sidebar" class="sidebar">
+        <!-- Your menu items go here -->
+        <a href="../tutorial/">TutorialMode</a>
+        <a href="#services">CheatSheet</a>
+        <a href="../auth/login">Login</a>
+    </div>
+
+    <button id="sidebarBtn">選單</button>
+    <!-- ===============sidebar============== -->
+
+
+<div class="content">
+    <div class="gamepart">
+        <div class="container">
+            <div id="word-grid"></div>
+        </div>
+
+        <div class="container">
+            <div id="keyboard"></div>
+        </div>
+    </div>
+    
+
+    <div class="detectionpart">
+        <div class="container">
+            <div id="webcam-container">
+                <video id="webcam-feed" autoplay playsinline></video>
+                <div id="webcam-placeholder">Webcam feed will appear here</div>
+            </div>
+        </div>
+    
+        <div class="container">
+            <div id="controls">
+                <button id="toggle-webcam">Start Rec</button>
+                <button id="submit">Submit</button>
+                <button id="give-up">Give Up</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+  </div>  
+
+<script>
+const wordGrid = document.getElementById('word-grid');
+const keyboard = document.getElementById('keyboard');
+const toggleWebcamBtn = document.getElementById('toggle-webcam');
+const submitBtn = document.getElementById('submit');
+const giveUpBtn = document.getElementById('give-up');
+const webcamFeed = document.getElementById('webcam-feed');
+const webcamPlaceholder = document.getElementById('webcam-placeholder');
+
+const sidebar = document.getElementById('sidebar');
+const slist = sidebar.querySelectorAll('a');
+
+let currentWord = '';
+let currentRow = 0;
+let targetWord = '';
+let isRecording = false;
+let submittedLetters = new Set();
+let chunks = [];
+mediaRecorder = null
+
+// Initialize the word grid
+// 更改可猜的次數(刪掉letterbox)
+for (let i = 0; i < 20; i++) {
+    const letterBox = document.createElement('div');
+    letterBox.classList.add('letter-box');
+    wordGrid.appendChild(letterBox);
+}
+
+// Initialize the keyboard
+'QWERTYUIOPASDFGHJKL ZXCVBNM'.split('').forEach(letter => {
+    const key = document.createElement('div');
+    key.classList.add('key');
+    key.textContent = letter;
+    if (key.textContent != ' ') {
+        key.addEventListener('click', () => handleKeyPress(letter));
+    }
+    keyboard.appendChild(key);
+});
+
+function handleKeyPress(letter) {
+    if (currentWord.length < 5 && currentRow < 6) {
+        currentWord += letter;
+        updateGrid();
+    }
+}
+
+function updateGrid() {
+    const rowStart = currentRow * 5;
+    for (let i = 0; i < 5; i++) {
+        wordGrid.children[rowStart + i].textContent = currentWord[i] || '';
+    }
+}
+
+function checkWord() {
+    if (currentWord.length !== 5) return;
+
+    for (let i = 0; i < 5; i++) {
+        const box = wordGrid.children[currentRow * 5 + i];
+        const letter = currentWord[i];
+        submittedLetters.add(letter);
+
+        if (letter === targetWord[i]) {
+            box.classList.add('green');
+        } else if (targetWord.includes(letter)) {
+            box.classList.add('yellow');
+        } else {
+            box.classList.add('grey');
+        }
+    }
+
+    updateKeyboard();
+
+    if (currentWord === targetWord) {
+        alert('Congratulations! You guessed the word!');
+        resetGame();
+    } else if (currentRow === 3) {       // 更改可猜的次數
+        alert(`Game over! The word was ${targetWord}`);
+        resetGame();
+    } else {
+        currentRow++;
+        currentWord = '';
+    }
+}
+
+function updateKeyboard() {
+    Array.from(keyboard.children).forEach(key => {
+        if (submittedLetters.has(key.textContent)) {
+            key.classList.add('used');
+        }
+    });
+}
+
+function resetGame() {
+    currentWord = '';
+    currentRow = 0;
+    targetWord = generateRandomWord();
+    submittedLetters.clear();
+    Array.from(wordGrid.children).forEach(box => {
+        box.textContent = '';
+        box.className = 'letter-box';
+    });
+    Array.from(keyboard.children).forEach(key => key.classList.remove('used'));
+}
+
+function generateRandomWord() {
+    const words = ['APPLE', 'BRAVE', 'CACTUS', 'DANCE', 'EAGLE', 'FABLE', 'GRAPE', 'HONEY', 'IVORY', 'JOKER'];
+    return words[Math.floor(Math.random() * words.length)];
+}
+
+function processRecording() {
+    let blob = new Blob(chunks, { type: 'video/webm' });
+    chunks = [];
+    let reader = new FileReader();
+    reader.onloadend = function() {
+        let base64Video = reader.result.split(',')[1];
+        submitVieo(base64Video);
+    };
+    reader.readAsDataURL(blob);
+}
+
+function submitVieo(base64Video) {
+    const postData = {
+        Authorization: "your_auth_token",
+        file: base64Video,
+        mode: "your_mode"
+    };
+
+    const currentUrl = window.location.origin;
+
+    fetch(currentUrl + '/upload_video/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        if (data.status === 'success') {
+            if (data.data.recognizedWord.length === 1) {
+                letter = data.data.recognizedWord.toUpperCase();
+                handleKeyPress(letter);
+            }
+        } else {
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+async function startWebcam() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        webcamFeed.srcObject = stream;
+        webcamPlaceholder.style.display = 'none';
+        isRecording = true;
+        toggleWebcamBtn.textContent = 'Stop Recording';
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = event => {
+            chunks.push(event.data);
+        };
+        mediaRecorder.onstop = processRecording;
+        mediaRecorder.start();
+    } catch (err) {
+        console.error("Error accessing the webcam:", err);
+        alert("Failed to access the webcam. Please check your permissions.");
+    }
+}
+
+function stopWebcam() {
+    const stream = webcamFeed.srcObject;
+    const tracks = stream.getTracks();
+
+    tracks.forEach(track => track.stop());
+    webcamFeed.srcObject = null;
+    webcamPlaceholder.style.display = 'block';
+    isRecording = false;
+    toggleWebcamBtn.textContent = 'Start Recording';
+    mediaRecorder.stop();    
+}
+
+toggleWebcamBtn.addEventListener('click', toggleWebcam);
+
+submitBtn.addEventListener('click', submitWord);
+
+giveUpBtn.addEventListener('click', () => {
+    alert(`The word was ${targetWord}`);
+    resetGame();
+});
+
+// Handle keyboard input
+document.addEventListener('keydown', (event) => {
+    if (event.key >= 'a' && event.key <= 'z') {
+        handleKeyPress(event.key.toUpperCase());
+    } else if (event.key === 'Backspace') {
+        if (currentWord.length > 0) {
+            currentWord = currentWord.slice(0, -1);
+            updateGrid();
+        }
+    } else if (event.key === 'Enter') {
+        submitWord();
+    } else if (event.key === ' ') {
+        toggleWebcam();
+    }
+});
+
+function toggleWebcam() {
+    if (isRecording) {
+        stopWebcam();
+    } else {
+        startWebcam();
+    }
+}
+
+function submitWord() {
+    if (currentWord.length === 5) {
+        checkWord();
+    } else {
+        alert("Please enter a 5-letter word before submitting.");
+    }
+}
+
+
+// =================sidebar=================
+document.getElementById("sidebarBtn").onclick = function() {
+    var sidebar = document.getElementById("sidebar");
+    
+    if (sidebar.style.width === "250px") {
+        sidebar.style.width = "0";        
+    } else {
+        sidebar.style.width = "250px";        
+    }
+};
+
+// function isUserLoggedIn(){
+//     if (sessionStorage.getItem("status") == "login"){
+//         return true;
+//     }
+// }
+
+if(sessionStorage.getItem("status") == "login"){
+    slist[2].textContent = 'Logout';
+}
+
+// =================sidebar=================
+
+
+
+
+// Initialize the game
+resetGame();
+</script>
+</body></html>
