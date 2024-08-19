@@ -31,7 +31,7 @@ def index(request):
 
 def wordle_view(request):
     title = "Wordle AI - Sign Language Edition"
-    return render(request, 'wordle2.html', locals())
+    return render(request, 'wordle3.html', locals())
 
 
 def tutorial_view(request):

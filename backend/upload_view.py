@@ -9,7 +9,7 @@ from django.core import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import base64
-import os
+import cv2
 from rest_framework.parsers import JSONParser
 from PIL import Image
 from io import BytesIO
@@ -94,7 +94,8 @@ def upload_video(request):
                 'feedback': openapi.Schema(type=openapi.TYPE_INTEGER),
                 "schema": {
                     "recognizedWord": openapi.Schema(type=openapi.TYPE_STRING),
-                    "confidence": openapi.Schema(type=openapi.FORMAT_FLOAT)
+                    "confidence": openapi.Schema(type=openapi.FORMAT_FLOAT),
+                    "recognizedImage": openapi.Schema(type=openapi.TYPE_STRING)
                 },
             }
     )},
@@ -119,20 +120,24 @@ def upload(request):
         image_byte = base64.b64decode(serializer.validated_data["file"])
 
         recognizedWord = ""
+        recognizedImage = ""
 
         with Image.open(BytesIO(image_byte)) as img:
             pil_image = img.convert('RGB')
             open_cv_image = numpy.array(pil_image)
             open_cv_image = open_cv_image[:, :, ::-1].copy()
             (recognizedWord, confidence) = recognize_image(open_cv_image)
+            _, buffer = cv2.imencode('.png', open_cv_image)
+            recognizedImage = base64.b64encode(buffer).decode('utf-8')
             print(recognizedWord)
-
+        
         return JsonResponse({
             "status": "success",
             "feedback": "",
             "data": {
                 "recognizedWord": recognizedWord,
-                "confidence": str(confidence)
+                "confidence": str(confidence),
+                "recognizedImage": recognizedImage
             }
         }, safe=False)
 
