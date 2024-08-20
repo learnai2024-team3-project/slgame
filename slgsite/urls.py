@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from backend.player_view import PlayerView
 from django.urls import include, re_path
-from backend.views import index, wordle_view, recognize_view, tutorial_view, auth_login_view
+from backend.views import index, wordle_view, tutorial_view, auth_login_view
 from backend.auth_login_view import other_login
 from backend.upload_view import upload, upload_video
 from backend.game_start_view import game_start
@@ -45,9 +45,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index),
-    # path("wordle/", wordle_view, name='wordle'),
     path("wordle3/", wordle_view, name='wordle'),
-    path('recognize/', recognize_view, name='recognize'),
     path('tutorial/', tutorial_view, name='tutorial'),
     path('players/', PlayerView.as_view()),
     path("auth/login/", auth_login_view, name='login'),
