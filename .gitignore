@@ -99,3 +99,5 @@ models/runs
 # public static
 public/assets/*
 !public/assets/.gitkeep
+
+.matplotlib
