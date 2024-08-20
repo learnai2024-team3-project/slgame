@@ -530,6 +530,14 @@ function stopWebcam() {
 
     // 将canvas内容转为base64图像数据
     const imageData = canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
+   
+    if (!imageData || imageData === "" || imageData === "data:,") {
+        // 如果圖片內容為空就不處理
+        console.log("imageData was empty!");
+        toggleWebcamBtn.disabled = false;
+        return
+    }
+   
     submitImage(imageData);
 
     // 停止摄像头流
