@@ -29,16 +29,25 @@ def index(request):
     return render(request, "index.html", locals())
 
 
-def wordle_view(request):
-    title = "Wordle AI - Sign Language Edition"
-    return render(request, 'wordle3.html', locals())
+# def wordle_view(request, userid=None):
+#     title = "Wordle AI - Sign Language Edition"
+#     return render(request, 'wordle2.html', locals())
 
+def wordle_view(request):
+    userid = request.GET.get('userid')
+    title = "Wordle AI - Sign Language Edition"
+    context = {'userid':userid}
+    return render(request, 'wordle3.html', context)
 
 def tutorial_view(request):
     return render(request, 'tutorial.html')
 
 def auth_login_view(request):
     return render(request, 'login.html')
+
+def register_view(request):
+    return render(request, 'register.html')
+
 
 @csrf_exempt
 def recognize_view(request):
