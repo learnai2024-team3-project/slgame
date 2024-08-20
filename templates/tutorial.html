@@ -6,13 +6,256 @@
         <title>ASL Alphabet Learning</title>
         <link rel="stylesheet" href="{% static 'styles/tutorial.css' %}">
     </head>
+    <style>
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    /* padding: 20px; */
+    /* border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); */
+
+   
+}
+
+
+.row {
+    /* display: flex;
+    margin-bottom: 20px; */
+
+    /* border: 3px solid orange; */
+    font-family: Arial, sans-serif;
+    display: inline-flex;
+    /* flex-wrap: wrap; */
+    justify-content: space-around;
+    /* padding: 20px; */
+    background-color: #f0f0f0;
+    width: 100%;
+
+
+}
+.column {
+    /* flex: 1;
+    padding: 10px; */
+
+
+ /* border:2px solid green; */
+ background-color: white;
+ border-radius: 10px;
+ padding: 20px;
+ margin: 5px;
+ box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+}
+
+.tutorialpart {
+    /* border: 2px solid purple; */
+    margin-left: 60px;
+}
+
+.detectionpart {
+    /* border: 2px solid pink; */
+    width: 100%;
+    max-width: fit-content;
+}
+
+body > div > div.row > div.row > div > div:nth-child(1) {
+  
+}
+#webcam-container {
+        
+        width: 100%;
+        height: 285px;
+        background-color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        position: relative;
+        border-radius: 10px;
+}
+#webcam-feed {
+        width: 100%;
+        height: 285px;
+        object-fit: contain;
+}
+#webcam-placeholder {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+}
+
+#demo-image {
+    width: 100%;
+    /* max-width: 300px;
+    height: auto; */
+    width: 100%;
+    height: 285px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+/*
+.control-button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid #c99458;
+    background-color: #c99458;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+
+}
+.control-button:hover {
+    background-color: #bf8c51;
+}
+*/
+
+#toggle-webcam {
+    font-size: 10px;
+    border: 2px solid #c99458;
+    background-color: #c99458;
+    color: white;
+    border-radius: 10px;
+}
+
+#hand-shape-explanation {
+    /* min-height: 100px; */
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+#recognition-result {
+    /* min-height: 100px; */
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+
+#user-score {
+    /* min-height: 100px; */
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+
+
+#keyboard {
+ /* border:2px solid green; */
+ background-color: white;
+ border-radius: 10px;
+ padding: 20px;
+ margin: 5px;
+ box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+.alphabet-buttons {
+   /* border: 2px solid blue; */
+   display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    /* border-radius: 10px; */
+}
+
+
+.key {
+    padding: 2.5px; /* 調整各字母的間距 */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    height: 15px;
+    width: 15px;
+}
+.key.used {
+    background-color: #ddd;
+}
+
+
+
+
+
+.sidebar {
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    height: 25%;
+    width: 0;
+    position: absolute;
+    /* position: fixed; 固定不動 */
+    top: 0;
+    left: 0;
+    background-color: #d4d0d0;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    border-radius: 10px;
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+}
+
+
+#sidebarBtn {
+    font-weight:bold;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #e2d9d9;
+    color: rgb(207, 181, 181);
+    padding: 10px;
+    border: none;
+    position: absolute;
+    /* position: fixed; */
+    top: 10px;
+    left: 10px;
+    border-radius: 10px;
+}
+
+
+
+ /* 響應式設計 */
+
+    </style>
+
     <body>
 
 
         <!-- ===============sidebar============== -->
         <div id="sidebar" class="sidebar">
             <!-- Your menu items go here -->
-            <a href="../wordle2/">WordleMode</a>
+            <a href="../wordle3/">WordleMode</a>
             <a href="#services">CheatSheet</a>
             <a href="#contact">Challenge</a>
         </div>
@@ -21,12 +264,7 @@
         <!-- ===============sidebar============== -->
 
         <div class="container">
-            <!-- <div class="alphabet-buttons"> -->
-                <!-- Alphabet buttons will be dynamically added here -->
-            <!-- </div> -->
-            
-            
-
+ 
             <div class="row">
 
                 <div class = "tutorialpart">
@@ -50,39 +288,279 @@
                 
             <div class="row">
                 <div class = "detectionpart">
-
                     <div class="column">
-                        <video id="webcam" autoplay playsinline></video>
+                        <div id="webcam-container">
+                            <video id="webcam-feed" autoplay playsinline style="transform: scaleX(-1);"></video>
+                            <img id="recognized-image" style="display:none; width: 100%; height: 285px; object-fit: contain; position: absolute; top: 0; left: 0;" />
+                            <div id="webcam-placeholder">Webcam feed will appear here</div>
+                        </div>
                     </div>
-
-
                     <div class="column">
-                        <button class="control-button" onclick="startInput()">Input</button>
-                        <button class="control-button" onclick="completeAction()">Complete</button>
+                        <button id="toggle-webcam">Start Rec</button>
                         <div id="recognition-result">辨識結果為A</div>
                         <div id="user-score"></div>
                     </div>
-
-
-
+                
                 </div>
-            </div>
-
-
-
-
-            
-            
-            
-            
-           
+            </div>         
         </div>
 
 
         <script>
             var tutorialImagesUrl = "{%static 'images/tutorial/' %}";
         </script>
-        <script src="{% static 'scripts/tutorial.js' %}">    </script>
+
+        <script> 
+            const alphabetLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const alphabetButtonsContainer = document.querySelector('.alphabet-buttons');
+            const demoImage = document.getElementById('demo-image');
+
+            const webcamVideo = document.getElementById('webcam');
+            const handShapeExplanation = document.getElementById('hand-shape-explanation');
+            const recognitionResult = document.getElementById('recognition-result');
+            const userScore = document.getElementById('user-score');
+            
+//for recognition
+const webcamFeed = document.getElementById('webcam-feed');
+const webcamPlaceholder = document.getElementById('webcam-placeholder');
+const toggleWebcamBtn = document.getElementById('toggle-webcam');
+let isRecording = false;
+
+            let currentLetter = '';
+            let userName = 'User';
+            let score = 0;
+
+            // Initialize alphabet buttons
+            alphabetLetters.split('').forEach(letter => {
+                const key = document.createElement('div');
+                key.classList.add('key');
+                key.textContent = letter;
+                key.onclick = () => selectLetter(letter);
+                alphabetButtonsContainer.appendChild(key);
+            });
+
+            const handShapeExplanations = [
+                "A: Closed fist with thumb on top of fingers",
+                "B: Flat hand with fingers together, thumb out",
+                "C: Curved hand with fingers and thumb forming a 'C' shape",
+                "D: Pointing hand with index finger extended, other fingers closed",
+                "E: Flat hand with fingers spread apart, thumb in",
+                "F: Closed fist with thumb on top of fingers, index finger extended",
+                "G: Closed fist with thumb on top of fingers, middle finger extended",
+                "H: Flat hand with fingers together, thumb out, index and middle fingers extended",
+                "I: Pinky finger extended, other fingers closed",
+                "J: Pinky finger extended, thumb and index finger touching",
+                "K: Flat hand with fingers together, thumb out, index and middle fingers crossed",
+                "L: Flat hand with fingers together, thumb in, index finger extended",
+                "M: Closed fist with thumb on top of fingers, ring and pinky fingers extended",
+                "N: Closed fist with thumb on top of fingers, middle and ring fingers extended",
+                "O: Circular hand shape with fingers and thumb forming a circle",
+                "P: Flat hand with fingers together, thumb out, index finger extended",
+                "Q: Closed fist with thumb on top of fingers, index and middle fingers extended",
+                "R: Crossed fingers with thumb on top",
+                "S: Flat hand with fingers together, thumb in",
+                "T: Flat hand with fingers together, thumb out, index finger extended",
+                "U: Closed fist with thumb on top of fingers, index and middle fingers extended",
+                "V: 'V' shape with index and middle fingers extended",
+                "W: 'W' shape with ring and pinky fingers extended",
+                "X: Closed fist with thumb on top of fingers, index finger extended",
+                "Y: Pinky finger extended, thumb and index finger touching",
+                "Z: Closed fist with thumb on top of fingers, middle and ring fingers extended"
+            ];
+
+            function selectLetter(letter) {
+                document.querySelectorAll('.key').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+
+                currentLetter = letter;
+                
+                const selectedButton = document.querySelector(`.key:nth-child(${alphabetLetters.indexOf(letter) + 1})`);
+                selectedButton.classList.add('selected');
+
+                demoImage.src = tutorialImagesUrl + letter.toLowerCase() + ".png";
+                demoImage.alt = `ASL hand shape for letter ${letter}`;
+                handShapeExplanation.textContent = handShapeExplanations[alphabetLetters.indexOf(letter)];
+            }
+
+// for recognition
+function submitImage(base64Image) {
+    const postData = {
+        Authorization: "your_auth_token",
+        file: base64Image,
+        mode: "your_mode"
+    };
+
+    const currentUrl = window.location.origin;
+
+    // 显示“辨识中”消息
+    let overlayMessage = document.getElementById('overlay-message');
+    if (!overlayMessage) {
+        overlayMessage = document.createElement('div');
+        overlayMessage.id = 'overlay-message';
+        overlayMessage.textContent = '辨识中...';
+        overlayMessage.style.position = 'absolute';
+        overlayMessage.style.top = '50%';
+        overlayMessage.style.left = '50%';
+        overlayMessage.style.transform = 'translate(-50%, -50%)';
+        overlayMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        overlayMessage.style.color = 'white';
+        overlayMessage.style.padding = '10px 20px';
+        overlayMessage.style.borderRadius = '5px';
+        overlayMessage.style.zIndex = '20';
+        overlayMessage.style.textAlign = 'center';
+        overlayMessage.style.display = 'none';
+
+        // 获取 video 或 img 容器
+        const webcamContainer = document.getElementById('webcam-container');
+        webcamContainer.appendChild(overlayMessage);  // 将消息添加到容器中
+    }
+
+    overlayMessage.style.display = 'block'; // 显示消息
+
+    fetch(currentUrl + '/upload/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+
+        // 显示识别的图像
+        let recognizedImage = data.data.recognizedImage;
+        const imageElement = document.getElementById('recognized-image');
+        imageElement.src = 'data:image/png;base64,' + recognizedImage;
+        imageElement.style.display = 'block';
+
+        if (data.status === 'success') {
+            if (data.data.recognizedWord.length === 1) {
+                let letter = data.data.recognizedWord.toUpperCase();
+                handleKeyPress(letter);
+            }
+        } else {
+            alert('Recognition failed. Please try again.');
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    })
+    .finally(() => {
+        toggleWebcamBtn.textContent = 'Start Rec';
+        isRecording = false;
+        // 隐藏“辨识中”消息
+        overlayMessage.style.display = 'none';
+        toggleWebcamBtn.disabled = false;
+    });
+}
+
+async function startWebcam() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        webcamFeed.srcObject = stream;
+        webcamPlaceholder.style.display = 'none';
+        const imageElement = document.getElementById('recognized-image');
+        imageElement.style.display = 'none';  // 隐藏识别的图像
+        isRecording = true;
+        toggleWebcamBtn.textContent = 'Capture Image';
+    } catch (err) {
+        console.error("Error accessing the webcam:", err);
+        alert("Failed to access the webcam. Please check your permissions.");
+    }
+    toggleWebcamBtn.disabled = false;
+}
+
+function stopWebcam() {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = webcamFeed.videoWidth;
+    canvas.height = webcamFeed.videoHeight;
+
+    // 绘制视频帧到canvas上
+    context.drawImage(webcamFeed, 0, 0, canvas.width, canvas.height);
+
+    // 将canvas内容转为base64图像数据
+    const imageData = canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
+   
+    if (!imageData || imageData === "" || imageData === "data:,") {
+        // 如果圖片內容為空就不處理
+        console.log("imageData was empty!");
+        toggleWebcamBtn.disabled = false;
+        return
+    }
+   
+    submitImage(imageData);
+
+    // 停止摄像头流
+    const stream = webcamFeed.srcObject;
+    const tracks = stream.getTracks();
+
+    tracks.forEach(track => {
+        track.stop();
+    });
+
+    webcamFeed.srcObject = null;  // 清空video元素的srcObject
+}
+
+function toggleWebcam() {
+    toggleWebcamBtn.disabled = true;
+
+    if (isRecording) {
+        stopWebcam();
+    } else {
+        startWebcam();
+    }
+}
+
+toggleWebcamBtn.addEventListener('click', toggleWebcam);
+ // end recognition
+
+            async function startInput() {
+                if (!currentLetter) {
+                    alert("Please select a letter first!");
+                    return;
+                }
+                
+                const detectedLetter = await detectHandShape();
+                
+                if (detectedLetter === currentLetter) {
+                    score += 10;
+                    recognitionResult.textContent = `Correct! The detected hand shape matches ${currentLetter}`;
+                } else {
+                    recognitionResult.textContent = `Incorrect. The detected hand shape does not match ${currentLetter}`;
+                }
+                
+                updateUserScore();
+            }
+
+            async function detectHandShape() {
+                return alphabetLetters[Math.floor(Math.random() * alphabetLetters.length)];
+            }
+
+            function updateUserScore() {
+                userScore.textContent = `${userName}'s current score: ${score}`;
+            }
+
+            updateUserScore();
+
+            demoImage.onerror = function() {
+                console.error("Error loading image:", demoImage.src);
+                handShapeExplanation.textContent = `Error loading image. Please try another letter or check your internet connection.`;
+            };
+
+            document.getElementById("sidebarBtn").onclick = function() {
+                var sidebar = document.getElementById("sidebar");
+                
+                if (sidebar.style.width === "250px") {
+                    sidebar.style.width = "0";        
+                } else {
+                    sidebar.style.width = "250px";        
+                }
+            };
+        </script>
 
     </body>
 </html>
+
