@@ -62,6 +62,7 @@
         font-size: 24px;
         font-weight: bold;
         text-transform: uppercase;
+        border-radius: 10px;
     }
     #keyboard {
         display: grid;
@@ -103,6 +104,12 @@
         transform: translate(-50%, -50%);
         text-align: center;
     }
+
+    #controls {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
     #controls button {
         margin: 5px;
         padding: 10px 20px;
@@ -122,12 +129,24 @@
         color: white;
     }
 
-    #toggle-webcam, #submit, #give-up {
+    #toggle-webcam, #submit, #give-up, #ranking {
         font-size: 10px;
         border: 2px solid #c99458;
         background-color: #c99458;
         color: white;
         border-radius: 10px;
+    }
+
+    #scoreDisplay {
+        font: bold;
+        font-size: 20px;
+        color: #c99458;
+        display: flex;
+        align-items: center; /* 垂直置中 */
+        justify-content: center; /* 水平置中 */
+        height: 30px; /* 根據需要調整高度 */
+        border-radius: 10px;
+
     }
 
     body > div.content > div.detectionpart > div:nth-child(2) {
@@ -140,7 +159,7 @@
     .sidebar {
         font-weight: bold;
         font-family: Arial, sans-serif;
-        height: 25%;
+        height: 15%;
         width: 0;
         position: absolute;
         /* position: fixed; 固定不動 */
@@ -230,19 +249,20 @@
 
     
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <div class="head">this is head</div>
+    <div class="head"></div>
 
     <!-- ===============sidebar============== -->
     <div id="sidebar" class="sidebar">
         <!-- Your menu items go here -->
         <a href="../tutorial/">TutorialMode</a>
-        <a href="#services">CheatSheet</a>
+        <!-- <a href="#services">CheatSheet</a> -->
         <a href="../auth/login">Login</a>
     </div>
 
-    <button id="sidebarBtn">選單</button>
+    <button id="sidebarBtn">Menu</button>
     <!-- ===============sidebar============== -->
 
 
@@ -271,9 +291,18 @@
             <div id="controls">
                 <button id="toggle-webcam">Start Rec</button>
                 <button id="submit">Submit</button>
-                <button id="give-up">Give Up</button>
+                <button id="give-up">New Round</button>
+                <button id="ranking">Ranking</button>
             </div>
         </div>
+
+        <div class="container">
+            <div id="scoredisplay">
+                <div id="scoreText">Previous round result</div>
+            </div>
+        </div>
+
+
     </div>
 
 
@@ -292,7 +321,12 @@ const webcamPlaceholder = document.getElementById('webcam-placeholder');
 
 const sidebar = document.getElementById('sidebar');
 const slist = sidebar.querySelectorAll('a');
+const currentUrl = window.location.origin;
+const userid = new URLSearchParams(window.location.search).get('userid');
+const scoreList = {0:100,1:80,2:60,3:40,4:20,5:0};
+const scoreElement = document.getElementById('scoreText');
 
+let score = 0
 let currentWord = '';
 let currentRow = 0;
 let targetWord = '';
@@ -301,7 +335,7 @@ let submittedLetters = new Set();
 
 // Initialize the word grid
 // 更改可猜的次數(刪掉letterbox)
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 25; i++) {
     const letterBox = document.createElement('div');
     letterBox.classList.add('letter-box');
     wordGrid.appendChild(letterBox);
@@ -333,6 +367,7 @@ function updateGrid() {
 }
 
 function checkWord() {
+   
     if (currentWord.length !== 5) return;
 
     for (let i = 0; i < 5; i++) {
@@ -353,9 +388,14 @@ function checkWord() {
 
     if (currentWord === targetWord) {
         alert('Congratulations! You guessed the word!');
+        score = scoreList[currentRow];
+        sendScore();
+        scoreElement.textContent = `Previous round result: ${score}`;
         resetGame();
-    } else if (currentRow === 3) {       // 更改可猜的次數
+    } else if (currentRow === 4) {       // 更改可猜的次數
         alert(`Game over! The word was ${targetWord}`);
+        score = 0;
+        scoreElement.textContent = `Previous round result: ${score}`;
         resetGame();
     } else {
         currentRow++;
@@ -384,8 +424,65 @@ function resetGame() {
 }
 
 function generateRandomWord() {
-    const words = ['APPLE', 'BRAVE', 'CACTUS', 'DANCE', 'EAGLE', 'FABLE', 'GRAPE', 'HONEY', 'IVORY', 'JOKER'];
+    const words = ['APPLE', 'BRAVE', 'CANDY', 'DANCE', 'EAGLE', 'FABLE', 'GRAPE', 'HONEY', 'IVORY', 'JOKER'];
     return words[Math.floor(Math.random() * words.length)];
+}
+
+function sendScore(){
+    console.log(userid);
+    console.log(score);
+    const data = {
+        'userid': userid,
+        'score': score,
+        'token': sessionStorage.getItem('token')
+    }
+
+    fetch(currentUrl +'/game_submit/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            if (data.status === 'success') {
+               sessionStorage.setItem("totalscore",data.totalscore)
+               sessionStorage.setItem("count",data.count)
+               sessionStorage.setItem("rank",data.rank)
+            
+            } 
+            // else if (data.feedback === "noToken" || !sessionStorage.getItem('token')) {
+            //     Swal.fire({
+            //         position: "center",
+            //         icon: "error",
+            //         title: "請正確登入",
+            //         showConfirmButton: true,
+            //         // timer: 1500
+            //         }); } 
+            // else {
+            //         Swal.fire({
+            //         position: "center",
+            //         icon: "error",
+            //         title: "成績送出失敗",
+            //         showConfirmButton: true,
+            //         // timer: 1500
+            //         });
+            // }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            resultText.textContent = "Error during recognition.";
+        });
+
+
+
+
+
+
+
+
 }
 
 function processRecording() {
@@ -406,8 +503,7 @@ function submitVieo(base64Video) {
         mode: "your_mode"
     };
 
-    const currentUrl = window.location.origin;
-
+    
     fetch(currentUrl + '/upload_video/', {
         method: 'POST',
         headers: {
@@ -445,7 +541,7 @@ function submitImage(base64Image) {
     if (!overlayMessage) {
         overlayMessage = document.createElement('div');
         overlayMessage.id = 'overlay-message';
-        overlayMessage.textContent = '辨识中...';
+        overlayMessage.textContent = 'Loading...';
         overlayMessage.style.position = 'absolute';
         overlayMessage.style.top = '50%';
         overlayMessage.style.left = '50%';
@@ -613,9 +709,17 @@ document.getElementById("sidebarBtn").onclick = function() {
 // }
 
 if(sessionStorage.getItem("status") == "login"){
-    slist[2].textContent = 'Logout';
+    slist[1].textContent = 'Logout';
 }
 
+slist[1].addEventListener('click',()=>{
+    if(slist[1].textContent === 'Logout'){
+        sessionStorage.removeItem('status');
+        sessionStorage.removeItem('token');
+        slist[1].textContent = 'Login';
+    }
+
+})
 // =================sidebar=================
 
 

@@ -20,9 +20,10 @@ class StartGameRequestSerializer(serializers.Serializer):
     mode = serializers.CharField()
 
 class SubmitGameRequestSerializer(serializers.Serializer):
-    Authorization = serializers.CharField()
+    # Authorization = serializers.CharField()
     userid = serializers.CharField()
     score = serializers.IntegerField()
+    token = serializers.CharField()
     
 
 class PlayerSerializer(serializers.ModelSerializer):
