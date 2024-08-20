@@ -23,7 +23,7 @@ BATCH = 32
 
 
 def print_section_head(txt):
-    print('\n' + '-' * 8+ '\n' + txt)
+    print('\n' + '-' * 8 + '\n' + txt)
 
 
 # Define the working directory
