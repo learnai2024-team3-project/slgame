@@ -143,6 +143,7 @@ def upload(request):
         }, safe=False)
 
     except BaseException as e:
+        print(str(e))
         return JsonResponse({
                 "status": str(e),
                 "feedback": "",
