@@ -22,4 +22,4 @@ dataset = project.version(1).download("yolov5")
 END
 
 # 使用 YOLOv8 進行訓練
-yolo task=detect mode=train data=datasets/american-sign-language-letters-1/data.yaml epochs=50 batch=32
+yolo device=0,1 task=detect mode=train model=yolov8l.pt optimizer="auto" batch=32 data={dataset.location}/data.yaml epochs=50 imgsz=800
