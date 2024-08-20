@@ -80,7 +80,7 @@ body > div > div.row > div.row > div > div:nth-child(1) {
     border: 1px solid #ddd;
     border-radius: 10px;
 }
-
+/*
 .control-button {
     margin-right: 10px;
     padding: 10px 20px;
@@ -96,6 +96,15 @@ body > div > div.row > div.row > div > div:nth-child(1) {
 }
 .control-button:hover {
     background-color: #bf8c51;
+}
+*/
+
+#toggle-webcam {
+    font-size: 10px;
+    border: 2px solid #c99458;
+    background-color: #c99458;
+    color: white;
+    border-radius: 10px;
 }
 
 #hand-shape-explanation {
