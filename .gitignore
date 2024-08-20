@@ -88,7 +88,8 @@ local_settings.py
 .env
 # db.sqlite3
 
-models/
+models/datasets
+*.pt
 
 # public static
 public/assets/*

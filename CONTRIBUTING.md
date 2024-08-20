@@ -53,7 +53,7 @@ source <path/to/slg>/bin/activate # Windows 下為 <path/to/slg>\Scripts\activat
 `cd` 到專案根目錄，然後執行
 
 ```shell
-pip install -r 'requirements.txt'
+pip install -r requirements.txt
 ```
 
 #### 個別安裝
