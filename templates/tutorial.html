@@ -398,7 +398,7 @@ function submitImage(base64Image) {
     if (!overlayMessage) {
         overlayMessage = document.createElement('div');
         overlayMessage.id = 'overlay-message';
-        overlayMessage.textContent = '辨识中...';
+        overlayMessage.textContent = 'Recognizing...';
         overlayMessage.style.position = 'absolute';
         overlayMessage.style.top = '50%';
         overlayMessage.style.left = '50%';
@@ -435,13 +435,15 @@ function submitImage(base64Image) {
         imageElement.src = 'data:image/png;base64,' + recognizedImage;
         imageElement.style.display = 'block';
 
+
         if (data.status === 'success') {
             if (data.data.recognizedWord.length === 1) {
                 let letter = data.data.recognizedWord.toUpperCase();
-                handleKeyPress(letter);
+                updateUserScore('Letter: ' +letter, 'Confidence: '+data.data.confidence);
             }
         } else {
-            alert('Recognition failed. Please try again.');
+            
+            updateUserScore('Recognition failed', 'Please try again');
         }
     })
     .catch((error) => {
@@ -506,7 +508,7 @@ function stopWebcam() {
 
 function toggleWebcam() {
     toggleWebcamBtn.disabled = true;
-
+    updateUserScore(' ', ' ');
     if (isRecording) {
         stopWebcam();
     } else {
@@ -517,33 +519,14 @@ function toggleWebcam() {
 toggleWebcamBtn.addEventListener('click', toggleWebcam);
  // end recognition
 
-            async function startInput() {
-                if (!currentLetter) {
-                    alert("Please select a letter first!");
-                    return;
-                }
-                
-                const detectedLetter = await detectHandShape();
-                
-                if (detectedLetter === currentLetter) {
-                    score += 10;
-                    recognitionResult.textContent = `Correct! The detected hand shape matches ${currentLetter}`;
-                } else {
-                    recognitionResult.textContent = `Incorrect. The detected hand shape does not match ${currentLetter}`;
-                }
-                
-                updateUserScore();
+ 
+            function updateUserScore(regLetter, regConf) {
+            
+                recognitionResult.textContent = ` ${regLetter} `;
+                userScore.textContent = ` ${regConf} `;
             }
 
-            async function detectHandShape() {
-                return alphabetLetters[Math.floor(Math.random() * alphabetLetters.length)];
-            }
-
-            function updateUserScore() {
-                userScore.textContent = `${userName}'s current score: ${score}`;
-            }
-
-            updateUserScore();
+            updateUserScore(' ', ' ');
 
             demoImage.onerror = function() {
                 console.error("Error loading image:", demoImage.src);
