@@ -1,4 +1,3 @@
-
 const wordGrid = document.getElementById('word-grid');
 const keyboard = document.getElementById('keyboard');
 const toggleWebcamBtn = document.getElementById('toggle-webcam');
@@ -9,6 +8,7 @@ const webcamPlaceholder = document.getElementById('webcam-placeholder');
 
 const sidebar = document.getElementById('sidebar');
 const slist = sidebar.querySelectorAll('a');
+
 const currentUrl = window.location.origin;
 const userid = new URLSearchParams(window.location.search).get('userid');
 const scoreList = {0:100,1:80,2:60,3:40,4:20,5:0};
@@ -55,7 +55,6 @@ function updateGrid() {
 }
 
 function checkWord() {
-   
     if (currentWord.length !== 5) return;
 
     for (let i = 0; i < 5; i++) {
@@ -81,7 +80,7 @@ function checkWord() {
         scoreElement.textContent = `Previous round result: ${score}`;
         resetGame();
     } else if (currentRow === 4) {       // 更改可猜的次數
-        alert(`Game over! The word was ${targetWord}`);
+        alert(`Game over! The word was ${targetWord}.`);
         score = 0;
         scoreElement.textContent = `Previous round result: ${score}`;
         resetGame();
@@ -112,8 +111,7 @@ function resetGame() {
 }
 
 function generateRandomWord() {
-    const words = ['APPLE', 'BRAVE', 'CANDY', 'DANCE', 'EAGLE', 'FABLE', 'GRAPE', 'HONEY', 'IVORY', 'JOKER'];
-    return words[Math.floor(Math.random() * words.length)];
+    return wordList[Math.floor(Math.random() * wordList.length)];
 }
 
 function sendScore(){
@@ -165,7 +163,6 @@ function sendScore(){
         });
 }
 
-
 function processRecording() {
     let blob = new Blob(chunks, { type: 'video/webm' });
     chunks = [];
@@ -184,7 +181,6 @@ function submitVieo(base64Video) {
         mode: "your_mode"
     };
 
-    
     fetch(currentUrl + '/upload_video/', {
         method: 'POST',
         headers: {
@@ -217,30 +213,20 @@ function submitImage(base64Image) {
 
     const currentUrl = window.location.origin;
 
-    // 显示“辨识中”消息
+    // Display "Recognizing" message
     let overlayMessage = document.getElementById('overlay-message');
     if (!overlayMessage) {
         overlayMessage = document.createElement('div');
         overlayMessage.id = 'overlay-message';
-        overlayMessage.textContent = 'Loading...';
-        overlayMessage.style.position = 'absolute';
-        overlayMessage.style.top = '50%';
-        overlayMessage.style.left = '50%';
-        overlayMessage.style.transform = 'translate(-50%, -50%)';
-        overlayMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-        overlayMessage.style.color = 'white';
-        overlayMessage.style.padding = '10px 20px';
-        overlayMessage.style.borderRadius = '5px';
-        overlayMessage.style.zIndex = '20';
-        overlayMessage.style.textAlign = 'center';
-        overlayMessage.style.display = 'none';
+        overlayMessage.textContent = 'Recognizing...';
 
-        // 获取 video 或 img 容器
+        // Get video or img container
         const webcamContainer = document.getElementById('webcam-container');
-        webcamContainer.appendChild(overlayMessage);  // 将消息添加到容器中
+        webcamContainer.appendChild(overlayMessage);  // Adding message to the container
     }
 
-    overlayMessage.style.display = 'block'; // 显示消息
+    overlayMessage.style.display = 'block'; // Display message
+
 
     fetch(currentUrl + '/upload/', {
         method: 'POST',
@@ -253,7 +239,7 @@ function submitImage(base64Image) {
     .then(data => {
         console.log('Success:', data);
 
-        // 显示识别的图像
+        // Display the recognized image
         let recognizedImage = data.data.recognizedImage;
         const imageElement = document.getElementById('recognized-image');
         imageElement.src = 'data:image/png;base64,' + recognizedImage;
@@ -274,7 +260,8 @@ function submitImage(base64Image) {
     .finally(() => {
         toggleWebcamBtn.textContent = 'Start Rec';
         isRecording = false;
-        // 隐藏“辨识中”消息
+
+        // Hide "Recognizing" message
         overlayMessage.style.display = 'none';
         toggleWebcamBtn.disabled = false;
     });
@@ -286,7 +273,7 @@ async function startWebcam() {
         webcamFeed.srcObject = stream;
         webcamPlaceholder.style.display = 'none';
         const imageElement = document.getElementById('recognized-image');
-        imageElement.style.display = 'none';  // 隐藏识别的图像
+        imageElement.style.display = 'none';  // Hide recoginzed image
         isRecording = true;
         toggleWebcamBtn.textContent = 'Capture Image';
     } catch (err) {
@@ -302,14 +289,15 @@ function stopWebcam() {
     canvas.width = webcamFeed.videoWidth;
     canvas.height = webcamFeed.videoHeight;
 
-    // 绘制视频帧到canvas上
+    // Draw video frames onto canvas
     context.drawImage(webcamFeed, 0, 0, canvas.width, canvas.height);
 
-    // 将canvas内容转为base64图像数据
+    // Convert canvas content to base64 image data
     const imageData = canvas.toDataURL('image/png').replace('data:image/png;base64,', '');
    
     if (!imageData || imageData === "" || imageData === "data:,") {
-        // 如果圖片內容為空就不處理
+        // If the image content is empty, it will not be processed.
+
         console.log("imageData was empty!");
         toggleWebcamBtn.disabled = false;
         return
@@ -317,7 +305,7 @@ function stopWebcam() {
    
     submitImage(imageData);
 
-    // 停止摄像头流
+    // Stop camera streaming
     const stream = webcamFeed.srcObject;
     const tracks = stream.getTracks();
 
@@ -325,17 +313,16 @@ function stopWebcam() {
         track.stop();
     });
 
-    webcamFeed.srcObject = null;  // 清空video元素的srcObject
+    //Clear the srcObject of the video element
+    webcamFeed.srcObject = null; 
 }
 
 toggleWebcamBtn.addEventListener('click', toggleWebcam);
 
 submitBtn.addEventListener('click', submitWord);
 
-giveUpBtn.addEventListener('click', () => {
-    alert(`The word was ${targetWord}`);
-    resetGame();
-});
+giveUpBtn.addEventListener('click', giveUpThisTurn);
+
 
 // Handle keyboard input
 document.addEventListener('keydown', (event) => {
@@ -350,6 +337,8 @@ document.addEventListener('keydown', (event) => {
         submitWord();
     } else if (event.key === ' ') {
         toggleWebcam();
+    } else if (event.key === 'Esc') {
+        giveUpThisTurn();
     }
 });
 
@@ -371,6 +360,10 @@ function submitWord() {
     }
 }
 
+function giveUpThisTurn() {
+    alert(`The word was ${targetWord}`);
+    resetGame();
+}
 
 // =================sidebar=================
 document.getElementById("sidebarBtn").onclick = function() {
@@ -389,22 +382,20 @@ document.getElementById("sidebarBtn").onclick = function() {
 //     }
 // }
 
-if(sessionStorage.getItem("status") == "login"){
+if (sessionStorage.getItem("status") == "login") {
     slist[1].textContent = 'Logout';
 }
 
-slist[1].addEventListener('click',()=>{
-    if(slist[1].textContent === 'Logout'){
+slist[1].addEventListener('click', () => {
+    if (slist[1].textContent === 'Logout') {
         sessionStorage.removeItem('status');
         sessionStorage.removeItem('token');
         slist[1].textContent = 'Login';
     }
-
 })
 // =================sidebar=================
 
 
-
-
 // Initialize the game
 resetGame();
+

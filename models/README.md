@@ -8,7 +8,7 @@
     train.bat # Windows 批次檔
     ```
     ```shell
-    .train.sh # Shell Script
+    . ./train.sh # Shell Script
     ```
 
 
