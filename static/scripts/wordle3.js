@@ -9,6 +9,12 @@ const webcamPlaceholder = document.getElementById('webcam-placeholder');
 const sidebar = document.getElementById('sidebar');
 const slist = sidebar.querySelectorAll('a');
 
+const currentUrl = window.location.origin;
+const userid = new URLSearchParams(window.location.search).get('userid');
+const scoreList = {0:100,1:80,2:60,3:40,4:20,5:0};
+const scoreElement = document.getElementById('scoreText');
+
+let score = 0
 let currentWord = '';
 let currentRow = 0;
 let targetWord = '';
@@ -16,7 +22,8 @@ let isRecording = false;
 let submittedLetters = new Set();
 
 // Initialize the word grid
-for (let i = 0; i < 20; i++) {
+// 更改可猜的次數(刪掉letterbox)
+for (let i = 0; i < 25; i++) {
     const letterBox = document.createElement('div');
     letterBox.classList.add('letter-box');
     wordGrid.appendChild(letterBox);
@@ -68,9 +75,14 @@ function checkWord() {
 
     if (currentWord === targetWord) {
         alert('Congratulations! You guessed the word!');
+        score = scoreList[currentRow];
+        sendScore();
+        scoreElement.textContent = `Previous round result: ${score}`;
         resetGame();
-    } else if (currentRow === 3) {       // 更改可猜的次數
+    } else if (currentRow === 4) {       // 更改可猜的次數
         alert(`Game over! The word was ${targetWord}.`);
+        score = 0;
+        scoreElement.textContent = `Previous round result: ${score}`;
         resetGame();
     } else {
         currentRow++;
@@ -102,6 +114,55 @@ function generateRandomWord() {
     return wordList[Math.floor(Math.random() * wordList.length)];
 }
 
+function sendScore(){
+    console.log(userid);
+    console.log(score);
+    const data = {
+        'userid': userid,
+        'score': score,
+        'token': sessionStorage.getItem('token')
+    }
+
+    fetch(currentUrl +'/game_submit/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            if (data.status === 'success') {
+               sessionStorage.setItem("totalscore",data.totalscore)
+               sessionStorage.setItem("count",data.count)
+               sessionStorage.setItem("rank",data.rank)
+            
+            } 
+            // else if (data.feedback === "noToken" || !sessionStorage.getItem('token')) {
+            //     Swal.fire({
+            //         position: "center",
+            //         icon: "error",
+            //         title: "請正確登入",
+            //         showConfirmButton: true,
+            //         // timer: 1500
+            //         }); } 
+            // else {
+            //         Swal.fire({
+            //         position: "center",
+            //         icon: "error",
+            //         title: "成績送出失敗",
+            //         showConfirmButton: true,
+            //         // timer: 1500
+            //         });
+            // }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            resultText.textContent = "Error during recognition.";
+        });
+}
+
 function processRecording() {
     let blob = new Blob(chunks, { type: 'video/webm' });
     chunks = [];
@@ -119,8 +180,6 @@ function submitVieo(base64Video) {
         file: base64Video,
         mode: "your_mode"
     };
-
-    const currentUrl = window.location.origin;
 
     fetch(currentUrl + '/upload_video/', {
         method: 'POST',
@@ -168,6 +227,7 @@ function submitImage(base64Image) {
 
     overlayMessage.style.display = 'block'; // Display message
 
+
     fetch(currentUrl + '/upload/', {
         method: 'POST',
         headers: {
@@ -179,7 +239,7 @@ function submitImage(base64Image) {
     .then(data => {
         console.log('Success:', data);
 
-        // Display tje recognized image
+        // Display the recognized image
         let recognizedImage = data.data.recognizedImage;
         const imageElement = document.getElementById('recognized-image');
         imageElement.src = 'data:image/png;base64,' + recognizedImage;
@@ -200,6 +260,7 @@ function submitImage(base64Image) {
     .finally(() => {
         toggleWebcamBtn.textContent = 'Start Rec';
         isRecording = false;
+
         // Hide "Recognizing" message
         overlayMessage.style.display = 'none';
         toggleWebcamBtn.disabled = false;
@@ -236,6 +297,7 @@ function stopWebcam() {
    
     if (!imageData || imageData === "" || imageData === "data:,") {
         // If the image content is empty, it will not be processed.
+
         console.log("imageData was empty!");
         toggleWebcamBtn.disabled = false;
         return
@@ -251,7 +313,8 @@ function stopWebcam() {
         track.stop();
     });
 
-    webcamFeed.srcObject = null;  //Clear the srcObject of the video element
+    //Clear the srcObject of the video element
+    webcamFeed.srcObject = null; 
 }
 
 toggleWebcamBtn.addEventListener('click', toggleWebcam);
@@ -259,6 +322,7 @@ toggleWebcamBtn.addEventListener('click', toggleWebcam);
 submitBtn.addEventListener('click', submitWord);
 
 giveUpBtn.addEventListener('click', giveUpThisTurn);
+
 
 // Handle keyboard input
 document.addEventListener('keydown', (event) => {
@@ -318,12 +382,20 @@ document.getElementById("sidebarBtn").onclick = function() {
 //     }
 // }
 
-if(sessionStorage.getItem("status") == "login"){
-    slist[2].textContent = 'Logout';
+if (sessionStorage.getItem("status") == "login") {
+    slist[1].textContent = 'Logout';
 }
 
+slist[1].addEventListener('click', () => {
+    if (slist[1].textContent === 'Logout') {
+        sessionStorage.removeItem('status');
+        sessionStorage.removeItem('token');
+        slist[1].textContent = 'Login';
+    }
+})
 // =================sidebar=================
 
 
 // Initialize the game
 resetGame();
+

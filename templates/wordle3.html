@@ -1,59 +1,69 @@
-<!DOCTYPE html>
+{% load static %}
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Wordle AI - Sign Language Edition</title>
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'styles/wordle3.css' %}">
-    </head>
-    <body>
-        <div class="head"></div>
+  
+<head>
+    <!-- <base href="https://websim.ai/wordle-ai/"> -->
+    <title>Wordle AI - Sign Language Edition</title>
+    <link rel="stylesheet" href="{% static 'styles/wordle3.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 
-        <!-- ===============begin sidebar============== -->
-        <div id="sidebar" class="sidebar">
-            <!-- Your menu items go here -->
-            <a href="../tutorial/">TutorialMode</a>
-            <a href="#services">CheatSheet</a>
-            <a href="../auth/login">Login</a>
-        </div>
+<body>
+    <div class="head"></div>
 
-        <button id="sidebarBtn">Menu</button>
-        <!-- ===============end sidebar============== -->
+    <!-- ===============sidebar============== -->
+    <div id="sidebar" class="sidebar">
+        <!-- Your menu items go here -->
+        <a href="../tutorial/">TutorialMode</a>
+        <!-- <a href="#services">CheatSheet</a> -->
+        <a href="../auth/login">Login</a>
+    </div>
 
-        <div class="content">
-            <div class="gamepart">
-                <div class="container"> <!--Word grid-->
-                    <div id="word-grid"></div>
+    <button id="sidebarBtn">Menu</button>
+    <!-- ===============sidebar============== -->
+
+
+    <div class="content">
+        <div class="gamepart">
+            <div class="container"> <!--5x4 word grid-->
+                <div id="word-grid"></div>
+            </div>
+
+            <div class="container"> <!--QWERTY keyboard-->
+                <div id="keyboard"></div>
+            </div>
+        </div> <!-- END gamepart -->
+
+        <div class="detectionpart">
+            <div class="container"> <!--webcam feed, recognized image or placeholder-->
+                <div id="webcam-container">
+                    <video id="webcam-feed" autoplay playsinline style="transform: scaleX(-1);"></video>
+                    <img id="recognized-image" />
+                    <div id="webcam-placeholder">Webcam feed will appear here</div>
                 </div>
+            </div>
 
-                <div class="container"> <!--keyboard-->
-                    <div id="keyboard"></div>
+            <div class="container"> <!--control buttons-->
+                <div id="controls">
+                    <button id="toggle-webcam">Start Rec</button>
+                    <button id="submit">Submit</button>
+                    <button id="give-up">New Round</button>
+                    <button id="ranking">Ranking</button>
+                </div>
+            </div>
+
+            <div class="container">  <!--score display-->
+                <div id="score-display">
+                    <div id="scoreText">Previous round result</div>
                 </div>
             </div>
             
-            <div class="detectionpart"> 
-                <div class="container"> <!--webcam feed, recognized image or placeholder-->
-                    <div id="webcam-container">
-                        <video id="webcam-feed" autoplay playsinline style="transform: scaleX(-1);"></video>
-                        <img id="recognized-image" />
-                        <div id="webcam-placeholder">Webcam feed will appear here</div>
-                    </div>
-                </div>
+        </div> <!-- END detectionpart -->
+    </div> <!-- END content -->
 
-                <div class="container"> <!--buttons-->
-                    <div id="controls">
-                        <button id="toggle-webcam">Start Rec</button>
-                        <button id="submit">Submit</button>
-                        <button id="give-up">Give Up</button>
-                    </div>
-                </div>
+    <script src="{% static 'scripts/wordlist.js' %}"></script>
+    <script src="{% static 'scripts/wordle3.js' %}"></script>
 
-            </div>
-
-        </div>  
-
-        <script src="{% static 'scripts/wordlist.js' %}"></script>
-        <script src="{% static 'scripts/wordle3.js' %}"></script>
-
-    </body>
+</body>
 </html>
+

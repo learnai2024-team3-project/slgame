@@ -50,7 +50,6 @@ from backend.models import UserTab
 )
 
 @api_view(['POST'])
-# @transaction.atomic
 def submit_game(request):
 
     try:
@@ -73,42 +72,49 @@ def submit_game(request):
         # 取username和score
         userid = serializer.validated_data["userid"]
         score = serializer.validated_data["score"]
+        token = serializer.validated_data["token"]
+
         # print(username)
         # print(score)
+
         user = UserTab.objects.get(userid=userid)
-        # print(f'originscore = {user.totalscore}')
-        user.totalscore += score
-        # print(f'changescore = {user.totalscore}')
-        user.save()
-
-
+        login_token = user.login_token
+        
         # 排名
         def getRank(id, usersrank):
             for key, value in usersrank.items():
                 if value['userid'] == id:
                     return key
 
-        
-        usersByScore = UserTab.objects.all().order_by('-totalscore').values('userid')
-        usersRank = {rank:id for rank, id in enumerate(usersByScore, start=1)}
-        count = len(usersRank)
-        rank = getRank(userid, usersRank)
-        print(f'總人數: {count}; {userid}的排名:{rank}')
+        if token == login_token:
 
-       
-        # 回傳總分
-        return JsonResponse({
-            "status": "success",
-            "feedback": "",
-            "data":{
-                    "totalscore": user.totalscore,
-                    "count":count,
-                    "rank":rank,
-                }
-            
-            
-        }, safe=False)
-    
+            # print(f'originscore = {user.totalscore}')
+            user.totalscore += score
+            # print(f'changescore = {user.totalscore}')
+            user.save()
+
+            usersByScore = UserTab.objects.all().order_by('-totalscore').values('userid')
+            usersRank = {rank:id for rank, id in enumerate(usersByScore, start=1)}
+            count = len(usersRank)
+            rank = getRank(userid, usersRank)
+            print(f'總人數: {count}; {userid}的排名:{rank}')
+
+            # 回傳總分
+            return JsonResponse({
+                "status": "success",
+                "feedback": "",
+                "data":{
+                        "totalscore": user.totalscore,
+                        "count":count,
+                        "rank":rank,
+                    }
+            }, safe=False)
+        else:
+            return JsonResponse({
+                "status": "fail",
+                "feedback": "noToken",
+            }, safe=False)
+        
     except Exception as e:
         print(traceback.format_exc())
         return JsonResponse({
