@@ -91,6 +91,8 @@ local_settings.py
 # deep learning models
 models/datasets
 models/runs
+datasets/
+runs/
 *.pt
 
 # virtual environment

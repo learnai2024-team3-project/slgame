@@ -29,8 +29,9 @@ def index(request):
 def wordle_view(request):
     userid = request.GET.get('userid')
     title = "Wordle AI - Sign Language Edition"
-    context = {'userid':userid}
+    context = {'userid': userid}
     return render(request, 'wordle3.html', context)
+
 
 def tutorial_view(request):
     return render(request, 'tutorial.html')
@@ -38,3 +39,7 @@ def tutorial_view(request):
 
 def auth_login_view(request):
     return render(request, 'login.html')
+
+
+def register_view(request):
+    return render(request, 'register.html')
