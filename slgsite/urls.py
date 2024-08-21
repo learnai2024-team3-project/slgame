@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from backend.player_view import PlayerView
 from django.urls import include, re_path
-from backend.views import index, wordle_view, tutorial_view, auth_login_view
+from backend.views import index, wordle_view, tutorial_view, auth_login_view, register_view
 
 from backend.auth_login_view import other_login
 from backend.upload_view import upload, upload_video
@@ -47,7 +47,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index),
     path("wordle3/", wordle_view, name='wordle'),
-    # path("wordle2/<str:userid>/", wordle_view, name='wordle_view_withUserId'),
     path('tutorial/', tutorial_view, name='tutorial'),
     path('players/', PlayerView.as_view()),
     path("auth/login/", auth_login_view, name='login'),
