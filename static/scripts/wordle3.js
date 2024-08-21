@@ -337,7 +337,7 @@ document.addEventListener('keydown', (event) => {
         submitWord();
     } else if (event.key === ' ') {
         toggleWebcam();
-    } else if (event.key === 'Esc') {
+    } else if (event.key === 'Escape') {
         giveUpThisTurn();
     }
 });
