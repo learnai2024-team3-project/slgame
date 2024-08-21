@@ -97,9 +97,8 @@ runs/
 
 # virtual environment
 .venv
+.matplotlib
 
 # public static
 public/assets/*
 !public/assets/.gitkeep
-
-.matplotlib

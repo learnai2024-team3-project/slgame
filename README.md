@@ -69,11 +69,17 @@ source <path/to/slg>/bin/activate # Windows 下為 <path/to/slg>\Scripts\activat
 ### 安裝相依套件
 
 #### 批量安裝（推薦使用）
-`cd` 到專案根目錄，然後執行
+1. `cd` 到專案根目錄。
+2. 如果要用學校電腦的 GPU 訓練模型，先用以下指令安裝 PyTorch，否則跳過此步驟。
+    ```shell
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+    ```
+3. 批量安裝。
+    ```shell
+    pip install -r requirements.txt
+    ```
 
-```shell
-pip install -r requirements.txt
-```
+
 
 #### 個別安裝
 ``` shell

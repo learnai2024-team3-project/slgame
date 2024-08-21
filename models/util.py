@@ -2,12 +2,40 @@ import os
 import yaml
 
 
+def print_section_head(txt, divider=('-', 100)):
+    print('\n' + divider[0] * divider[1] + '\n' + txt)
+
+
+def check_gpu():
+    import subprocess
+    print_section_head('Checking GPU status...')
+    subprocess.run(['nvidia-smi'])
+
+
+def check_torch_cuda():
+    print_section_head('Checking CUDA status...')
+    import torch
+    print('CUDA available? -->', torch.cuda.is_available())
+    print('Using', torch.cuda.device_count(), 'GPU(s)')
+
+
+def check_ultralytics():
+    print_section_head('Checking ultralytics and environment...')
+    from ultralytics import checks
+    checks()
+
+
+def check_all():
+    check_gpu()
+    check_torch_cuda()
+    check_ultralytics()
+
+
 def find_dataset_directory(base_dir, target_subdir):
     for root, dirs, files in os.walk(base_dir):
         if target_subdir in dirs:
             return os.path.join(root, target_subdir)
     return None
-
 
 def update_data_yaml(yaml_path):
     # 獲取當前工作目錄
@@ -53,6 +81,4 @@ def add_path_equal_dot(yaml_path):
 
 
 if __name__ == '__main__':
-    # 使用範例
-    yaml_path = 'data.yaml'  # 替換為你實際的 yaml 文件路徑
-    update_data_yaml(yaml_path)
+    check_all()
