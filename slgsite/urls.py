@@ -19,6 +19,7 @@ from django.urls import path
 from backend.player_view import PlayerView
 from django.urls import include, re_path
 from backend.views import index, wordle_view, tutorial_view, auth_login_view
+
 from backend.auth_login_view import other_login
 from backend.upload_view import upload, upload_video
 from backend.game_start_view import game_start
@@ -46,15 +47,17 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index),
     path("wordle3/", wordle_view, name='wordle'),
+    # path("wordle2/<str:userid>/", wordle_view, name='wordle_view_withUserId'),
     path('tutorial/', tutorial_view, name='tutorial'),
     path('players/', PlayerView.as_view()),
     path("auth/login/", auth_login_view, name='login'),
     path("login/", other_login),
-    path("auth/register/", register),
+    path("auth/register/", register_view),
+    path("register/", register),
     path("upload/", upload),
     path("upload_video/", upload_video),
     path("game/start", game_start),
-    path("game/submit", submit_game),
+    path("game_submit/", submit_game),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             view=schema_view.without_ui(cache_timeout=0),
             name='schema-json'

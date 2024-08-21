@@ -126,16 +126,16 @@ const registerbtn = document.getElementById('registerbtn');
 // const csrftoken = getCookie('csrftoken'); // 提取 CSRF 令牌的函數
 
 // console.log(client_id)
+const currentUrl = window.location.origin;
 
 generalbtn.addEventListener('click', ()=>{
     
-
     const data ={
         "client_id": client_id.value,
         "password": password.value
     }
 
-    fetch('http://127.0.0.1:8000/login/', {
+    fetch(currentUrl +'/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -148,14 +148,23 @@ generalbtn.addEventListener('click', ()=>{
             console.log('Success:', data);
             if (data.status === 'success') {
                sessionStorage.setItem("status","login")
+               sessionStorage.setItem("token",data.loginToken)
                Swal.fire({
                     position: "center",
                     icon: "success",
                     title: "登入成功",
                     showConfirmButton: false,
-                    timer: 3000
-                    });
-                document.location.href="../../wordle2/"
+                    timer: 1500
+                    })
+                    .then(()=>{
+                        // redirectUrl.searchParams.set('userid', data.userid)
+                        window.location.href='/wordle3/?userid=' + data.userid
+                        // console.log(data.redirect_url)
+                        // document.location.href="../../wordle2/"
+                        // redirect_url = data.redirect_url
+                        // document.location.href = currentUrl + redirect_url  // /wordle2/123/
+                    })
+                
 
             } else {
                 Swal.fire({

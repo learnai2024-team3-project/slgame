@@ -96,7 +96,7 @@
     const mail = document.getElementById('mail');
     const registerbtn = document.getElementById('registerbtn');
     
-    
+    const currentUrl = window.location.origin;
 
     registerbtn.addEventListener('click', ()=>{
 
@@ -111,7 +111,7 @@
                 "mail": mail.value
              }
 
-            fetch('http://127.0.0.1:8000/register/', {
+            fetch(currentUrl + '/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -123,22 +123,21 @@
         .then(data => {
             console.log('Success:', data);
             if (data.status === 'success') {
-            //    sessionStorage.setItem("status","login")
+               sessionStorage.setItem("status","login")
+               sessionStorage.setItem("token",data.loginToken)
                Swal.fire({
                     position: "center",
                     icon: "success",
                     title: "註冊成功",
                     showConfirmButton: false,
-                    timer: 3000
-                    });
+                    timer: 1500
+                    })
+                    .then(()=>{
+                        // redirect_url = data.redirect_url
+                        // document.location.href = currentUrl + redirect_url  // /wordle2/123/
+                        window.location.href='/wordle3/?userid=' + data.userid
+                    })
                 
-                // document.location.href="../../wordle2/"
-                // redirect_url = data.redirect_url
-
-                // 跳轉不過去
-                // document.location.href = window.location.origin + data.redirect_url  // /wordle2/123/
-                // document.location.href = "../../" + data.redirect_url.replace(/^\//, '');
-                // document.location.href = "../../" + redirect_url.substring(1);
 
 
             } else if (data.errortype === 'repeatuserid'){

@@ -1,3 +1,4 @@
+import uuid
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db import transaction
@@ -17,8 +18,8 @@ from backend.serializers import AuthLoginRequestSerializer,\
       UploadRequestSerializer,\
       StartGameRequestSerializer, SubmitGameRequestSerializer
 
-from django.views.decorators.csrf import csrf_exempt
-
+from django.urls import reverse
+from django.utils import timezone
 
 @swagger_auto_schema(
         methods=['POST'],
@@ -57,10 +58,23 @@ def other_login(request):
         user = UserTab.objects.get(userid=userid)
         if user:
               if user.password == password:
+                  
+                    user.last_login_time = timezone.now();
+                    # print(user.last_login_time);
+                    # user.save();
+
+                    user.login_token = uuid.uuid4().hex  # 生成新的 token
+                    user.save(update_fields=['login_token', 'last_login_time'])  # 更新 token 和最後登入時間
+
                     print(f'登入成功')
+                    # target_url = reverse('wordle', kwargs={'userid': userid})
+                    # print(target_url)
                     return JsonResponse({
                         "status": "success",
-                        "message": "Login successful",    
+                        "message": "Login successful", 
+                        # "redirect_url": target_url,  
+                        'userid': userid, 
+                        "loginToken": user.login_token,
                     }, safe=False)
               else:
                     print(f'密碼輸入錯誤')

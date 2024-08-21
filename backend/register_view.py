@@ -1,6 +1,8 @@
+import uuid
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db import transaction
+from django.urls import reverse
 from rest_framework.generics import GenericAPIView
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -60,11 +62,20 @@ def register(request):
         if UserTab.objects.get(userid=userid):
             print(f'重複建立使用者帳號{userid}')
             return JsonResponse({
+                "status": "fail",
+                "errortype": "repeatuserid",
                 "error": f"重複建立使用者帳號{userid}",
             }, safe=False)
         
     except UserTab.DoesNotExist:
          UserTab.objects.create(userid=userid, useremail=useremail, password=password)
+         user = UserTab.objects.get(userid=userid);
+         user.login_token = uuid.uuid4().hex  # 生成新的 token
+         user.save(update_fields=['login_token', 'last_login_time'])  # 更新 token 和最後登入時間
+    
          return JsonResponse({
-              'message': '成功建立使用者帳號'
+              "status": "success",
+              'message': '成功建立使用者帳號',
+              "userid": userid,  
+              "loginToken": user.login_token,
          }, safe=False)
