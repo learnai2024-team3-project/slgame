@@ -32,7 +32,7 @@ python manage.py collectstatic
 5. 點選 OK，開始安裝虛擬環境
 6. 安裝完之後，到終端機啟用虛擬環境
    - Powershell `.\venv\Scripts\Activate\ps1`
-   - Commnad Promt `.venv/Scripts\activate.bat`
+   - Commnad Promt `.venv\Scripts\activate.bat`
    - Shell `.venv/Scripts\activate`
 7. 在終端機執行 `pip list`，確認套件都已經安裝
 8. 在終端機執行 `deactivate` 可停用虛擬環境
