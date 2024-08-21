@@ -6,12 +6,13 @@ import subprocess
 from roboflow import Roboflow
 import ultralytics
 from ultralytics import YOLO
+from yaml_parser import update_data_yaml
 
 API_KEY = "UMHEdNtxcnwY7uVP60Lh"
 WORKSPACE = "david-lee-d0rhs"
 PROJECT = "american-sign-language-letters"
 VERSION = 1
-FORMAT = "yolov8"
+FORMAT = "yolov5"
 # https://universe.roboflow.com/david-lee-d0rhs/american-sign-language-letters
 
 EPOCH = 10
@@ -22,13 +23,13 @@ BATCH = 32
 # ----------------------------------------------------------------------
 
 
-def print_section_head(txt):
-    print('\n' + '-' * 8 + '\n' + txt)
+def print_section_head(txt, divider=('-', 100)):
+    print('\n' + divider[0] * divider[1] + '\n' + txt)
 
 
 # Define the working directory
-HOME = os.getcwd()
-print('Working directory: ', HOME)
+MODEL_DIR = os.getcwd()
+print('Working directory: ', MODEL_DIR)
 
 
 # Check GPU status
@@ -42,7 +43,7 @@ ultralytics.checks()
 
 
 # Create datasets directory and navigate into it
-datasets_dir = os.path.join(HOME, 'datasets')
+datasets_dir = os.path.join(MODEL_DIR, 'datasets')
 os.makedirs(datasets_dir, exist_ok=True)
 os.chdir(datasets_dir)
 print('Dataset directory: ', datasets_dir)
@@ -57,11 +58,10 @@ version = project.version(VERSION)
 dataset = version.download(FORMAT)
 
 
-# Add a new line `path: .` at the end of the dataset configuration file
-os.chdir(dataset.location)
-with open('data.yaml', 'a') as file:
-    file.write('\npath: .\n')
-os.chdir(HOME)
+# Ensure `path: .` is at the end of the dataset configuration file
+config_path = os.path.join(f'{dataset.location}', 'data.yaml')# 替換為你實際的 yaml 文件路徑
+update_data_yaml(config_path)
+os.chdir(MODEL_DIR)
 
 
 # Initialize the YOLO pre-trained model
@@ -70,12 +70,13 @@ print_section_head('Initialize YOLO model')
 model = YOLO('yolov8l.pt')
 
 
-# Congifure hyperparameters and start model training
+# # Congifure hyperparameters and start model training
 print_section_head('Start training...')
 model.train(
-    data=f'{dataset.location}/data.yaml',  # Dataset configuration file
-    epochs=EPOCH,                          # Number of training epochs
-    imgsz=IMGSZ,                           # Image size
-    batch=BATCH,                           # Batch size
-    optimizer="auto"                       # Optimizer
+    data=config_path,       # dataset configuration file
+    epochs=EPOCH,           # number of training epochs
+    imgsz=IMGSZ,            # image size
+    batch=BATCH,            # batch size
+    optimizer="auto",       # optimizer
+    save_dir=MODEL_DIR      # saving directory
 )
