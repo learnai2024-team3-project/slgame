@@ -4,7 +4,7 @@
 HOME=$(pwd)
 
 # 查看 GPU 的狀態
-nvidia-smi
+# nvidia-smi
 
 # 檢查 YOLOv8 環境
 python -c "import ultralytics; ultralytics.checks()"
@@ -21,5 +21,13 @@ project = rf.workspace("david-lee-d0rhs").project("american-sign-language-letter
 dataset = project.version(1).download("yolov5")
 END
 
+# cd dataset.location
+# echo dataset.location
+# echo "path: ." | tee -a data.yaml
+# cat ./data.yaml
+
+cd $HOME
 # 使用 YOLOv8 進行訓練
-yolo device=0,1 task=detect mode=train model=yolov8l.pt optimizer="auto" batch=32 data={dataset.location}/data.yaml epochs=50 imgsz=800
+# yolo device=0,1 task=detect mode=train model=yolov8l.pt optimizer="auto" batch=32 data={dataset.location}/data.yaml epochs=50 imgsz=800
+
+export HOME=$(echo ~)
