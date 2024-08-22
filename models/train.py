@@ -2,8 +2,9 @@ import os
 from roboflow import Roboflow
 from ultralytics import YOLO
 from util import check_all, print_section_head, update_data_yaml
+from decouple import config
 
-API_KEY = "UMHEdNtxcnwY7uVP60Lh"
+ROBOFLOW_API_KEY = config('ROBOFLOW_API_KEY')
 WORKSPACE = "david-lee-d0rhs"
 PROJECT = "american-sign-language-letters"
 VERSION = 1
@@ -25,29 +26,29 @@ if __name__ == '__main__':
 
     check_all()
 
-    # # Create datasets directory and navigate into it
-    # datasets_dir = os.path.join(MODEL_DIR, 'datasets')
-    # os.makedirs(datasets_dir, exist_ok=True)
-    # os.chdir(datasets_dir)
-    # print('Dataset directory: ', datasets_dir)
+    # Create datasets directory and navigate into it
+    datasets_dir = os.path.join(MODEL_DIR, 'datasets')
+    os.makedirs(datasets_dir, exist_ok=True)
+    os.chdir(datasets_dir)
+    print('Dataset directory: ', datasets_dir)
 
-    # # Initialize Roboflow and download the dataset
-    # print_section_head('Initialize Roboflow and download the dataset')
-    # rf = Roboflow(api_key=API_KEY)
-    # workspace = rf.workspace(WORKSPACE)
-    # project = workspace.project(PROJECT)
-    # version = project.version(VERSION)
-    # dataset = version.download(FORMAT)
+    # Initialize Roboflow and download the dataset
+    print_section_head('Initialize Roboflow and download the dataset')
+    rf = Roboflow(api_key=ROBOFLOW_API_KEY)
+    workspace = rf.workspace(WORKSPACE)
+    project = workspace.project(PROJECT)
+    version = project.version(VERSION)
+    dataset = version.download(FORMAT)
 
-    # # Ensure `path: .` is at the end of the dataset configuration file
-    # config_path = os.path.join(f'{dataset.location}', 'data.yaml')
-    # update_data_yaml(config_path)
-    # os.chdir(MODEL_DIR)
+    # Ensure `path: .` is at the end of the dataset configuration file
+    config_path = os.path.join(f'{dataset.location}', 'data.yaml')
+    update_data_yaml(config_path)
+    os.chdir(MODEL_DIR)
 
-    # # Initialize the YOLO pre-trained model
-    # print_section_head('Initialize YOLO model')
-    # # Our choice: YOLOv8 Large
-    # model = YOLO('yolov8m.pt')
+    # Initialize the YOLO pre-trained model
+    print_section_head('Initialize YOLO model')
+    # Our choice: YOLOv8 Large
+    model = YOLO('yolov8l.pt')
 
     # # # Congifure hyperparameters and start model training
     # print_section_head('Start training...')
