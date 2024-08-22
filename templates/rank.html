@@ -1,0 +1,277 @@
+<html><head><base href="https://websimulation.dev/game-rankings/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Rankings</title>
+<style>
+    :root {
+        --primary-color: #FF4136; /* Red */
+        --secondary-color: #FF851B; /* Orange */
+        --background-color: #FFF0F5; /* Light Pink */
+        --text-color: #85144b; /* Dark Pink */
+        --highlight-color: #FF69B4; /* Hot Pink */
+        --brown-accent: #8B4513; /* Saddle Brown */
+        --light-brown: #DEB887; /* Burlywood */
+        --gold-color: #FFD700; /* Gold */
+        --competing-text-color: #A0522D; /* Sienna - a warm brown that complements the existing color scheme */
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 400px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 15px;
+        background-color: var(--light-brown);
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        color: var(--brown-accent);
+        margin-bottom: 5px;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        color: var(--competing-text-color);
+        font-weight: bold;
+    }
+
+    .user-rank {
+        background-color: white;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(139, 69, 19, 0.2);
+        margin-bottom: 15px;
+        border: 2px solid var(--brown-accent);
+    }
+
+    .rank-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--brown-accent);
+        display: inline-block;
+    }
+
+    .username {
+        font-size: 1.2rem;
+        margin-top: 5px;
+        color: var(--brown-accent);
+    }
+
+    .user-score {
+        font-size: 1.1rem;
+        margin-top: 5px;
+        color: var(--secondary-color);
+        font-weight: bold;
+    }
+
+    .medal {
+        width: 30px;
+        height: 30px;
+        margin-left: 5px;
+        vertical-align: super;
+    }
+
+    .leaderboard {
+        background-color: white;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(139, 69, 19, 0.2);
+        flex-grow: 1;
+        border: 2px solid var(--brown-accent);
+    }
+
+    .leaderboard-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--brown-accent);
+    }
+
+    .leaderboard-list {
+        list-style-type: none;
+    }
+
+    .leaderboard-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--light-brown);
+    }
+
+    .leaderboard-item:nth-child(even) {
+        background-color: #FFF5E6; /* Light Brown */
+    }
+
+    .leaderboard-rank {
+        font-weight: bold;
+        width: 20px;
+        color: var(--brown-accent);
+    }
+
+    .leaderboard-username {
+        flex-grow: 1;
+        text-align: left;
+        padding: 0 5px;
+        font-size: 0.9rem;
+    }
+
+    .leaderboard-score {
+        font-weight: bold;
+        color: var(--brown-accent);
+        font-size: 0.9rem;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-return {
+        background-color: var(--brown-accent);
+        color: white;
+    }
+
+    .btn-return:hover {
+        background-color: #A0522D; /* Sienna */
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Game Rankings</h1>
+        <p class="subtitle">Competing with <span id="total-players">1,234</span> players</p>
+    </header>
+
+    <section class="user-rank">
+        <span id = "rank" class="rank-number">7</span>
+        <svg class="medal" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 15C15.866 15 19 11.866 19 8C19 4.13401 15.866 1 12 1C8.13401 1 5 4.13401 5 8C5 11.866 8.13401 15 12 15Z" fill="#FFD700"/>
+            <path d="M7 13.5V23L12 20L17 23V13.5" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p id = "player" class="username">John_Doe</p>
+        <p id = "score" class="user-score">Score: 8,200</p>
+    </section>
+
+    <section class="leaderboard">
+        <h2 class="leaderboard-title">Top Players</h2>
+        <ul class="leaderboard-list" id="leaderboard-list">
+            <!-- Leaderboard items will be dynamically inserted here -->
+        </ul>
+    </section>
+
+    <div class="btn-container">
+        <button class="btn btn-return" id="return-btn">Return to Game</button>
+    </div>
+</div>
+
+<script>
+    const userid = new URLSearchParams(window.location.search).get('userid');
+    const currentUrl = window.location.origin;
+    const player = document.getElementById('player');
+    const score = document.getElementById('score');
+    const rank = document.getElementById('rank');
+    const totalPlayers = document.getElementById('total-players')
+    const leaderboardList = document.getElementById('leaderboard-list');
+    
+
+    //讀取就載入
+    window.addEventListener('load', getRank())
+
+    
+    function getRank(){
+
+        fetch(currentUrl + `/rank/?userid=${userid}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            //=======================渲染!!!
+                player.innerText = userid;
+                score.innerText = data.score;
+                rank.innerText = data.rank;
+                totalPlayers.innerText = data.count;
+
+                data.users.forEach(player => {
+                const listItem = document.createElement('li');
+                listItem.className = 'leaderboard-item';
+                listItem.innerHTML = `
+                    <span class="leaderboard-rank">${player.rank}</span>
+                    <span class="leaderboard-username">${player.userid}</span>
+                    <span class="leaderboard-score">${player.score.toLocaleString()}</span>
+                `;
+                leaderboardList.appendChild(listItem);
+            });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+
+    }
+    
+
+    function returnToGame() {
+        // Simulate returning to the game
+        window.close();
+    }
+
+    // Event listener
+    document.getElementById('return-btn').addEventListener('click', returnToGame);
+
+    // Initialize the page
+    populateLeaderboard();
+
+    // Simulate real-time updates
+    setInterval(() => {
+        const totalPlayers = document.getElementById('total-players');
+        const currentPlayers = parseInt(totalPlayers.textContent.replace(',', ''));
+        totalPlayers.textContent = (currentPlayers + Math.floor(Math.random() * 10)).toLocaleString();
+    }, 5000);
+</script>
+</body>
+</html>

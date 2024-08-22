@@ -43,3 +43,8 @@ def auth_login_view(request):
 
 def register_view(request):
     return render(request, 'register.html')
+
+def rank_view(request):
+    userid = request.GET.get('userid')
+    context = {'userid': userid}
+    return render(request, 'rank.html', context)

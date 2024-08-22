@@ -18,13 +18,14 @@ from django.contrib import admin
 from django.urls import path
 from backend.player_view import PlayerView
 from django.urls import include, re_path
-from backend.views import index, wordle_view, tutorial_view, auth_login_view, register_view
+from backend.views import index, wordle_view, tutorial_view, auth_login_view, register_view, rank_view
 
 from backend.auth_login_view import other_login
 from backend.upload_view import upload, upload_video
 from backend.game_start_view import game_start
 from backend.submit_game_view import submit_game
 from backend.register_view import register
+from backend.rank_view import get_rank
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -57,6 +58,9 @@ urlpatterns = [
     path("upload_video/", upload_video),
     path("game/start", game_start),
     path("game_submit/", submit_game),
+    path("rank/", get_rank),
+    path("wordle3/rank/", rank_view),
+
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             view=schema_view.without_ui(cache_timeout=0),
             name='schema-json'

@@ -32,6 +32,19 @@ class PlayerSerializer(serializers.ModelSerializer):
          fields = '__all__'
 
 
+# class UserScoreSerializer(serializers.Serializer):
+#     userid = serializers.CharField()         # 定義 userid 的類型
+#     score = serializers.IntegerField()       # 定義 score 的類型
+
+# class RankQuerySerializer(serializers.Serializer):
+#     count = serializers.IntegerField()       # 整數類型的 count
+#     rank = serializers.IntegerField()        # 整數類型的 rank
+#     users = serializers.ListField(           # 包含物件的陣列
+#         child=UserScoreSerializer()          # 使用嵌套的序列化器來定義每個物件
+#     )
+
+
+
 # class LineQuerySerializer(serializers.Serializer):
 #     response_type = serializers.CharField()
 #     client_id = serializers.CharField()

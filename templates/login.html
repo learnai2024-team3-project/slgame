@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Login</title>
     <style>
 
 body {
@@ -77,12 +77,12 @@ body {
         }
 
         .container .register-btn {
-            background-color: #007bff;
+            background-color: #be975c;
             color: white;
         }
 
         .container .register-btn:hover {
-            background-color: #0056b3;
+            background-color: #d7ab69;
         }
 
     </style>
@@ -98,12 +98,12 @@ body {
 
         <div class="container">
             
-            <h2>Let's play</h2>
+            <h2 style="text-align: center">Let's play</h2>
             <input id="client_id" type="text" placeholder="帳號">
             <input id="password" type="password" placeholder="密碼">
             <button id="generalbtn" class="general-btn">登入</button>
-            <button id="linebtn"class="line-btn">使用 LINE 登入</button>
-            <button id="googlebtn" class="google-btn">使用 Google 登入</button>
+            <!-- <button id="linebtn"class="line-btn">使用 LINE 登入</button>
+            <button id="googlebtn" class="google-btn">使用 Google 登入</button> -->
             <button id="registerbtn" class="register-btn">註冊新帳號</button>
 
 
@@ -184,6 +184,10 @@ generalbtn.addEventListener('click', ()=>{
     
 
 
+})
+
+registerbtn.addEventListener('click',()=>{
+    window.location.href='../register/';
 })
 
 

@@ -9,27 +9,32 @@
     <style>
  body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+    /* margin: 0;
+    padding: 20px; */
     background-color: #f0f0f0;
 }
+
+.head {
+    /* border:2px solid red; */
+    /* height: 10px; */
+    width: 100%;
+
+}
 .container {
-    max-width: 1200px;
+    /* max-width: 1200px;
     margin: 0 auto;
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; */
     /* padding: 20px; */
     /* border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1); */
 
-   
-}
+    /* max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column; */
 
-
-.row {
-    /* display: flex;
-    margin-bottom: 20px; */
-
-    /* border: 3px solid orange; */
+    /* border: 3px solid purple; */
     font-family: Arial, sans-serif;
     display: inline-flex;
     /* flex-wrap: wrap; */
@@ -40,11 +45,32 @@
 
 
 }
+
+
+.row {
+    /* display: flex;
+    margin-bottom: 20px; */
+
+    /* border: 3px solid orange; */
+    /* flex-wrap: wrap; */
+    /* padding: 20px; */
+
+    /* font-family: Arial, sans-serif;
+    display: inline-flex;
+    justify-content: space-around;
+    background-color: #f0f0f0;
+    width: 100%; */
+
+    /* display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; */
+}
+
+
+
 .column {
     /* flex: 1;
     padding: 10px; */
-
-
  /* border:2px solid green; */
  background-color: white;
  border-radius: 10px;
@@ -54,20 +80,31 @@
 
 }
 
-.tutorialpart {
+/* .tutorialpart { */
     /* border: 2px solid purple; */
-    margin-left: 60px;
-}
+    /* margin-left: 60px;
+    margin-top: 40px;
+} */
 
-.detectionpart {
-    /* border: 2px solid pink; */
+/* .detectionpart { */
+    /* margin-left: 180px;
+    margin-top: 40px;
+    margin-right: 10px; */
+/* } */
+
+/* .detectionpart {
     width: 100%;
     max-width: fit-content;
-}
+} */
 
-body > div > div.row > div.row > div > div:nth-child(1) {
+/* .div.row:nth-child(2) {
+    width: 100%;
+    max-width: fit-content;
+} */
+
+/* body > div > div.row > div.row > div > div:nth-child(1) {
   
-}
+} */
 #webcam-container {
         
         width: 100%;
@@ -255,30 +292,81 @@ body > div > div.row > div.row > div > div:nth-child(1) {
     border-radius: 10px;
 }
 
+#recognition-result, #user-score{
+    font: bold;
+    font-size: 15px;
+    color: #c99458;
+    display: flex;
+    align-items: center; /* 垂直置中 */
+    justify-content: center; /* 水平置中 */
+    border-radius: 10px;
+}
 
 
  /* 響應式設計 */
+ 
+ @media screen and (min-width: 1001px) {
+    .container {
+        display: flex;
+        flex-direction: row;
+        /* align-items: center; */
+    }
+
+    .tutorialpart {
+        width: 310px; /* 固定寬度，不隨螢幕縮放 */
+        margin-bottom: 20px;
+    }
+
+    .detectionpart {
+        width: 100%; /* 保持響應性，避免過窄或過寬 */
+        margin-bottom: 20px;
+    }
+}
+
+
+@media screen and (max-width: 1000px) { 
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .tutorialpart {
+        width: 310px; /* 固定寬度，不隨螢幕縮放 */
+        margin-left: 70px;
+        margin-right: 45px;
+    }
+
+    .detectionpart {
+        width: 90%; /* 調整寬度以便兩者可以在大螢幕上均勻分布 */
+        
+        margin-left: 45px;
+        margin-right: 70px;
+    }
+}
+ 
+
+
 
     </style>
 
     <body>
 
-
+        <div class="head"></div>
         <!-- ===============sidebar============== -->
         <div id="sidebar" class="sidebar">
             <!-- Your menu items go here -->
             <a href="../wordle3/">WordleMode</a>
-            <a href="#services">CheatSheet</a>
-            <a href="#contact">Challenge</a>
+            <a href="../auth/login">Login</a>
         </div>
 
-        <button id="sidebarBtn">選單</button>
+        <button id="sidebarBtn">Menu</button>
         <!-- ===============sidebar============== -->
 
         <div class="container">
  
-            <div class="row">
-
                 <div class = "tutorialpart">
 
                     <div class="column">
@@ -296,9 +384,9 @@ body > div > div.row > div.row > div > div:nth-child(1) {
                     </div>
 
                 </div>
-            </div>
-                
-            <div class="row">
+        </div>
+
+            <div class="container">
                 <div class = "detectionpart">
                     <div class="column">
                         <div id="webcam-container">
@@ -314,7 +402,7 @@ body > div > div.row > div.row > div > div:nth-child(1) {
                     </div>
                 
                 </div>
-            </div>         
+
         </div>
 
 
@@ -323,6 +411,7 @@ body > div > div.row > div.row > div > div:nth-child(1) {
         </script>
 
         <script> 
+            const userid = new URLSearchParams(window.location.search).get('userid');
             const alphabetLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             const alphabetButtonsContainer = document.querySelector('.alphabet-buttons');
             const demoImage = document.getElementById('demo-image');
@@ -332,6 +421,9 @@ body > div > div.row > div.row > div > div:nth-child(1) {
             const recognitionResult = document.getElementById('recognition-result');
             const userScore = document.getElementById('user-score');
             
+            const sidebar = document.getElementById('sidebar');
+            const slist = sidebar.querySelectorAll('a');
+
 //for recognition
 const webcamFeed = document.getElementById('webcam-feed');
 const webcamPlaceholder = document.getElementById('webcam-placeholder');
@@ -563,6 +655,29 @@ document.addEventListener('keydown', (event) => {
                     sidebar.style.width = "250px";        
                 }
             };
+
+
+        //==================
+
+
+        if (sessionStorage.getItem("status") == "login") {
+            slist[1].textContent = 'Logout';
+        }
+
+        slist[1].addEventListener('click', () => {
+            if (slist[1].textContent === 'Logout') {
+                sessionStorage.removeItem('status');
+                sessionStorage.removeItem('token');
+                slist[1].href = "../../tutorial/";
+                slist[1].textContent = 'Login';
+            }
+        })
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem("status") == "login"){
+                slist[0].href = `../wordle3/?userid=${userid}`;
+        }
+        });
         </script>
 
     </body>

@@ -3,6 +3,7 @@ const keyboard = document.getElementById('keyboard');
 const toggleWebcamBtn = document.getElementById('toggle-webcam');
 const submitBtn = document.getElementById('submit');
 const giveUpBtn = document.getElementById('give-up');
+const rankingBtn = document.getElementById('ranking');
 const webcamFeed = document.getElementById('webcam-feed');
 const webcamPlaceholder = document.getElementById('webcam-placeholder');
 
@@ -162,6 +163,27 @@ function sendScore(){
             resultText.textContent = "Error during recognition.";
         });
 }
+
+
+// =====排名==========
+
+function openwin() {
+     window.open ("/wordle3/rank/?userid=" + userid, "newwindow", "height=550, width=410, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")}
+    // window.open ("../../wordle3/rank/", "newwindow", "height=550, width=410, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no")}
+
+rankingBtn.addEventListener('click',()=>{
+    openwin();
+})
+
+window.addEventListener('load',()=>{
+    if (!sessionStorage.getItem('status')){
+        rankingBtn.style.display = 'none';
+    }
+})
+
+//=================
+
+
 
 function processRecording() {
     let blob = new Blob(chunks, { type: 'video/webm' });
@@ -390,9 +412,16 @@ slist[1].addEventListener('click', () => {
     if (slist[1].textContent === 'Logout') {
         sessionStorage.removeItem('status');
         sessionStorage.removeItem('token');
+        slist[1].href = "../../wordle3/";
         slist[1].textContent = 'Login';
     }
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem("status") == "login"){
+        slist[0].href = `../tutorial/?userid=${userid}`;}
+});
+
 // =================sidebar=================
 
 
