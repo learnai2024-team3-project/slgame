@@ -28,6 +28,7 @@ Temporary Items
 __pycache__/
 */__pycache__/
 *.py[cod]
+*/.ipynb_checkpoints/
 
 # C extensions
 *.so
