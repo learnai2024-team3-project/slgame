@@ -452,10 +452,13 @@ function submitImage(base64Image) {
             if (data.data.recognizedWord.length === 1) {
                 let letter = data.data.recognizedWord.toUpperCase();
                 updateUserScore('Letter: ' +letter, 'Confidence: '+data.data.confidence);
+            } else {
+                updateUserScore('Recognition failed', 'Please show hand in front of webcam');
             }
+
         } else {
             
-            updateUserScore('Recognition failed', 'Please try again');
+            updateUserScore('Backend server failed', 'Please check system');
         }
     })
     .catch((error) => {
@@ -544,7 +547,13 @@ toggleWebcamBtn.addEventListener('click', toggleWebcam);
                 console.error("Error loading image:", demoImage.src);
                 handShapeExplanation.textContent = `Error loading image. Please try another letter or check your internet connection.`;
             };
-
+// Handle keyboard input
+document.addEventListener('keydown', (event) => {
+ 
+    if (event.key === ' ') {
+        toggleWebcam();
+    } 
+});
             document.getElementById("sidebarBtn").onclick = function() {
                 var sidebar = document.getElementById("sidebar");
                 
