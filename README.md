@@ -98,6 +98,8 @@ pip install ultralytics
 # Roboflow & Kaggle — 資料集下載與管理
 pip install roboflow 
 pip install kaggle
+
+pip install python-decouple 
 ```
 
 <!-- # PIL/Pillow — 影像處理

@@ -3,8 +3,8 @@ django
 djangorestframework
 drf-yasg
 ultralytics
+roboflow
 python-decouple 
-#roboflow # only for ML model training/validation
 
 # Dependencies of ultralytics
 # pillow
