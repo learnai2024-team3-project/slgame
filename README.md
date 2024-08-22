@@ -24,20 +24,6 @@ python manage.py collectstatic
 3. 建立虛擬環境並安裝相依套件，請閱讀以下說明。
 
 
-### 使用 VS Code 安裝虛擬環境與相依套件
-1. 開啟 Command Palette（快速鍵：[Shift]+[Ctrl]+[P]）
-2. 輸入 Create Environment
-3. 點選 Python 直譯器
-4. 點選 dependencies 為 `requirements.txt`
-5. 點選 OK，開始安裝虛擬環境
-6. 安裝完之後，到終端機啟用虛擬環境
-   - Powershell `.\venv\Scripts\Activate\ps1`
-   - Commnad Promt `.venv\Scripts\activate.bat`
-   - Shell `.venv/Scripts\activate`
-7. 在終端機執行 `pip list`，確認套件都已經安裝
-8. 在終端機執行 `deactivate` 可停用虛擬環境
-
-
 ### 虛擬環境
 
 ```shell
@@ -66,6 +52,21 @@ python -m venv <path/to/slg> # <path/to/slg> 是填欲安裝目錄路徑
 source <path/to/slg>/bin/activate # Windows 下為 <path/to/slg>\Scripts\activate
 ```
 
+
+#### 使用 VS Code 與 venv
+1. 開啟 Command Palette（快速鍵：[Shift]+[Ctrl]+[P]）
+2. 輸入 Create Environment
+3. 點選 Python 直譯器
+4. 點選 dependencies 為 `requirements.txt`
+5. 點選 OK，開始安裝虛擬環境
+6. 安裝完之後，到終端機啟用虛擬環境
+   - Powershell `.\venv\Scripts\Activate\ps1`
+   - Commnad Promt `.venv\Scripts\activate.bat`
+   - Shell `.venv/Scripts\activate`
+7. 在終端機執行 `pip list`，確認套件都已經安裝
+8. 在終端機執行 `deactivate` 可停用虛擬環境
+
+
 ### 安裝相依套件
 
 #### 批量安裝（推薦使用）
@@ -90,7 +91,16 @@ pip install djangorestframework
 # drf-yasg — 自動生成 Swagger UI
 pip install -U drf-yasg
 
-# PIL/Pillow — 影像處理
+# Ultralytics, for YOLOv8 — 電腦視覺模型
+# https://docs.ultralytics.com/quickstart/
+pip install ultralytics
+
+# Roboflow & Kaggle — 資料集下載與管理
+pip install roboflow 
+pip install kaggle
+```
+
+<!-- # PIL/Pillow — 影像處理
 pip install pillow
 
 # NumPy — 數值運算
@@ -99,13 +109,4 @@ pip install numpy<=1.26.4
 
 # PyTorch — 深度學習框架
 # https://pytorch.org/get-started/locally/
-pip install torch
-
-# Ultralytics, for YOLOv8 — 電腦視覺模型
-# https://docs.ultralytics.com/quickstart/
-pip install ultralytics
-
-# Roboflow & Kaggle — 資料集管理
-pip install roboflow 
-pip install kaggle
-```
+pip install torch -->

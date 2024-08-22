@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,17 +20,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-!i=r+_b-xe=__-wl)h5oe!$dj6jyhui8$m#0nb49td&inkccnr"
+# 涉及機敏的參數儲存在 .env 的環境變數中，並從版控中排除 .env
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+LINE_CHANNEL_ACCESS_TOKEN = config('LINE_CHANNEL_ACCESS_TOKEN')
+LINE_CHANNEL_SECRET = config('LINE_CHANNEL_SECRET')
+LINE_USER_ID = config('LINE_USER_ID')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+# 開發階段，可以暫時使用 ALLOWED_HOSTS = ["*"]
+# 產環境中，應該明確地列出允許的域名或 IP 地址
+ALLOWED_HOSTS = ["*"] # 35.221.206.226
 
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -121,7 +124,6 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / 'public/assets'
 STATICFILES_DIRS = [
@@ -134,6 +136,3 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LINE_CHANNEL_ACCESS_TOKEN="eqIuYj1mXTTCMXwIP22DuGjkTXK3OKxU0S6YvNdolMFOyAmPnF70id6KwdwCCzXLdP5zvAJpH7O/r9LA2aguVnhyw2JZiEAmJdjkXCGqMfuLT5ftqcRoQbJQx8lB5MDKtcFDSguKzY+Zz+UjUOkWVAdB04t89/1O/w1cDnyilFU="
-LINE_CHANNEL_SECRET="3faf6dae8a61bf1425d48487c88b7050"
-LINE_USER_ID = "@011fresn"

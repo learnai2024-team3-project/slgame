@@ -1,18 +1,13 @@
-line-bot-sdk==3.11.0
+#line-bot-sdk==3.11.0
 django
 djangorestframework
 drf-yasg
-
 ultralytics
-roboflow
+python-decouple 
+#roboflow # only for ML model training/validation
 
 # Dependencies of ultralytics
 # pillow
 # numpy==1.26.4
 # torch==2.2.2
 # opencv-python==4.10.0
-
-
-watchdog
-django-extensions
-Werkzeug
