@@ -1,4 +1,3 @@
-from lib2to3.pgen2.parse import ParseError
 import traceback
 from django.shortcuts import render
 from django.http import JsonResponse
