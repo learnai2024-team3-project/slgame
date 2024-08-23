@@ -11,3 +11,5 @@ python-decouple==3.8
 # numpy==1.26.4
 # torch==2.2.2
 # opencv-python==4.10.0
+
+django-extensions==3.2.3
