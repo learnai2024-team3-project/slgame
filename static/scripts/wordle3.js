@@ -32,13 +32,16 @@ for (let i = 0; i < 25; i++) {
 
 // Initialize the keyboard
 'QWERTYUIOPASDFGHJKL ZXCVBNM'.split('').forEach(letter => {
-    const key = document.createElement('div');
-    key.classList.add('key');
-    key.textContent = letter;
-    if (key.textContent != ' ') {
+    if (letter === ' ') {
+        const lineBreak = document.createElement('br');
+        keyboard.appendChild(lineBreak);
+    } else {
+        const key = document.createElement('div');
+        key.classList.add('key');
+        key.textContent = letter;
         key.addEventListener('click', () => handleKeyPress(letter));
+        keyboard.appendChild(key);
     }
-    keyboard.appendChild(key);
 });
 
 function handleKeyPress(letter) {
