@@ -20,16 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# 涉及機敏的參數儲存在 .env 的環境變數中，並從版控中排除 .env
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = True  #config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 LINE_CHANNEL_ACCESS_TOKEN = config('LINE_CHANNEL_ACCESS_TOKEN')
 LINE_CHANNEL_SECRET = config('LINE_CHANNEL_SECRET')
 LINE_USER_ID = config('LINE_USER_ID')
 
-# 開發階段，可以暫時使用 ALLOWED_HOSTS = ["*"]
-# 產環境中，應該明確地列出允許的域名或 IP 地址
-ALLOWED_HOSTS = ["*"] # 35.221.206.226
+
+ALLOWED_HOSTS = ["35.221.206.226"] 
 
 
 # Application definition
