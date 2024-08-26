@@ -1,15 +1,16 @@
-#line-bot-sdk==3.11.0
+numpy==1.23.5
+opencv-python==4.10.0.82
 django==5.1
 djangorestframework==3.15.2
 drf-yasg==1.21.7
 ultralytics==8.2.79
 roboflow==1.1.40
 python-decouple==3.8
+gdown==5.2.0
+django-extensions==3.2.3
 
 # Dependencies of ultralytics
 # pillow
-# numpy==1.26.4
 # torch==2.2.2
-# opencv-python==4.10.0
 
-django-extensions==3.2.3
+
