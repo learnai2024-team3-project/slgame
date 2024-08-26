@@ -4,10 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ASL Alphabet Learning</title>
-        <link rel="stylesheet" href="{% static 'styles/tutorial.css' %}">
+        <!-- <link rel="stylesheet" href="{% static 'styles/tutorial.css' %}"> -->
     </head>
     <style>
- body {
+
+ .body {
     font-family: Arial, sans-serif;
     /* margin: 0;
     padding: 20px; */
@@ -16,7 +17,7 @@
 
 .head {
     /* border:2px solid red; */
-    /* height: 10px; */
+    height: 50px;
     width: 100%;
 
 }
@@ -40,7 +41,7 @@
     /* flex-wrap: wrap; */
     justify-content: space-around;
     /* padding: 20px; */
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
     width: 100%;
 
 
@@ -72,6 +73,8 @@
     /* flex: 1;
     padding: 10px; */
  /* border:2px solid green; */
+ max-width: 510px;
+ min-width: 310px;
  background-color: white;
  border-radius: 10px;
  padding: 20px;
@@ -80,11 +83,12 @@
 
 }
 
-/* .tutorialpart { */
+.tutorialpart { 
     /* border: 2px solid purple; */
-    /* margin-left: 60px;
-    margin-top: 40px;
-} */
+    
+    margin-left: 70px;
+    margin-right: 45px;
+}
 
 /* .detectionpart { */
     /* margin-left: 180px;
@@ -108,6 +112,8 @@
 #webcam-container {
         
         width: 100%;
+        min-width: 310px;
+        max-width: 510px;
         height: 285px;
         background-color: #333;
         display: flex;
@@ -132,12 +138,12 @@
 
 #demo-image {
     width: 100%;
-    /* max-width: 300px;
-    height: auto; */
-    width: 100%;
-    height: 285px;
+    /* max-width: 300px; */
+    /* height: auto; */
+    height: 250px;
     border: 1px solid #ddd;
     border-radius: 10px;
+    object-fit: contain;
 }
 /*
 .control-button {
@@ -293,6 +299,7 @@
 }
 
 #recognition-result, #user-score{
+    width: 495px;
     font: bold;
     font-size: 15px;
     color: #c99458;
@@ -303,9 +310,40 @@
 }
 
 
+/* footer */
+footer {
+    background-color: #e2d9d9;
+    color: #d4d0d0;
+    padding: 2px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .github-link {
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    font-weight:bold;
+    transition: color 0.3s ease;
+  }
+
+
+
+
  /* 響應式設計 */
  
- @media screen and (min-width: 1001px) {
+ @media screen and (min-width: 1001px) {  /*當螢幕大於或等於1001px的CSS樣式*/
     .container {
         display: flex;
         flex-direction: row;
@@ -320,11 +358,14 @@
     .detectionpart {
         width: 100%; /* 保持響應性，避免過窄或過寬 */
         margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
 
-@media screen and (max-width: 1000px) { 
+@media screen and (max-width: 1000px) {  /*當螢幕小於或等於1000px的CSS樣式*/
     .container {
         display: flex;
         flex-direction: column;
@@ -335,15 +376,20 @@
 
     .tutorialpart {
         width: 310px; /* 固定寬度，不隨螢幕縮放 */
-        margin-left: 70px;
-        margin-right: 45px;
+        /* margin-left: 70px;
+        margin-right: 45px; */
     }
 
     .detectionpart {
         width: 90%; /* 調整寬度以便兩者可以在大螢幕上均勻分布 */
-        
-        margin-left: 45px;
-        margin-right: 70px;
+        min-width: 310px;
+        /* margin-left: 45px;
+        margin-right: 70px; */
+    }
+
+    #recognition-result, #user-score{
+        width:95%
+
     }
 }
  
@@ -358,6 +404,7 @@
         <!-- ===============sidebar============== -->
         <div id="sidebar" class="sidebar">
             <!-- Your menu items go here -->
+            <a href="#services">About</a>
             <a href="../wordle3/">WordleMode</a>
             <a href="../auth/login">Login</a>
         </div>
@@ -404,6 +451,23 @@
                 </div>
 
         </div>
+
+
+<!-- footer -->
+<footer>
+    <div class="footer-content">
+      <a href="https://github.com/learnai2024-team3-project/slgame" class="github-link" target="_blank">
+        Visit SWordle on GitHub
+      </a>
+      <!-- <div id="qrcode"><img id="sqrcode" src="../static/images/Swordle_qrcode.png"></div> -->
+    </div>
+  </footer>
+
+
+
+
+
+
 
 
         <script>
