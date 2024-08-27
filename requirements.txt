@@ -11,13 +11,6 @@ django-extensions==3.2.3
 
 # Dependencies of ultralytics
 # pillow
-<<<<<<< HEAD
-numpy==1.23.5
-# torch==2.2.2
-opencv-python==4.10.0.82
-
-=======
 # torch==2.2.2
 
 
->>>>>>> origin/main
