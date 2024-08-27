@@ -408,21 +408,21 @@ document.getElementById("sidebarBtn").onclick = function() {
 // }
 
 if (sessionStorage.getItem("status") == "login") {
-    slist[1].textContent = 'Logout';
+    slist[2].textContent = 'Logout';
 }
 
-slist[1].addEventListener('click', () => {
-    if (slist[1].textContent === 'Logout') {
+slist[2].addEventListener('click', () => {
+    if (slist[2].textContent === 'Logout') {
         sessionStorage.removeItem('status');
         sessionStorage.removeItem('token');
-        slist[1].href = "../../wordle3/";
-        slist[1].textContent = 'Login';
+        slist[2].href = "../../wordle3/";
+        slist[2].textContent = 'Login';
     }
 })
 
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem("status") == "login"){
-        slist[0].href = `../tutorial/?userid=${userid}`;}
+        slist[1].href = `../tutorial/?userid=${userid}`;}
 });
 
 // =================sidebar=================
