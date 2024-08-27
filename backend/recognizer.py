@@ -3,48 +3,47 @@ import torch
 from ultralytics import YOLO
 import tempfile
 
-# If a GPU (CUDA) is available, use it;
-# otherwise, fall back to using the CPU.
+# If a GPU (CUDA) is available, use it; otherwise, fall back to using the CPU.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f'Using device: {device}')
 
 # Load the model and move it to the device
-model = YOLO('/home/aslwordle/slgame/models/best.pt')
+model = YOLO('./models/best.pt')
 model.to(device)
 
 def recognize_video(file_byte):
-    # 创建一个临时文件来存储视频
+    # Create a temporary file to store the video
     with tempfile.NamedTemporaryFile(suffix='.webm', mode='wb+', delete=False) as temp_video_file:
-        # 将字节流写入临时文件
+        # Write the byte stream to the temporary file
         temp_video_file.write(file_byte)
         temp_video_file.flush()
 
-        # 打开视频文件
+        # Open the video file
         video_capture = cv2.VideoCapture(temp_video_file.name)
         
         highest_conf = 0
         best_label = ""
 
-        # 检查视频是否成功打开
+        # Check if the video opened successfully
         if not video_capture.isOpened():
-            print("无法打开视频文件")
+            print("Unable to open video file")
             return best_label, highest_conf
         
-        # 逐帧处理视频
+        # Process the video frame by frame
         while True:
             ret, frame = video_capture.read()
             if not ret:
                 break
 
-            # 调用 recognize_image 识别每一帧
+            # Call recognize_image to recognize each frame
             label, conf, _ = recognize_image(frame)
             
-            # 更新最高置信度的结果
+            # Update the result with the highest confidence
             if conf > highest_conf:
                 highest_conf = conf
                 best_label = label
 
-        # 释放视频捕获对象
+        # Release the video capture object
         video_capture.release()
 
     return best_label, highest_conf
