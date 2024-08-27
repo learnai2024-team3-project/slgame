@@ -725,21 +725,21 @@ document.addEventListener('keydown', (event) => {
 
 
         if (sessionStorage.getItem("status") == "login") {
-            slist[1].textContent = 'Logout';
+            slist[2].textContent = 'Logout';
         }
 
-        slist[1].addEventListener('click', () => {
-            if (slist[1].textContent === 'Logout') {
+        slist[2].addEventListener('click', () => {
+            if (slist[2].textContent === 'Logout') {
                 sessionStorage.removeItem('status');
                 sessionStorage.removeItem('token');
-                slist[1].href = "../../tutorial/";
-                slist[1].textContent = 'Login';
+                slist[2].href = "../../tutorial/";
+                slist[2].textContent = 'Login';
             }
         })
 
         document.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem("status") == "login"){
-                slist[0].href = `../wordle3/?userid=${userid}`;
+                slist[1].href = `../wordle3/?userid=${userid}`;
         }
         });
         </script>
