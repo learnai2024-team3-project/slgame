@@ -8,7 +8,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f'Using device: {device}')
 
 # Load the model and move it to the device
-model = YOLO('./models/best.pt')
+model = YOLO('/home/aslgame/slgame/models/best.pt')
 model.to(device)
 
 def recognize_video(file_byte):
