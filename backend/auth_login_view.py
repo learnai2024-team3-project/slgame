@@ -65,6 +65,9 @@ def other_login(request):
 
                     user.login_token = uuid.uuid4().hex  # 生成新的 token
                     user.save(update_fields=['login_token', 'last_login_time'])  # 更新 token 和最後登入時間
+                    login_time = user.last_login_time.strftime('%Y-%m-%d %H:%M:%S')  # Format the login time
+
+                    print(f"Login time: {login_time}") 
 
                     print(f'登入成功')
                     # target_url = reverse('wordle', kwargs={'userid': userid})
@@ -75,6 +78,7 @@ def other_login(request):
                         # "redirect_url": target_url,  
                         'userid': userid, 
                         "loginToken": user.login_token,
+                        "loginTime": login_time, 
                     }, safe=False)
               else:
                     print(f'密碼輸入錯誤')

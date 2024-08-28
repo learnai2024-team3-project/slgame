@@ -422,8 +422,61 @@ slist[2].addEventListener('click', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem("status") == "login"){
-        slist[1].href = `../tutorial/?userid=${userid}`;}
+        slist[1].href = `../tutorial/?userid=${userid}`
+        
+        // 增加此行
+        document.getElementById('login-time-container').innerHTML = `  
+            <a>${sessionStorage.getItem("loginTime")}</a>
+        `
+        ;}
 });
+
+
+
+// Function to handle the response after a successful login
+// function handleLoginResponse() {
+//     if (sessionStorage.getItem("status") == "login") {     // 修改判斷式
+//         // Update the sidebar with the login time
+//         document.getElementById('login-time-container').innerHTML = `
+//             <a>Login Time: ${response.loginTime}</a>
+//         `;
+//     } else {
+//         console.log("Login failed:", response.message);
+//     }
+// }
+
+
+
+// Function to handle the login process
+// function loginUser(userid) {
+//     fetch(currentUrl + '/login/', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'  // 設置請求頭，告訴伺服器發送的是 JSON 格式的數據
+//         },
+//         body: JSON.stringify({
+//             client_id: userid  // 將數據轉換為 JSON 格式
+//         })
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();  // 解析 JSON 響應
+//     })
+//     .then(data => {
+//         handleLoginResponse(data);  // 呼叫函數處理響應
+//     })
+//     .catch(error => {
+//         console.error("Login error:", error);  // 處理錯誤
+//     });
+// }
+
+
+// window.addEventListener('DOMContentLoaded', ()=>{
+//     loginUser(userid)
+// })
+
 
 // =================sidebar=================
 

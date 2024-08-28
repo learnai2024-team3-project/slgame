@@ -270,7 +270,7 @@
 }
 
 .sidebar a {
-    padding: 10px 15px;
+    padding: 7px 12px;
     text-decoration: none;
     font-size: 18px;
     color: #fff;
@@ -404,9 +404,13 @@ footer {
         <!-- ===============sidebar============== -->
         <div id="sidebar" class="sidebar">
             <!-- Your menu items go here -->
-            <a href="#services">About</a>
+            <a href="../about/">About</a>
             <a href="../wordle3/">WordleMode</a>
             <a href="../auth/login">Login</a>
+            <div id="login-time-container">
+                <!-- Login time will be dynamically added here -->
+            </div>
+
         </div>
 
         <button id="sidebarBtn">Menu</button>
@@ -740,6 +744,10 @@ document.addEventListener('keydown', (event) => {
         document.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem("status") == "login"){
                 slist[1].href = `../wordle3/?userid=${userid}`;
+
+                document.getElementById('login-time-container').innerHTML = `  
+                <a>${sessionStorage.getItem("loginTime")}</a>
+                `
         }
         });
         </script>

@@ -48,3 +48,6 @@ def rank_view(request):
     userid = request.GET.get('userid')
     context = {'userid': userid}
     return render(request, 'rank.html', context)
+
+def about_view(request):
+    return render(request, 'about.html')
