@@ -1,4 +1,6 @@
-<html><head><base href="https://asl-learning-game.com/">
+{% load static %}
+
+<html><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About Us - ASL Learning Game</title>
@@ -121,6 +123,8 @@
         text-align: center;
         padding: 10px;
         margin-top: 30px;
+        font-size: 10px;
+        font-weight: bold;
     }
     footer a {
         color: var(--base-color);
@@ -167,6 +171,7 @@
         }
     }
 </style>
+<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" /> 
 </head>
 <body>
     <header>
@@ -224,10 +229,8 @@
             <section class="qr-code">
                 <h2>Github</h2>
                 <p>Scan the QR code below to visit our github!</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 29 29">
-                    <path d="M1 1h7v7h-7zM21 1h7v7h-7zM1 21h7v7h-7z" fill="#D2691E"/>
-                    <path d="M10 1h3v2h-3zM16 1h3v2h-3zM10 4h3v3h-3zM16 4h3v3h-3zM10 10h3v3h-3zM16 10h3v3h-3zM1 10h7v3h-7zM21 10h7v3h-7zM10 16h3v3h-3zM16 16h3v3h-3zM1 16h7v3h-7zM21 16h7v3h-7zM10 21h3v2h-3zM16 21h3v2h-3zM10 26h3v2h-3zM16 26h3v2h-3zM21 21h7v7h-7z" fill="#D2691E"/>
-                </svg>
+                <img src="{% static 'images/slgame_qrcode.png' %}" width="150" height="150" viewBox="0 0 29 29">
+        
                 
             </section>
 
@@ -236,18 +239,18 @@
                 <div class="member-row">
                     <div class="member">
                         <h3>Bill Lin</h3>
-                        <p>Team Leader</p>
+                        <!-- <p>Team Leader</p> -->
                     </div>
                     <div class="member">
-                        <h3>Eric Su</h3>
+                        <h3>Sin-Iu Ho</h3>
                         <!-- <p>UI/UX Designer</p> -->
                     </div>
                     <div class="member">
-                        <h3>Jacques Ho</h3>
+                        <h3>Jia Ling Cheng</h3>
                         <!-- <p>ASL Expert</p> -->
                     </div>
                     <div class="member">
-                        <h3>Rae Wang</h3>
+                        <h3>Yun Ting Wang</h3>
                         <!-- <p>Game Developer</p> -->
                     </div>
                 </div>
@@ -270,14 +273,20 @@
     </div>
 
     <footer>
-        <p>Contact us: <a href="mailto:info@asl-learning-game.com">info@asl-learning-game.com</a></p>
+        <p>Contact us: <a href="mailto:aslwordle@gmail.com">aslwordle@gmail.com</a></p>
+        <p>This site uses some images from external sources for non-commercial educational purposes. If you are the copyright owner and have concerns, please contact us.</p>
+        <p>Original content on this site is licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.en" target="_blank">Creative Commons BY-NC 4.0</a> license.</p>
+        <p>&copy; 2024 Swordle | All rights reserved.</p>
     </footer>
 </body>
 
 <script>
     const goBackBtn = document.getElementById('goBackBtn');
     goBackBtn.addEventListener('click',()=>{
-        history.back().reload();
+        history.back(); // 回到上一頁
+        setTimeout(() => {
+        window.location.reload(); // 在返回上一頁後重新加載頁面
+    }, 500); // 適當延遲以確保回到上一頁
     })
 </script>
 
