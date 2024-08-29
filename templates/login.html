@@ -149,6 +149,8 @@ generalbtn.addEventListener('click', ()=>{
             if (data.status === 'success') {
                sessionStorage.setItem("status","login")
                sessionStorage.setItem("token",data.loginToken)
+               sessionStorage.setItem("loginTime",data.loginTime) // 加入此行
+            
                Swal.fire({
                     position: "center",
                     icon: "success",

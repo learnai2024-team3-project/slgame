@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from backend.player_view import PlayerView
 from django.urls import include, re_path
-from backend.views import index, wordle_view, tutorial_view, auth_login_view, register_view, rank_view
+from backend.views import index, wordle_view, tutorial_view, auth_login_view, register_view, rank_view, about_view
 
 from backend.auth_login_view import other_login
 from backend.upload_view import upload, upload_video
@@ -60,6 +60,7 @@ urlpatterns = [
     path("game_submit/", submit_game),
     path("rank/", get_rank),
     path("wordle3/rank/", rank_view),
+    path("about/", about_view),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             view=schema_view.without_ui(cache_timeout=0),

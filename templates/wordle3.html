@@ -6,6 +6,7 @@
     <title>Wordle AI - Sign Language Edition</title>
     <link rel="stylesheet" href="{% static 'styles/wordle3.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" /> 
 </head>
 
 <body>
@@ -14,9 +15,13 @@
     <!-- ===============sidebar============== -->
     <div id="sidebar" class="sidebar">
         <!-- Your menu items go here -->
-        <a href="#services">About</a>
+        <a href="../about/">About</a>
         <a href="../tutorial/">TutorialMode</a>
         <a href="../auth/login">Login</a>
+        <div id="login-time-container">
+            <!-- Login time will be dynamically added here -->
+        </div>
+    
         
         
     </div>
