@@ -1,3 +1,4 @@
+import os
 import cv2
 import torch
 from ultralytics import YOLO
@@ -8,7 +9,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f'Using device: {device}')
 
 # Load the model and move it to the device
-model = YOLO('/home/aslwordle/slgame/models/best.pt')
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_dir, 'models', 'best.pt')
+model = YOLO(model_path)
 model.to(device)
 
 def recognize_video(file_byte):
