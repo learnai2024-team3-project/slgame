@@ -1,122 +1,125 @@
-<html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Swordle - Word Puzzle Game</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
+{% load static %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Swordle - Word Puzzle Game</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
 
-body, html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #FFF5E6 0%, #FFE4E1 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+            body, html {
+                height: 100%;
+                margin: 0;
+                font-family: 'Roboto', sans-serif;
+                background: linear-gradient(135deg, #FFF5E6 0%, #FFE4E1 100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-.container {
-    text-align: center;
-}
+            .container {
+                text-align: center;
+            }
 
-h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 4rem;
-    color: #8B4513;
-    margin-bottom: 2rem;
-    text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.1);
-    animation: fadeIn 1s ease-out;
-}
+            h1 {
+                font-family: 'Poppins', sans-serif;
+                font-size: 4rem;
+                color: #8B4513;
+                margin-bottom: 2rem;
+                text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.1);
+                animation: fadeIn 1s ease-out;
+            }
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
+            .button-container {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+            }
 
-.btn {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #8B4513;
-    text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.1);
-    box-shadow: 0 4px 6px rgba(139, 69, 19, 0.1);
-}
+            .btn {
+                font-family: 'Roboto', sans-serif;
+                font-size: 1.2rem;
+                padding: 1rem 2rem;
+                border: none;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                color: #8B4513;
+                text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.1);
+                box-shadow: 0 4px 6px rgba(139, 69, 19, 0.1);
+            }
 
-.btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 8px rgba(139, 69, 19, 0.15);
-}
+            .btn:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 8px rgba(139, 69, 19, 0.15);
+            }
 
-.btn-tutorial {
-    background: linear-gradient(135deg, #FFB6C1 0%, #FFA07A 100%);
-}
+            .btn-tutorial {
+                background: linear-gradient(135deg, #FFB6C1 0%, #FFA07A 100%);
+            }
 
-.btn-tutorial:hover {
-    background: linear-gradient(135deg, #FFA07A 0%, #FF8C69 100%);
-}
+            .btn-tutorial:hover {
+                background: linear-gradient(135deg, #FFA07A 0%, #FF8C69 100%);
+            }
 
-.btn-wordle {
-    background: linear-gradient(135deg, #FFDAB9 0%, #FFE4B5 100%);
-}
+            .btn-wordle {
+                background: linear-gradient(135deg, #FFDAB9 0%, #FFE4B5 100%);
+            }
 
-.btn-wordle:hover {
-    background: linear-gradient(135deg, #FFE4B5 0%, #F4A460 100%);
-}
+            .btn-wordle:hover {
+                background: linear-gradient(135deg, #FFE4B5 0%, #F4A460 100%);
+            }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
 
-@media (max-width: 600px) {
-    h1 {
-        font-size: 3rem;
-    }
+            @media (max-width: 600px) {
+                h1 {
+                    font-size: 3rem;
+                }
 
-    .button-container {
-        flex-direction: column;
-    }
+                .button-container {
+                    flex-direction: column;
+                }
 
-    .btn {
-        font-size: 1rem;
-        padding: 0.8rem 1.6rem;
-    }
-}
-</style>
-<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" /> 
-</head>
-<body>
-<div class="container">
-    <h1>Swordle</h1>
-    <div class="button-container">
-        <button class="btn btn-tutorial" onclick="window.location.href='../../tutorial/'">Tutorial Mode</button>
-        <button class="btn btn-wordle" onclick="window.location.href='../../wordle3/'">Wordle Mode</button>
-    </div>
-</div>
+                .btn {
+                    font-size: 1rem;
+                    padding: 0.8rem 1.6rem;
+                }
+            }
+        </style>
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" /> 
+    </head>
+    <body>
+        <div class="container">
+            <h1>Swordle</h1>
+            <div class="button-container">
+                <button class="btn btn-tutorial" onclick="window.location.href='../../tutorial/'">Tutorial Mode</button>
+                <button class="btn btn-wordle" onclick="window.location.href='../../wordle3/'">Wordle Mode</button>
+            </div>
+        </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
-        button.addEventListener('mouseover', () => {
-            button.style.transform = 'scale(1.05)';
-        });
-        button.addEventListener('mouseout', () => {
-            button.style.transform = 'scale(1)';
-        });
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            button.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                window.location.href = button.getAttribute('onclick').split("'")[1];
-            }, 200);
-        });
-    });
-});
-</script>
-</body></html>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const buttons = document.querySelectorAll('.btn');
+                buttons.forEach(button => {
+                    button.addEventListener('mouseover', () => {
+                        button.style.transform = 'scale(1.05)';
+                    });
+                    button.addEventListener('mouseout', () => {
+                        button.style.transform = 'scale(1)';
+                    });
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        button.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            window.location.href = button.getAttribute('onclick').split("'")[1];
+                        }, 200);
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

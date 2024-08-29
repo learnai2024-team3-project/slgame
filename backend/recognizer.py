@@ -10,7 +10,8 @@ print(f'Using device: {device}')
 
 # Load the model and move it to the device
 current_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(current_dir, 'models', 'best.pt')
+parent_dir = os.path.dirname(current_dir)
+model_path = os.path.join(parent_dir, 'models', 'best.pt')
 model = YOLO(model_path)
 model.to(device)
 

@@ -6,41 +6,41 @@
     <title>Login</title>
     <style>
 
-body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-       
-        
-    }
+        body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+            
+                
+            }
 
-    .content {
-        /* border: 3px solid purple; */
-        font-family: Arial, sans-serif;
-        display: inline-flex;
-        /* flex-wrap: wrap; */
-        justify-content: space-around;
-        /* padding: 20px; */
-        background-color: #f0f0f0;
-        width: 100%;
+        .content {
+            /* border: 3px solid purple; */
+            font-family: Arial, sans-serif;
+            display: inline-flex;
+            /* flex-wrap: wrap; */
+            justify-content: space-around;
+            /* padding: 20px; */
+            background-color: #f0f0f0;
+            width: 100%;
 
-    }
+        }
 
-    .container {
-        /* border:2px solid green; */
-        background-color: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        width: 300px;
-        position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* 将元素移动到中心 */
-    }
+        .container {
+            /* border:2px solid green; */
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+            position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); /* 将元素移动到中心 */
+        }
 
-    
         .container input[type="text"],
+
         .container input[type="password"] {
             width: 285px;
             padding: 10px 0px 10px 10px;
@@ -99,12 +99,12 @@ body {
         <div class="container">
             
             <h2 style="text-align: center">Let's play</h2>
-            <input id="client_id" type="text" placeholder="帳號">
-            <input id="password" type="password" placeholder="密碼">
-            <button id="generalbtn" class="general-btn">登入</button>
+            <input id="client_id" type="text" placeholder="UserID">
+            <input id="password" type="password" placeholder="Password">
+            <button id="generalbtn" class="general-btn">Login</button>
             <!-- <button id="linebtn"class="line-btn">使用 LINE 登入</button>
             <button id="googlebtn" class="google-btn">使用 Google 登入</button> -->
-            <button id="registerbtn" class="register-btn">註冊新帳號</button>
+            <button id="registerbtn" class="register-btn">Register</button>
 
 
 
@@ -123,7 +123,7 @@ const generalbtn = document.getElementById('generalbtn');
 const linebtn = document.getElementById('linebtn');
 const googlebtn = document.getElementById('googlebtn');
 const registerbtn = document.getElementById('registerbtn');
-// const csrftoken = getCookie('csrftoken'); // 提取 CSRF 令牌的函數
+// const csrftoken = getCookie('csrftoken'); // 提取 CSRF token 的函數
 
 // console.log(client_id)
 const currentUrl = window.location.origin;
@@ -154,7 +154,7 @@ generalbtn.addEventListener('click', ()=>{
                Swal.fire({
                     position: "center",
                     icon: "success",
-                    title: "登入成功",
+                    title: "Success",
                     showConfirmButton: false,
                     timer: 1500
                     })
@@ -172,7 +172,7 @@ generalbtn.addEventListener('click', ()=>{
                 Swal.fire({
                     position: "center",
                     icon: "error",
-                    title: "登入失敗",
+                    title: "Login failed",
                     showConfirmButton: true,
                     // timer: 1500
                     });

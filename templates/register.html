@@ -82,7 +82,7 @@
             <input id="client_id" type="text" placeholder="userID" required>
             <input id="password" type="password" placeholder="password" required>
             <input id="mail" type="email" placeholder="Mail" required>
-            <button id="registerbtn" class="register-btn">註冊</button>
+            <button id="registerbtn" class="register-btn">Register</button>
         </div>
     </div>
 
@@ -101,7 +101,7 @@
     registerbtn.addEventListener('click', ()=>{
 
         if (!client_id.value || !password.value || !mail.value){
-            alert("請輸入完整資料")
+            alert("Please enter complete information")
     }
         else{
 
@@ -128,7 +128,7 @@
                Swal.fire({
                     position: "center",
                     icon: "success",
-                    title: "註冊成功",
+                    title: "Registration successful",
                     showConfirmButton: false,
                     timer: 1500
                     })
@@ -144,7 +144,7 @@
                 Swal.fire({
                     position: "center",
                     icon: "error",
-                    title: "UserID重複",
+                    title: "The UserID is taken",
                     showConfirmButton: true,
                     // timer: 1500
                     });
@@ -155,7 +155,7 @@
                 Swal.fire({
                     position: "center",
                     icon: "error",
-                    title: "註冊失敗",
+                    title: "Registration failed",
                     showConfirmButton: true,
                     // timer: 1500
                     });

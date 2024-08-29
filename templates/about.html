@@ -1,294 +1,131 @@
 {% load static %}
 
-<html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us - ASL Learning Game</title>
-<style>
-    :root {
-        --base-color: #f0f0f0;
-        --accent-color: #D2691E;
-        --dark-accent: #8B4513;
-        --light-accent: #FFDAB9;
-        --text-color: #333333;
-    }
-    body {
-        font-family: 'Arial', sans-serif;
-        line-height: 1.6;
-        color: var(--text-color);
-        margin: 0;
-        padding: 0;
-        background-color: var(--base-color);
-    }
-    .container {
-        width: 95%;
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px;
-    }
-    header {
-        background: var(--accent-color);
-        color: var(--base-color);
-        padding: 10px 0; /* Reduced padding */
-        text-align: center;
-    }
-    header h1 {
-        margin: 0;
-        font-size: 2em; /* Reduced font size */
-    }
-    header p {
-        margin-top: 3px; /* Reduced margin */
-        font-size: 1em; /* Reduced font size */
-    }
-    .group-members {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        margin-top: 30px;
-    }
-    .member-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-    }
-    .member {
-        flex: 1;
-        background: var(--base-color);
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-    .member h3 {
-        margin: 0 0 5px;
-        color: var(--accent-color);
-    }
-    .member p {
-        margin: 0;
-        font-size: 0.9em;
-        /* color: var(--dark-accent); */
-        color: rgb(113, 83, 26);
-    }
-    .project-intro, .purpose, .how-to-play {
-        margin-top: 30px;
-    }
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Us - Swordle</title>
+        <link rel="stylesheet" href="{% static 'styles/about.css' %}">
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" /> 
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>About</h1>
+                <p>Learn, Play, and Master ASL with Our Interactive Game!</p>
+                <button id="goBackBtn">Go Back</button>
+            </div>
+        </header>
 
-    .project-intro p{
-        /* font-family: "Noto Sans CJK TC"; */
-        padding-right:30px;
-        padding-left:30px;
-        color: rgb(113, 83, 26);
-        font-weight: bold;
-    }
-
-    .purpose ul, .how-to-play ul {
-        /* font-family: "Noto Sans CJK TC"; */
-        padding-left: 20px;
-        color: rgb(113, 83, 26);
-        font-weight: bold;
-    }
-    .purpose li, .how-to-play li {
-        /* font-family: "Noto Sans CJK TC"; */
-        margin-bottom: 10px;
-        color: rgb(113, 83, 26);
-        font-weight: bold;
-    }
-    .purpose li:before {
-        content: '✓';
-        color: var(--accent-color);
-        margin-right: 10px;
-    }
-    .bottom-content {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 30px;
-    }
-    .qr-code {
-        flex: 1;
-        text-align: center;
-        color: rgb(113, 83, 26);
-        font-weight: bold;
-    }
-    .qr-code svg {
-        width: 150px;
-        height: 150px;
-    }
-    .group-members {
-        flex: 2;
-        margin-left: 30px;
-    }
-    footer {
-        background: var(--accent-color);
-        color: var(--base-color);
-        text-align: center;
-        padding: 10px;
-        margin-top: 30px;
-        font-size: 10px;
-        font-weight: bold;
-    }
-    footer a {
-        color: var(--base-color);
-        text-decoration: none;
-    }
-    h2 {
-        color: var(--accent-color);
-        border-bottom: 2px solid var(--accent-color);
-        padding-bottom: 10px;
-    }
-
-    #goBackBtn {
-        font-size: 18px;
-        border: 2px solid #c99458;
-        background-color: #c99458;
-        color: white;
-        border-radius: 10px;
-    }
-
-    #goBackBtn:hover {
-        font-size: 18px;
-        border: 2px solid #c99458;
-        cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-        .bottom-content {
-            flex-direction: column;
-        }
-        .group-members {
-            margin-left: 0;
-            margin-top: 30px;
-        }
-        .member-row {
-            flex-wrap: wrap;
-        }
-        .member {
-            flex: 0 0 calc(50% - 10px);
-        }
-    }
-    @media (max-width: 480px) {
-        .member {
-            flex: 0 0 100%;
-        }
-    }
-</style>
-<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" /> 
-</head>
-<body>
-    <header>
         <div class="container">
-            <h1>About</h1>
-            <p>Learn, Play, and Master ASL with Our Interactive Game!</p>
-            <button id="goBackBtn">Go Back</button>
-        </div>
-    </header>
+            <section class="project-intro">
+                <h2>Welcome to Swordle</h2>
+                <!-- <p>透過YOLO V8物件偵測模型，即時辨識玩家透過攝像頭展示的英文字母手語。不僅加深了玩家對字母的記憶，還能通過有趣的遊戲挑戰激發他們的學習興趣。</p>
+                <p>遊戲中設計了多種適合不同能力基礎的關卡，確保各層級英文能力的用戶都能從中受益。 此外，系統基於Django框架開發，提供穩定的後端支援並建立友善的前端介面。</p> -->
+                <p>Using the YOLOv8 object detection model, players can instantly recognize the American fingerspelling through the webcam. This not only reinforces their memory of the letters but also enhances their learning interest through engaging game challenges.</p>
+                <p>The game is designed with various levels suitable for different skill levels, ensuring that users of all English proficiency levels can benefit.</p>
+                <p>Additionally, the system is developed on the Django framework, providing stable backend support and creating a user-friendly frontend interface.</p>
+            </section>
 
-    <div class="container">
-        <section class="project-intro">
-            <h2>Welcome to Our ASL Learning Game</h2>
-            <!-- <p>透過YOLO V8物件偵測模型，即時辨識玩家透過攝像頭展示的英文字母手語。不僅加深了玩家對字母的記憶，還能通過有趣的遊戲挑戰激發他們的學習興趣。</p>
-            <p>遊戲中設計了多種適合不同能力基礎的關卡，確保各層級英文能力的用戶都能從中受益。 此外，系統基於Django框架開發，提供穩定的後端支援並建立友善的前端介面。</p> -->
-            <p>Using the YOLO V8 object detection model, players can instantly recognize the English alphabet sign language they display through the camera. This not only reinforces their memory of the letters but also enhances their learning interest through engaging game challenges.</p>
-            <p>The game is designed with various levels suitable for different skill levels, ensuring that users of all English proficiency levels can benefit. Additionally, the system is developed on the Django framework, providing stable backend support and creating a user-friendly frontend interface.</p>
-        </section>
+            <!-- <section class="purpose">
+                <h2>Our Purpose</h2>
+                <ul>
+                    <li>Improve ASL proficiency through interactive lessons and exercises</li>
+                    <li>Provide a fun and engaging learning experience for users of all ages</li>
+                    <li>Promote accessibility and inclusivity in language learning</li>
+                    <li>Bridge communication gaps between deaf and hearing communities</li>
+                    <li>Leverage technology to create an immersive ASL learning environment</li>
+                </ul>
+            </section> -->
 
-        <!-- <section class="purpose">
-            <h2>Our Purpose</h2>
-            <ul>
-                <li>Improve ASL proficiency through interactive lessons and exercises</li>
-                <li>Provide a fun and engaging learning experience for users of all ages</li>
-                <li>Promote accessibility and inclusivity in language learning</li>
-                <li>Bridge communication gaps between deaf and hearing communities</li>
-                <li>Leverage technology to create an immersive ASL learning environment</li>
-            </ul>
-        </section> -->
-
-        <section class="how-to-play">
-            <h2>How to Play</h2>
-            <ul>
-                <h3>Tutorial Mode</h3>
-                    <ul>
-                        <li>On the left side, you can select English letters, which will display the corresponding sign language images and explanations.</li>
-                        <li>On the right side is the recognition area, showing the recognized letters and their recognition accuracy.</li>
-                    </ul>
-                </li>
-                <h3>Wordle Mode</h3> 
-                    <ul>
-                        <li>Players use sign language recognition to play a word-guessing game.</li>
-                        <li>The left side displays the word to be guessed, and players have five attempts to guess it.</li>
-                        <li>Correct letters in the correct position are highlighted in green; correct letters in the wrong position are highlighted in yellow; incorrect letters are highlighted in gray.</li>
-                        <li>A small keyboard at the bottom will show already entered letters in gray, and players can also use the computer keyboard to play.</li>
-                        <li>If players register and log in, their score will be based on the number of attempts it takes to guess the word, and rankings will be displayed accordingly.</li>
-                    </ul>
-                </li>
+            <section class="how-to-play">
+                <h2>How to Play</h2>
+                <ul>
+                    <h3>Tutorial Mode</h3>
+                        <ul>
+                            <li>On the left side, you can select English letters, which will display the corresponding sign language images and explanations.</li>
+                            <li>On the right side is the recognition area, showing the recognized letters and their recognition accuracy.</li>
+                        </ul>
+                    </li>
+                    <h3>Wordle Mode</h3> 
+                        <ul>
+                            <li>Players use sign language recognition to play a word-guessing game.</li>
+                            <li>The left side displays the word to be guessed, and players have five attempts to guess it.</li>
+                            <li>Correct letters in the correct position are highlighted in green; correct letters in the wrong position are highlighted in yellow; incorrect letters are highlighted in gray.</li>
+                            <li>A small keyboard at the bottom will show already entered letters in gray, and players can also use the computer keyboard to play.</li>
+                            <li>If players register and log in, their score will be based on the number of attempts it takes to guess the word, and rankings will be displayed accordingly.</li>
+                        </ul>
+                    </li>
+                    
+                </ul>
                 
-            </ul>
+            </section>
+
+            <div class="bottom-content">
+                <section class="qr-code">
+                    <h2>Github</h2>
+                    <p>Scan the QR code below to visit our github!</p>
+                    <img src="{% static 'images/slgame_qrcode.png' %}" width="150" height="150" viewBox="0 0 29 29">
             
-        </section>
+                    
+                </section>
 
-        <div class="bottom-content">
-            <section class="qr-code">
-                <h2>Github</h2>
-                <p>Scan the QR code below to visit our github!</p>
-                <img src="{% static 'images/slgame_qrcode.png' %}" width="150" height="150" viewBox="0 0 29 29">
-        
-                
-            </section>
-
-            <section class="group-members">
-                <h2>Our Team</h2>
-                <div class="member-row">
-                    <div class="member">
-                        <h3>Bill Lin</h3>
-                        <!-- <p>Team Leader</p> -->
+                <section class="group-members">
+                    <h2>Our Team</h2>
+                    <div class="member-row">
+                        <div class="member">
+                            <h3>Bill Lin</h3>
+                            <!-- <p>Team Leader</p> -->
+                        </div>
+                        <div class="member">
+                            <h3>Sin-iu Ho</h3>
+                            <!-- <p>UI/UX Designer</p> -->
+                        </div>
+                        <div class="member"> 
+                            <h3>Jia Ling Cheng</h3>
+                            <!-- <p>ASL Expert</p> -->
+                        </div>
+                        <div class="member">
+                            <h3>Yun Ting Wang</h3>
+                            <!-- <p>Game Developer</p> -->
+                        </div>
                     </div>
-                    <div class="member">
-                        <h3>Sin-Iu Ho</h3>
-                        <!-- <p>UI/UX Designer</p> -->
+                    <div class="member-row">
+                        <div class="member">
+                            <h3>?</h3>
+                            <!-- <p>Content Creator</p> -->
+                        </div>
+                        <div class="member">
+                            <h3>?</h3>
+                            <!-- <p>QA Tester</p> -->
+                        </div>
+                        <div class="member">
+                            <h3>?</h3>
+                            <!-- <p>Project Manager</p> -->
+                        </div>
                     </div>
-                    <div class="member">
-                        <h3>Jia Ling Cheng</h3>
-                        <!-- <p>ASL Expert</p> -->
-                    </div>
-                    <div class="member">
-                        <h3>Yun Ting Wang</h3>
-                        <!-- <p>Game Developer</p> -->
-                    </div>
-                </div>
-                <div class="member-row">
-                    <div class="member">
-                        <h3>?</h3>
-                        <!-- <p>Content Creator</p> -->
-                    </div>
-                    <div class="member">
-                        <h3>?</h3>
-                        <!-- <p>QA Tester</p> -->
-                    </div>
-                    <div class="member">
-                        <h3>?</h3>
-                        <!-- <p>Project Manager</p> -->
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
-    </div>
 
-    <footer>
-        <p>Contact us: <a href="mailto:aslwordle@gmail.com">aslwordle@gmail.com</a></p>
-        <p>This site uses some images from external sources for non-commercial educational purposes. If you are the copyright owner and have concerns, please contact us.</p>
-        <p>Original content on this site is licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.en" target="_blank">Creative Commons BY-NC 4.0</a> license.</p>
-        <p>&copy; 2024 Swordle | All rights reserved.</p>
-    </footer>
-</body>
+        <footer>
+            <p>Contact us: <a href="mailto:aslwordle@gmail.com">aslwordle@gmail.com</a></p>
+            <p>This site uses some images from external sources for non-commercial educational purposes. If you are the copyright owner and have concerns, please contact us.</p>
+            <p>Original content on this site is licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.en" target="_blank">Creative Commons BY-NC 4.0</a> license.</p>
+            <p>&copy; 2024 Swordle | All rights reserved.</p>
+        </footer>
+    </body>
 
-<script>
-    const goBackBtn = document.getElementById('goBackBtn');
-    goBackBtn.addEventListener('click',()=>{
-        history.back(); // 回到上一頁
-        setTimeout(() => {
-        window.location.reload(); // 在返回上一頁後重新加載頁面
-    }, 500); // 適當延遲以確保回到上一頁
-    })
-</script>
-
+    <script>
+        const goBackBtn = document.getElementById('goBackBtn');
+        
+        goBackBtn.addEventListener('click', () => {
+            history.back(); // Go back to the previous page
+            
+            setTimeout(() => {
+                window.location.reload(); // Reload the page after going back
+            }, 500); // Add a delay to ensure the page navigates back properly
+        });
+    </script>
 
 </html>
